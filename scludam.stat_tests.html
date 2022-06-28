@@ -44,10 +44,10 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">modules</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="scludam.html">scludam package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="scludam.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html">detection module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html">fetcher module</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">stat_tests module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html">synthetic module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.type_utils.html">type_utils module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="scludam.html#module-scludam">Module contents</a></li>
@@ -154,7 +154,7 @@ is taken as the median of the results, by default is 100.</p></li>
 <li><p><strong>n_samples</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of samples to take from the data, by default is <code class="docutils literal notranslate"><span class="pre">0.1*n</span></code> where n is
 the number of points in the data set, as it is the recommended value.</p></li>
 <li><p><strong>metric</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>DistanceMetric</em><em>]</em><em>, </em><em>optional</em>) – Metric to use for the distance between points, by default is ‘euclidean’.
-Can be str or sklearn.neighbours.DistanceMetric.</p></li>
+Can be str or sklearn.neighbors.DistanceMetric.</p></li>
 <li><p><strong>threshold</strong> (<em>Number</em><em>, </em><em>optional</em>) – Threshold to use with the Hopkins statistic value to define if H0 is rejected,
 by default is None. If set, it is used instead of the pvalue_threshold.</p></li>
 <li><p><strong>pvalue_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold to use with the p-value to define if H0 is rejected, by default
@@ -252,7 +252,7 @@ pp.213-227. <a class="reference external" href="https://doi.org/10.1093/oxfordjo
 of points in the data set. If n_samples is provided, then it is set to
 min(n, n_samples).</p></li>
 <li><p><strong>metric</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>DistanceMetric</em><em>]</em><em>, </em><em>optional</em>) – Metric to use for the distance between points, by default is ‘euclidean’. Can be
-str or sklearn.neighbours.DistanceMetric.</p></li>
+str or sklearn.neighbors.DistanceMetric.</p></li>
 <li><p><strong>pvalue_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold to use with the p-value to define if H0 is rejected, by default
 is <code class="docutils literal notranslate"><span class="pre">0.05</span></code>.</p></li>
 </ul>
@@ -356,7 +356,8 @@ a custom RipleysKEstimator configuration is needed.</p></li>
 “ripley”. Allowed values are:</p>
 <ol class="arabic">
 <li><p>”ripley”: H0 rejected if <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">&gt;</span> <span class="pre">ripley_factor</span> <span class="pre">*</span> <span class="pre">sqrt(area)</span> <span class="pre">/</span> <span class="pre">n</span></code> where</p>
-<ul>
+<blockquote>
+<div><ul>
 <li><p>area: is the area of the 2D data set taken as a square window.</p></li>
 <li><p>n: is the number of points in the data set.</p></li>
 <li><p>ripley_factor: are the tabulated values calculated by Ripleys <a class="footnote-reference brackets" href="#id12" id="id8">4</a>
@@ -364,6 +365,7 @@ to determine p-value significance. Available Ripleys factors
 are <code class="docutils literal notranslate"><span class="pre">p-value</span> <span class="pre">=</span> <span class="pre">0.05</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">factor</span> <span class="pre">=</span> <span class="pre">1.42</span></code> and
 <code class="docutils literal notranslate"><span class="pre">p-value</span> <span class="pre">=</span> <span class="pre">0.01</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">factor</span> <span class="pre">=</span> <span class="pre">1.68</span></code>.</p></li>
 </ul>
+</div></blockquote>
 </li>
 <li><p>”chiu”: H0 rejected if <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">&gt;</span> <span class="pre">chiu_factor</span> <span class="pre">*</span> <span class="pre">sqrt(area)</span> <span class="pre">/</span> <span class="pre">n</span></code> where:</p>
 <blockquote>
@@ -489,17 +491,13 @@ Paper. Journals of the Royal Statistical Society, B39, 193-195.</p>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>RipleysKTestResult</p>
 </dd>
-</dl>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<dl class="simple">
-<dt>UserWarning</dt><dd><p>Warns if some dataset points are repeated (exactly equal). In that case,
+<dt class="field-even">Warns</dt>
+<dd class="field-even"><p><strong>UserWarning</strong> – Warns if some dataset points are repeated (exactly equal). In that case,
 the RipleysKEstimator will not be able to calculate the L function,
 so repeated points will will be eliminated before the test. Bound to
 change when RipleysKEstimator implementation is changed.</p>
 </dd>
 </dl>
-</div>
 </dd></dl>
 
 </dd></dl>

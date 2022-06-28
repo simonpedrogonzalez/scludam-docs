@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>detection module &mdash; scludam 0.0.3 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="fetcher module" href="scludam.fetcher.html" />
+    <link rel="prev" title="scludam package" href="scludam.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> scludam
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="scludam.html">scludam package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="scludam.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">detection module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html">fetcher module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html">stat_tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html">synthetic module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.html#module-scludam">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="diagrams.html">Diagrams</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">scludam</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">modules</a> &raquo;</li>
+          <li><a href="scludam.html">scludam package</a> &raquo;</li>
+      <li>detection module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/scludam.detection.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-scludam.detection">
+<span id="detection-module"></span><h1>detection module<a class="headerlink" href="#module-scludam.detection" title="Permalink to this heading"></a></h1>
+<p>Module for density peak detection in numerical data.</p>
+<p>This module provides density peak detection over numerical data and helper functions
+for tasks such as defining filtering masks. The main API of
+the module includes <a class="reference internal" href="#scludam.detection.CountPeakDetector" title="scludam.detection.CountPeakDetector"><code class="xref py py-class docutils literal notranslate"><span class="pre">CountPeakDetector</span></code></a>,
+<a class="reference internal" href="#scludam.detection.default_mask" title="scludam.detection.default_mask"><code class="xref py py-func docutils literal notranslate"><span class="pre">default_mask()</span></code></a> and <a class="reference internal" href="#scludam.detection.extend_1dmask" title="scludam.detection.extend_1dmask"><code class="xref py py-func docutils literal notranslate"><span class="pre">extend_1dmask()</span></code></a>,
+which can be direcly imported from <code class="docutils literal notranslate"><span class="pre">scludam</span></code>. Other functions and classes can be
+imported from <code class="docutils literal notranslate"><span class="pre">scludam.detection</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="scludam.detection.default_mask">
+<span class="sig-prename descclassname"><span class="pre">scludam.detection.</span></span><span class="sig-name descname"><span class="pre">default_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/detection.html#default_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.detection.default_mask" title="Permalink to this definition"></a></dt>
+<dd><p>Create a default mean mask for a given dimension.</p>
+<p>It returns a mean weighted mask with 5 elements per dimension,
+to be used as a filter for convolution. The sum of the
+mask weights is equal to 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dim</strong> (<em>int</em>) – Dimension of the mask.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Array with the mask.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NDArray[np.number]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The shape of the mask is chosen so it takes into account
+the values of neighboring bins, but not the value of the bin over
+which the mask is applied. The mask is intended to
+produce a good estimate of the local density of the background
+of the bin over which it is applied. This mask is used in the
+method applied by González-Alejo (2020) <a class="footnote-reference brackets" href="#id2" id="id1">1</a>.</p>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets">1</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id3">2</a>)</span></dt>
+<dd><p>Alejo, A.D., González, J.F., González, S. P. (2020).
+Estudio de membresı́a de cúmulos estelares utilizando Gaia DR2.
+Cuaderno de Resúmenes 62a Reunión Anual Asociación
+Argentina de Astronomía, Rosario, Provincia de Santa Fe, 64.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span> <span class="nn">scludam</span> <span class="kn">import</span> <span class="n">default_mask</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">mask</span> <span class="o">=</span> <span class="n">default_mask</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="linenos">4</span><span class="nb">print</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+<span class="linenos">5</span><span class="c1"># [[0.         0.         0.08333333 0.         0.        ]</span>
+<span class="linenos">6</span><span class="c1">#  [0.         0.08333333 0.08333333 0.08333333 0.        ]</span>
+<span class="linenos">7</span><span class="c1">#  [0.08333333 0.08333333 0.         0.08333333 0.08333333]</span>
+<span class="linenos">8</span><span class="c1">#  [0.         0.08333333 0.08333333 0.08333333 0.        ]</span>
+<span class="linenos">9</span><span class="c1">#  [0.         0.         0.08333333 0.         0.        ]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scludam.detection.fast_std_filter">
+<span class="sig-prename descclassname"><span class="pre">scludam.detection.</span></span><span class="sig-name descname"><span class="pre">fast_std_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">ScalarType</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">ScalarType</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/detection.html#fast_std_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.detection.fast_std_filter" title="Permalink to this definition"></a></dt>
+<dd><p>Fast standard deviation filter.</p>
+<p>To be applied over an image or histogram.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>NDArray</em>) – Image or n-dimensional histogram.</p></li>
+<li><p><strong>mask</strong> (<em>ArrayLike</em>) – Mask to be used for the convolution.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Filtered image or histogram of the same dimensions.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NDArray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Is possible to pass kwargs to the <code class="docutils literal notranslate"><span class="pre">scipy.ndimage.convolve</span></code> function.
+Its default border mode is ‘reflect’.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scludam.detection.get_histogram_bins">
+<span class="sig-prename descclassname"><span class="pre">scludam.detection.</span></span><span class="sig-name descname"><span class="pre">get_histogram_bins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offsets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/detection.html#get_histogram_bins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.detection.get_histogram_bins" title="Permalink to this definition"></a></dt>
+<dd><p>Get histogram bins and edges given a bin shape and data.</p>
+<p>The method takes into account the data max and min values
+for each dimension and the bin shape to calculate the amount
+of bins and the edges to be used of an histogram. Half a bin
+is added to each extremum to avoid bins edges to be exactly
+on the data extremums.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Numeric2DArray</em>) – Data to be used to get the histogram bins.</p></li>
+<li><p><strong>bin_shape</strong> (<em>Numeric1DArrayLike</em>) – Bin shape (each dimension) to be used.</p></li>
+<li><p><strong>offsets</strong> (<em>OptionalNumeric1DArrayLike, optional</em>) – Offsets to be added to the edges, by default None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of bins and edges.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(Numeric1DArray, Numeric2DArray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scludam.detection.histogram">
+<span class="sig-prename descclassname"><span class="pre">scludam.detection.</span></span><span class="sig-name descname"><span class="pre">histogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offsets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/detection.html#histogram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.detection.histogram" title="Permalink to this definition"></a></dt>
+<dd><p>Get a histogram given a bin shape and data.</p>
+<p>Uses <a class="reference internal" href="#scludam.detection.get_histogram_bins" title="scludam.detection.get_histogram_bins"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_histogram_bins()</span></code></a> results
+to create a n-dimensional histogram.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Numeric2DArray</em>) – Data to be used.</p></li>
+<li><p><strong>bin_shape</strong> (<em>Numeric1DArrayLike</em>) – Bin shape (in each dimension) to be used.</p></li>
+<li><p><strong>offsets</strong> (<em>OptionalNumeric1DArrayLike, optional</em>) – Offsets to shift the edges of the histogram, by default None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Histogram and edges.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(NDArray, NDArray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scludam.detection.nyquist_offsets">
+<span class="sig-prename descclassname"><span class="pre">scludam.detection.</span></span><span class="sig-name descname"><span class="pre">nyquist_offsets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/detection.html#nyquist_offsets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.detection.nyquist_offsets" title="Permalink to this definition"></a></dt>
+<dd><p>Get offsets for shifting a histogram.</p>
+<p>Get all possible offsets for a given bin shape, to be used
+to shift the histogram edges following the Nyquist spatial
+sampling interval. The offsets are calculated as the half of the
+bin shape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>bin_shape</strong> (<em>Numeric1DArrayLike</em>) – Bin shape (in each dimension).</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Array of shape (n_combinations, n_dimensions) with the
+possible offsets.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Numeric2DArray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scludam.detection.extend_1dmask">
+<span class="sig-prename descclassname"><span class="pre">scludam.detection.</span></span><span class="sig-name descname"><span class="pre">extend_1dmask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">ScalarType</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/detection.html#extend_1dmask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.detection.extend_1dmask" title="Permalink to this definition"></a></dt>
+<dd><p>Extend a 1-dimensional filtering mask to a n-dimensional mask.</p>
+<p>From a numeric filtering 1D mask, the function uses the
+outer product to
+extend it to a n-dimensional one. The resulting mask is
+the combination of n 1D masks orthogonal to
+each other. The sum of the resulting mask is equal to 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mask</strong> (<em>ArrayLike</em>) – 1D mask to be extended.</p></li>
+<li><p><strong>dim</strong> (<em>int</em>) – Dimension of the mask to be extended to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Extended mask.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NDArray</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="linenos"> 3</span><span class="kn">from</span> <span class="nn">scipy.signal.windows</span> <span class="kn">import</span> <span class="n">gaussian</span> <span class="k">as</span> <span class="n">gaus_win</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="kn">from</span> <span class="nn">scludam</span> <span class="kn">import</span> <span class="n">extend_1dmask</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="n">win</span> <span class="o">=</span> <span class="n">gaus_win</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="linenos"> 8</span><span class="nb">print</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="c1"># [0.13533528 0.60653066 1.         0.60653066 0.13533528]</span>
+<span class="linenos">10</span><span class="n">mask</span> <span class="o">=</span> <span class="n">extend_1dmask</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos">11</span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">12</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="_images/extend_1dmask.png" src="_images/extend_1dmask.png" />
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scludam.detection.DetectionResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scludam.detection.</span></span><span class="sig-name descname"><span class="pre">DetectionResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">centers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigmas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offsets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/detection.html#DetectionResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.detection.DetectionResult" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Result of a detection run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>centers</strong> (<em>Numeric2DArray</em>) – Centers of the detected peaks. Are calculated using
+sigma clipped median over the data delimited by the
+<code class="docutils literal notranslate"><span class="pre">edges</span></code>.</p></li>
+<li><p><strong>edges</strong> (<em>Numeric2DArray</em>) – Edges that delimit the data used to calculate the
+centers. It is taken as a bin shape in each direction,
+in each dimension.</p></li>
+<li><p><strong>scores</strong> (<em>Numeric1DArray</em>) – Scores of the detected peaks. The results are sorted
+by score in descending order.</p></li>
+<li><p><strong>counts</strong> (<em>Numeric1DArray</em>) – Number of data points in the bin that represents the
+peak.</p></li>
+<li><p><strong>sigmas</strong> (<em>Numeric1DArray</em>) – Sigma of the detected peaks. Currently arbitrarily set
+as the bin shape in each dimension.</p></li>
+<li><p><strong>offsets</strong> (<em>Numeric2DArray</em>) – Offsets used for detecting each peak.</p></li>
+<li><p><strong>indices</strong> (<em>Numeric2DArray</em>) – Indices of the detected peaks in the histogram.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scludam.detection.CountPeakDetector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scludam.detection.</span></span><span class="sig-name descname"><span class="pre">CountPeakDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">ScalarType</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nyquist_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Number</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_dif</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Number</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_sigma_dif</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Number</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_num_peaks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_interpeak_dist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_low_density_regions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'std'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offsets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">ScalarType</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#scludam.detection.DetectionResult" title="scludam.detection.DetectionResult"><span class="pre">DetectionResult</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/detection.html#CountPeakDetector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.detection.CountPeakDetector" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Count peak detector class.</p>
+<p>Uses an n-dimensional histogram (array) to detect density
+peaks in the input data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bin_shape</strong> (<em>Numeric1DArrayLike</em>) – Bin shape (in each dimension) to be used to create the histogram.</p></li>
+<li><p><strong>mask</strong> (<em>OptionalArrayLike</em><em>, </em><em>optional</em>) – Mask to be used as in the filtering operations, by default uses
+<a class="reference internal" href="#scludam.detection.default_mask" title="scludam.detection.default_mask"><code class="xref py py-func docutils literal notranslate"><span class="pre">default_mask()</span></code></a> with data dimensions.
+The mask must have same dimensions as the data and its weights
+must sum to 1 and be appropriate for smoothing.</p></li>
+<li><p><strong>nyquist_offsets</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the Nyquist spatial sampling interval is used to shift the
+histogram edges, by default True. It helps to underestimating
+the bin count due to an arbitrarily
+chosen bin edge shift. It uses <a class="reference internal" href="#scludam.detection.nyquist_offsets" title="scludam.detection.nyquist_offsets"><code class="xref py py-func docutils literal notranslate"><span class="pre">nyquist_offsets()</span></code></a>.</p></li>
+<li><p><strong>min_count</strong> (<em>Number</em><em>, </em><em>optional</em>) – Mimimum count for a bin to be elegible as a peak, by default 5. Also used to
+<code class="docutils literal notranslate"><span class="pre">remove_low_density_regions</span></code> if that option is enabled.</p></li>
+<li><p><strong>remove_low_density_regions</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, low density bins are removed from the histogram, by default
+True. It removes low density bins from the edges of the histogram,
+trimming down the region of interest and reducing the size of the
+histogram, which in turn reduces memory usage for sparse data. It uses
+the <code class="docutils literal notranslate"><span class="pre">min_count</span></code> value as the threshold. It also keeps bins that are in the
+neigborhood of a valid (dense) bin so the filtering operation can be applied
+to the remaining bins correctly. The neighborhood is defined by the size of
+the <code class="docutils literal notranslate"><span class="pre">mask</span></code> to be used for the filtering operations.</p></li>
+<li><p><strong>min_dif</strong> (<em>Number</em><em>, </em><em>optional</em>) – Minimum difference between the background and the bin count for a bin to be
+elegible as peak, by default 10. The formula used is:
+<code class="docutils literal notranslate"><span class="pre">elegible</span> <span class="pre">if</span> <span class="pre">histogram</span> <span class="pre">-</span> <span class="pre">background</span> <span class="pre">&gt;</span> <span class="pre">min_dif</span></code> where <code class="docutils literal notranslate"><span class="pre">background</span></code> is
+obtained by using filtering the histogram with the provided <code class="docutils literal notranslate"><span class="pre">mask</span></code>.</p></li>
+<li><p><strong>min_sigma_dif</strong> (<em>Number</em><em>, </em><em>optional</em>) – Sigma value to be used to calculate difference between the background and the
+bin count for a bin to be elegible as peak, by default None (deactivated).
+The formula used is:
+<code class="docutils literal notranslate"><span class="pre">elegible</span> <span class="pre">if</span> <span class="pre">histogram</span> <span class="pre">-</span> <span class="pre">background</span> <span class="pre">&gt;</span> <span class="pre">min_sigma_dif*std</span></code> where <code class="docutils literal notranslate"><span class="pre">background</span></code>
+is obtained by using filtering the histogram with the provided
+<code class="docutils literal notranslate"><span class="pre">mask</span></code>. <code class="docutils literal notranslate"><span class="pre">std</span></code>
+represents the standard deviation in a window surrounding the bin, calculated
+according to the <code class="docutils literal notranslate"><span class="pre">norm_mode</span></code> parameter.</p></li>
+<li><p><strong>min_score</strong> (<em>Number</em><em>, </em><em>optional</em>) – Minimum score for a bin to be elegible as peak, by default 1. The score is
+calculated as the standardized difference between the bin count and the
+background:
+<code class="docutils literal notranslate"><span class="pre">score</span> <span class="pre">=</span> <span class="pre">(histogram</span> <span class="pre">-</span> <span class="pre">background)</span> <span class="pre">/</span> <span class="pre">std</span></code> where <code class="docutils literal notranslate"><span class="pre">background</span></code> is obtained by
+using filtering the histogram with the provided <code class="docutils literal notranslate"><span class="pre">mask</span></code>. <code class="docutils literal notranslate"><span class="pre">std</span></code> is
+calculated according to the <code class="docutils literal notranslate"><span class="pre">norm_mode</span></code> parameter.</p></li>
+<li><p><strong>min_interpeak_distance</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum number of bins between peaks, by default 1.</p></li>
+<li><p><strong>norm_mode</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>Mode to be used to get the standard deviation used in the
+score calculation, by default “std”. Can be one of the following:</p>
+<ol class="arabic">
+<li><p>”std”: Standard deviation of the <code class="docutils literal notranslate"><span class="pre">histogram</span> <span class="pre">-</span> <span class="pre">background</span></code> calculated
+using the <code class="docutils literal notranslate"><span class="pre">mask</span></code> provided and
+<a class="reference internal" href="#scludam.detection.fast_std_filter" title="scludam.detection.fast_std_filter"><code class="xref py py-func docutils literal notranslate"><span class="pre">fast_std_filter()</span></code></a></p></li>
+<li><p>”approx”: Approximation <a class="footnote-reference brackets" href="#id2" id="id3">1</a> to the standard deviation taking into account
+how the <code class="docutils literal notranslate"><span class="pre">sharp</span> <span class="pre">=</span> <span class="pre">histogram</span> <span class="pre">-</span> <span class="pre">background</span></code> is obtained.</p>
+<blockquote>
+<div><ul>
+<li><p>An common estimate of the standard deviation of an histogram
+is the root square of the bin count: <code class="docutils literal notranslate"><span class="pre">std(h)</span> <span class="pre">=</span> <span class="pre">sqrt(h)</span></code>.</p></li>
+<li><p>According to the uncertainty propagation:
+if <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">=</span> <span class="pre">h</span> <span class="pre">-</span> <span class="pre">b</span></code>, then
+<code class="docutils literal notranslate"><span class="pre">std(s)</span> <span class="pre">=</span> <span class="pre">sqrt(var(h)</span> <span class="pre">+</span> <span class="pre">var(b)</span> <span class="pre">-</span> <span class="pre">2*cov(h,b))</span></code>.</p></li>
+<li><p>Considering <code class="docutils literal notranslate"><span class="pre">2*cov(h,b)~0</span></code>, the approximation is:
+<code class="docutils literal notranslate"><span class="pre">std(s)</span> <span class="pre">=</span> <span class="pre">sqrt(h</span> <span class="pre">+</span> <span class="pre">b)</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The algorithm used is based in the following steps:</p>
+<ol class="arabic">
+<li><p>Remove the data corresponding to low density regions from the edges
+to the center, until a dense enough bin is found,
+as described in the <code class="docutils literal notranslate"><span class="pre">remove_low_density_regions</span></code> parameter.</p></li>
+<li><p>Calculate all possible offsets for the histogram edges, using the
+Nyquist spatial sampling interval. The region surveyed is subdivided into
+a rectilinear grid of overlapping hypercubes separated by half the side
+length of an individual bin <a class="footnote-reference brackets" href="#id10" id="id4">2</a> <a class="footnote-reference brackets" href="#id11" id="id5">3</a> <a class="footnote-reference brackets" href="#id12" id="id6">4</a>.</p></li>
+<li><p>Instead of creating one histogram including all possible offsets, which
+can be very large when dimensionality increases, an histogram is created
+for each possible offset. Per histogram, the following steps are preformed:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Estimate the background density, convolving the histogram with the
+provided <code class="docutils literal notranslate"><span class="pre">mask</span></code>, smoothing the histogram over adjacent bins inside
+a window defined by the mask size <a class="footnote-reference brackets" href="#id10" id="id7">2</a> <a class="footnote-reference brackets" href="#id13" id="id8">5</a> <a class="footnote-reference brackets" href="#id14" id="id9">6</a>.</p></li>
+<li><p>Calculate the excess of data points in each bin as the difference
+between the bin count and the background density. This is equivalent
+to applying a high-pass filter to the histogram. It should be noted
+that the excess count using this
+method can be poorly estimated, specially when the bin shape used
+is not appropriate.</p></li>
+<li><p>Calculate the score of each bin as the normalized excess count, using
+the methods described in the <code class="docutils literal notranslate"><span class="pre">norm_mode</span></code> parameter.</p></li>
+<li><p>Apply <code class="docutils literal notranslate"><span class="pre">min_count</span></code>, <code class="docutils literal notranslate"><span class="pre">min_sigma_dif</span></code>, <code class="docutils literal notranslate"><span class="pre">min_dif</span></code> and
+<code class="docutils literal notranslate"><span class="pre">min_interpeak_distance</span></code> constraints and find peaks in the n-dimensional
+score histogram.</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>Take the peaks found in each shifted histogram and merge them into a
+a single list, taking only the higher score shift for each peak. The list
+is sorted in descending order by score.</p></li>
+</ol>
+<p>The fundamental parameter of the method is <code class="docutils literal notranslate"><span class="pre">bin_shape</span></code>.
+In general, the shape must be chosen as the span in each dimension
+of the object to be detected.</p>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id10"><span class="brackets">2</span><span class="fn-backref">(<a href="#id4">1</a>,<a href="#id7">2</a>)</span></dt>
+<dd><p>Schmeja, S. (2011). Identifying star clusters in a field:
+A comparison of different algorithms. Astronomische Nachrichten,
+332, 172-184. doi: 10.1002/asna.201011484</p>
+</dd>
+<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id5">3</a></span></dt>
+<dd><p>Lada, E. A., Lada, C. J. (1995). Near-infrared images of IC
+348 and the luminosity functions of young embedded star clusters.
+The Astrophysical Journal, 109.</p>
+</dd>
+<dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id6">4</a></span></dt>
+<dd><p>Nanda Kumar, M. S., Kamath U. S., and Davis, C. J. (2004). Embedded
+star clusters in the W51 giant molecular cloud. Monthly Notices of the
+Royal Astronomical Society, 353, 1025–1034.
+doi:10.1111/j.1365-2966.2004.08143.x</p>
+</dd>
+<dt class="label" id="id13"><span class="brackets"><a class="fn-backref" href="#id8">5</a></span></dt>
+<dd><p>Lada, E. A., DePoy, D. L., Evans, N. J. y Gatley, I. (1991).
+Micron survey in the LI630 molecular cloud. The Astrophysical Journal,
+371, 171-182.</p>
+</dd>
+<dt class="label" id="id14"><span class="brackets"><a class="fn-backref" href="#id9">6</a></span></dt>
+<dd><p>Karampelas, A., Dapergolas, A., Kontizas, E., Livanou, E., Kontizas,
+M., Bellas-Velidis, I. y Vílchez, J. M. (2009). Star complexes and stellar
+populations in NGC 6822: Comparison with the Magellanic Clouds.
+Astronomy and Astrophysics, 497, 703–711.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos"> 3</span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">multivariate_normal</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="kn">from</span> <span class="nn">scludam</span> <span class="kn">import</span> <span class="n">CountPeakDetector</span>
+<span class="linenos"> 6</span><span class="kn">from</span> <span class="nn">scludam.synthetic</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="linenos"> 7</span>    <span class="n">StarCluster</span><span class="p">,</span>
+<span class="linenos"> 8</span>    <span class="n">StarField</span><span class="p">,</span>
+<span class="linenos"> 9</span>    <span class="n">Synthetic</span><span class="p">,</span>
+<span class="linenos">10</span>    <span class="n">UniformFrustum</span><span class="p">,</span>
+<span class="linenos">11</span>    <span class="n">polar_to_cartesian</span><span class="p">,</span>
+<span class="linenos">12</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="c1"># Generate some data</span>
+<span class="linenos">15</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">134</span><span class="p">)</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="n">field_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e4</span><span class="p">)</span>
+<span class="linenos">18</span><span class="n">cluster_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e2</span><span class="p">)</span>
+<span class="linenos">19</span><span class="n">field</span> <span class="o">=</span> <span class="n">StarField</span><span class="p">(</span>
+<span class="linenos">20</span>    <span class="n">pm</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="n">cov</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">15</span><span class="p">)),</span>
+<span class="linenos">21</span>    <span class="n">space</span><span class="o">=</span><span class="n">UniformFrustum</span><span class="p">(</span><span class="n">locs</span><span class="o">=</span><span class="p">(</span><span class="mf">120.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.5</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">scales</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">11.8</span><span class="p">)),</span>
+<span class="linenos">22</span>    <span class="n">n_stars</span><span class="o">=</span><span class="n">field_size</span><span class="p">,</span>
+<span class="linenos">23</span><span class="p">)</span>
+<span class="linenos">24</span><span class="n">clusters</span> <span class="o">=</span> <span class="p">[</span>
+<span class="linenos">25</span>    <span class="n">StarCluster</span><span class="p">(</span>
+<span class="linenos">26</span>        <span class="n">space</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span>
+<span class="linenos">27</span>            <span class="n">mean</span><span class="o">=</span><span class="n">polar_to_cartesian</span><span class="p">([</span><span class="mf">120.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="linenos">28</span>        <span class="p">),</span>
+<span class="linenos">29</span>        <span class="n">pm</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">cov</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">10</span><span class="p">),</span>
+<span class="linenos">30</span>        <span class="n">n_stars</span><span class="o">=</span><span class="n">cluster_size</span><span class="p">,</span>
+<span class="linenos">31</span>    <span class="p">),</span>
+<span class="linenos">32</span>    <span class="n">StarCluster</span><span class="p">(</span>
+<span class="linenos">33</span>        <span class="n">space</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">polar_to_cartesian</span><span class="p">([</span><span class="mf">120.8</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.6</span><span class="p">,</span> <span class="mi">5</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
+<span class="linenos">34</span>        <span class="n">pm</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">cov</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">10</span><span class="p">),</span>
+<span class="linenos">35</span>        <span class="n">n_stars</span><span class="o">=</span><span class="n">cluster_size</span><span class="p">,</span>
+<span class="linenos">36</span>    <span class="p">),</span>
+<span class="linenos">37</span>    <span class="n">StarCluster</span><span class="p">(</span>
+<span class="linenos">38</span>        <span class="n">space</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">polar_to_cartesian</span><span class="p">([</span><span class="mf">120.9</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
+<span class="linenos">39</span>        <span class="n">pm</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">(</span><span class="mf">7.5</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">cov</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">10</span><span class="p">),</span>
+<span class="linenos">40</span>        <span class="n">n_stars</span><span class="o">=</span><span class="n">cluster_size</span><span class="p">,</span>
+<span class="linenos">41</span>    <span class="p">),</span>
+<span class="linenos">42</span><span class="p">]</span>
+<span class="linenos">43</span><span class="n">df</span> <span class="o">=</span> <span class="n">Synthetic</span><span class="p">(</span><span class="n">star_field</span><span class="o">=</span><span class="n">field</span><span class="p">,</span> <span class="n">clusters</span><span class="o">=</span><span class="n">clusters</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">()</span>
+<span class="linenos">44</span>
+<span class="linenos">45</span><span class="c1"># Select the data to be used for the detection</span>
+<span class="linenos">46</span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;log10_parallax&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span><span class="c1"># Detect density peaks in the data</span>
+<span class="linenos">49</span><span class="n">detector</span> <span class="o">=</span> <span class="n">CountPeakDetector</span><span class="p">(</span><span class="n">bin_shape</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">])</span>
+<span class="linenos">50</span><span class="n">result</span> <span class="o">=</span> <span class="n">detector</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos">51</span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="linenos">52</span><span class="c1"># DetectionResult(</span>
+<span class="linenos">53</span><span class="c1">#     centers=numpy.ndarray([</span>
+<span class="linenos">54</span><span class="c1">#         [4.536048743232476, 3.9186486456763276, 0.6994997601345216],</span>
+<span class="linenos">55</span><span class="c1">#         [7.538194372795517, 6.998371367057486, 0.9020709230859785],</span>
+<span class="linenos">56</span><span class="c1">#         [0.4479574532248377, -0.01917758842077178, -0.3009924913261566]</span>
+<span class="linenos">57</span><span class="c1">#     ]),</span>
+<span class="linenos">58</span><span class="c1">#     sigmas=numpy.ndarray([</span>
+<span class="linenos">59</span><span class="c1">#         [0.5, 0.5, 0.05],</span>
+<span class="linenos">60</span><span class="c1">#         [0.5, 0.5, 0.05],</span>
+<span class="linenos">61</span><span class="c1">#         [0.5, 0.5, 0.05]</span>
+<span class="linenos">62</span><span class="c1">#     ]),</span>
+<span class="linenos">63</span><span class="c1">#     scores=numpy.ndarray([</span>
+<span class="linenos">64</span><span class="c1">#         6.9706701775336,</span>
+<span class="linenos">65</span><span class="c1">#         6.627355856978734,</span>
+<span class="linenos">66</span><span class="c1">#         5.886588680967625</span>
+<span class="linenos">67</span><span class="c1">#     ]),</span>
+<span class="linenos">68</span><span class="c1">#     counts=numpy.ndarray([35.21875, 24.71875, 31.21875]),</span>
+<span class="linenos">69</span><span class="c1">#     edges=numpy.ndarray([</span>
+<span class="linenos">70</span><span class="c1">#         [</span>
+<span class="linenos">71</span><span class="c1">#             [4.016260095931324, 5.016260095931324],</span>
+<span class="linenos">72</span><span class="c1">#             [3.1871460374559666, 4.187146037455967],</span>
+<span class="linenos">73</span><span class="c1">#             [0.6297442445624907, 0.7297442445624908]</span>
+<span class="linenos">74</span><span class="c1">#         ],</span>
+<span class="linenos">75</span><span class="c1">#         [</span>
+<span class="linenos">76</span><span class="c1">#             [6.766260095931324, 7.766260095931324],</span>
+<span class="linenos">77</span><span class="c1">#             [6.437146037455967, 7.437146037455967],</span>
+<span class="linenos">78</span><span class="c1">#             [0.8047442445624906, 0.9047442445624907]</span>
+<span class="linenos">79</span><span class="c1">#         ],</span>
+<span class="linenos">80</span><span class="c1">#         [</span>
+<span class="linenos">81</span><span class="c1">#             [-0.23373990406867584, 0.7662600959313242],</span>
+<span class="linenos">82</span><span class="c1">#             [-0.5628539625440334, 0.4371460374559666],</span>
+<span class="linenos">83</span><span class="c1">#             [-0.37025575543750955, -0.27025575543750957]</span>
+<span class="linenos">84</span><span class="c1">#         ]</span>
+<span class="linenos">85</span><span class="c1">#     ]),</span>
+<span class="linenos">86</span><span class="c1">#     offsets=numpy.ndarray([</span>
+<span class="linenos">87</span><span class="c1">#         [0.0, 0.25, 0.0],</span>
+<span class="linenos">88</span><span class="c1">#         [0.25, 0.0, 0.025],</span>
+<span class="linenos">89</span><span class="c1">#         [0.25, 0.0, 0.0]</span>
+<span class="linenos">90</span><span class="c1">#     ]),</span>
+<span class="linenos">91</span><span class="c1">#     indices=numpy.ndarray([[27, 21, 28], [32, 28, 31], [18, 14, 8]])</span>
+<span class="linenos">92</span><span class="c1"># )</span>
+<span class="linenos">93</span><span class="c1"># Note: the above print is actually made with (https://pypi.org/project/prettyprinter/)</span>
+<span class="linenos">94</span>
+<span class="linenos">95</span><span class="c1"># Plot the third peak found in pmra vs pmdec</span>
+<span class="linenos">96</span><span class="n">detector</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="linenos">97</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="_images/count_peak_detector.png" src="_images/count_peak_detector.png" />
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.detection.CountPeakDetector.detect">
+<span class="sig-name descname"><span class="pre">detect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/detection.html#CountPeakDetector.detect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.detection.CountPeakDetector.detect" title="Permalink to this definition"></a></dt>
+<dd><p>Detect peaks in the provided data.</p>
+<p>Uses the configuration provided in the class attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Numeric2DArray</em>) – Numerical data to be used.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Instance containing the detected peaks.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#scludam.detection.DetectionResult" title="scludam.detection.DetectionResult">DetectionResult</a></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">remove_low_density_regions</span></code> is used and no bin passes
+    the density check, the min_count is probably too low.</p></li>
+<li><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">data</span></code>, <code class="docutils literal notranslate"><span class="pre">bin_shape</span></code> and <code class="docutils literal notranslate"><span class="pre">mask</span></code> dimensions do not match.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Warns</dt>
+<dd class="field-odd"><p><strong>UserWarning</strong> – If histogram has too few bins in some dimension, the
+filtering operations can still be applied but prone to border effects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.detection.CountPeakDetector.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peak</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'c'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cut_label_prec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_label_prec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/detection.html#CountPeakDetector.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.detection.CountPeakDetector.plot" title="Permalink to this definition"></a></dt>
+<dd><p>Create a plot of the individual peaks detected.</p>
+<p>Creates the plot using the result of the last
+<a class="reference internal" href="#scludam.detection.CountPeakDetector.detect" title="scludam.detection.CountPeakDetector.detect"><code class="xref py py-func docutils literal notranslate"><span class="pre">detect()</span></code></a> call.
+Returns a custom seaborn heatmap plot. Passes any kwargs
+to the plot function. The heatmap is a two dimensional
+histogram slice, where x and y can be set, and the rest
+of dimensions are fixed in the peak center.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul>
+<li><p><strong>peak</strong> (<em>int, optional</em>) – Index of the peak to be plotted in the result array,
+by default 0</p></li>
+<li><p><strong>x</strong> (<em>int, optional</em>) – Index of the variable that should be placed as the
+first dimension, by default 0</p></li>
+<li><p><strong>y</strong> (<em>int, optional</em>) – Index of the variable that should be placed as the
+second dimension, by default 1</p></li>
+<li><p><strong>mode</strong> (<em>str, optional</em>) – Histogram type, by default “c”. Can be one of:</p>
+<ol class="arabic simple">
+<li><p>“c”: Counts histogram.</p></li>
+<li><p>“b”: Background histogram.</p></li>
+<li><p>“e”: Excess histogram.</p></li>
+<li><p>“s”: Score histogram.</p></li>
+</ol>
+<p>The meaning of each histogram can be inferred from the
+method explained in
+<a class="reference internal" href="#scludam.detection.CountPeakDetector" title="scludam.detection.CountPeakDetector"><code class="xref py py-class docutils literal notranslate"><span class="pre">CountPeakDetector</span></code></a>.</p>
+</li>
+<li><p><strong>labels</strong> (<em>Union[[List[str]], None], optional</em>) – List of variable names, by default None. If None,
+then the variables are called ‘var1’, ‘var2’, and so on.</p></li>
+<li><p><strong>cut_label_prec</strong> (<em>int, optional</em>) – Decimal places for the cut message in the title, by default 4.</p></li>
+<li><p><strong>center_label_prec</strong> (<em>int, optional</em>) – Decimal places for the center message in the title, by default 4.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Plot of the peak.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>matplotlib.axes._subplots.AxesSubplot</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If no results are available.</p></li>
+<li><p><strong>ValueError</strong> – If no peaks are detected in the last result.</p></li>
+<li><p><strong>ValueError</strong> – Invalid peak index.</p></li>
+<li><p><strong>ValueError</strong> – Invalid mode.</p></li>
+<li><p><strong>ValueError</strong> – Invalid x or y dimensions.</p></li>
+<li><p><strong>ValueError</strong> – Invalid label length.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos"> 3</span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">multivariate_normal</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="kn">from</span> <span class="nn">scludam</span> <span class="kn">import</span> <span class="n">CountPeakDetector</span>
+<span class="linenos"> 6</span><span class="kn">from</span> <span class="nn">scludam.synthetic</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="linenos"> 7</span>    <span class="n">StarCluster</span><span class="p">,</span>
+<span class="linenos"> 8</span>    <span class="n">StarField</span><span class="p">,</span>
+<span class="linenos"> 9</span>    <span class="n">Synthetic</span><span class="p">,</span>
+<span class="linenos">10</span>    <span class="n">UniformFrustum</span><span class="p">,</span>
+<span class="linenos">11</span>    <span class="n">polar_to_cartesian</span><span class="p">,</span>
+<span class="linenos">12</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="c1"># Generate some data</span>
+<span class="linenos">15</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">134</span><span class="p">)</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="n">field_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e4</span><span class="p">)</span>
+<span class="linenos">18</span><span class="n">cluster_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e2</span><span class="p">)</span>
+<span class="linenos">19</span><span class="n">field</span> <span class="o">=</span> <span class="n">StarField</span><span class="p">(</span>
+<span class="linenos">20</span>    <span class="n">pm</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="n">cov</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">15</span><span class="p">)),</span>
+<span class="linenos">21</span>    <span class="n">space</span><span class="o">=</span><span class="n">UniformFrustum</span><span class="p">(</span><span class="n">locs</span><span class="o">=</span><span class="p">(</span><span class="mf">120.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.5</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">scales</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">11.8</span><span class="p">)),</span>
+<span class="linenos">22</span>    <span class="n">n_stars</span><span class="o">=</span><span class="n">field_size</span><span class="p">,</span>
+<span class="linenos">23</span><span class="p">)</span>
+<span class="linenos">24</span><span class="n">clusters</span> <span class="o">=</span> <span class="p">[</span>
+<span class="linenos">25</span>    <span class="n">StarCluster</span><span class="p">(</span>
+<span class="linenos">26</span>        <span class="n">space</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span>
+<span class="linenos">27</span>            <span class="n">mean</span><span class="o">=</span><span class="n">polar_to_cartesian</span><span class="p">([</span><span class="mf">120.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="linenos">28</span>        <span class="p">),</span>
+<span class="linenos">29</span>        <span class="n">pm</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">cov</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">10</span><span class="p">),</span>
+<span class="linenos">30</span>        <span class="n">n_stars</span><span class="o">=</span><span class="n">cluster_size</span><span class="p">,</span>
+<span class="linenos">31</span>    <span class="p">),</span>
+<span class="linenos">32</span>    <span class="n">StarCluster</span><span class="p">(</span>
+<span class="linenos">33</span>        <span class="n">space</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">polar_to_cartesian</span><span class="p">([</span><span class="mf">120.8</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.6</span><span class="p">,</span> <span class="mi">5</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
+<span class="linenos">34</span>        <span class="n">pm</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">cov</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">10</span><span class="p">),</span>
+<span class="linenos">35</span>        <span class="n">n_stars</span><span class="o">=</span><span class="n">cluster_size</span><span class="p">,</span>
+<span class="linenos">36</span>    <span class="p">),</span>
+<span class="linenos">37</span>    <span class="n">StarCluster</span><span class="p">(</span>
+<span class="linenos">38</span>        <span class="n">space</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">polar_to_cartesian</span><span class="p">([</span><span class="mf">120.9</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
+<span class="linenos">39</span>        <span class="n">pm</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">(</span><span class="mf">7.5</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">cov</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">10</span><span class="p">),</span>
+<span class="linenos">40</span>        <span class="n">n_stars</span><span class="o">=</span><span class="n">cluster_size</span><span class="p">,</span>
+<span class="linenos">41</span>    <span class="p">),</span>
+<span class="linenos">42</span><span class="p">]</span>
+<span class="linenos">43</span><span class="n">df</span> <span class="o">=</span> <span class="n">Synthetic</span><span class="p">(</span><span class="n">star_field</span><span class="o">=</span><span class="n">field</span><span class="p">,</span> <span class="n">clusters</span><span class="o">=</span><span class="n">clusters</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">()</span>
+<span class="linenos">44</span>
+<span class="linenos">45</span><span class="c1"># Select the data to be used for the detection</span>
+<span class="linenos">46</span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;log10_parallax&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span><span class="c1"># Detect density peaks in the data</span>
+<span class="linenos">49</span><span class="n">detector</span> <span class="o">=</span> <span class="n">CountPeakDetector</span><span class="p">(</span><span class="n">bin_shape</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">])</span>
+<span class="linenos">50</span><span class="n">result</span> <span class="o">=</span> <span class="n">detector</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos">51</span>
+<span class="linenos">52</span><span class="c1"># Custom plot of third peak scores in pmdec and log10_parallax</span>
+<span class="linenos">53</span><span class="n">detector</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+<span class="linenos">54</span>    <span class="n">peak</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="linenos">55</span>    <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="linenos">56</span>    <span class="n">y</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="linenos">57</span>    <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">,</span>
+<span class="linenos">58</span>    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;log10_parallax&quot;</span><span class="p">],</span>
+<span class="linenos">59</span>    <span class="n">annot_threshold</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+<span class="linenos">60</span>    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;copper&quot;</span><span class="p">,</span>
+<span class="linenos">61</span><span class="p">)</span>
+<span class="linenos">62</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="linenos">63</span><span class="c1"># Custom plot of third peak background in pmra and pmdec</span>
+<span class="linenos">64</span><span class="n">detector</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+<span class="linenos">65</span>    <span class="n">peak</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="linenos">66</span>    <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="linenos">67</span>    <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="linenos">68</span>    <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span>
+<span class="linenos">69</span>    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;log10_parallax&quot;</span><span class="p">],</span>
+<span class="linenos">70</span>    <span class="n">annot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="linenos">71</span>    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;copper&quot;</span><span class="p">,</span>
+<span class="linenos">72</span><span class="p">)</span>
+<span class="linenos">73</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="_images/plot1.png" src="_images/plot1.png" />
+<img alt="_images/plot2.png" src="_images/plot2.png" />
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="scludam.html" class="btn btn-neutral float-left" title="scludam package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scludam.fetcher.html" class="btn btn-neutral float-right" title="fetcher module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Simón Pedro González.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
