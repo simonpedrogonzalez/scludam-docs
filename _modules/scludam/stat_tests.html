@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.stat_tests &mdash; scludam 0.0.2 documentation</title>
+  <title>scludam.stat_tests &mdash; scludam 0.0.3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -37,7 +37,8 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">scludam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../diagrams.html">Diagrams</a></li>
 </ul>
 
@@ -177,7 +178,7 @@
 <span class="sd">        the number of points in the data set, as it is the recommended value.</span>
 <span class="sd">    metric : Union[str, DistanceMetric], optional</span>
 <span class="sd">        Metric to use for the distance between points, by default is &#39;euclidean&#39;.</span>
-<span class="sd">        Can be str or sklearn.neighbours.DistanceMetric.</span>
+<span class="sd">        Can be str or sklearn.neighbors.DistanceMetric.</span>
 <span class="sd">    threshold : Number, optional</span>
 <span class="sd">        Threshold to use with the Hopkins statistic value to define if H0 is rejected,</span>
 <span class="sd">        by default is None. If set, it is used instead of the pvalue_threshold.</span>
@@ -330,7 +331,7 @@
 <span class="sd">        min(n, n_samples).</span>
 <span class="sd">    metric : Union[str, DistanceMetric], optional</span>
 <span class="sd">        Metric to use for the distance between points, by default is &#39;euclidean&#39;. Can be</span>
-<span class="sd">        str or sklearn.neighbours.DistanceMetric.</span>
+<span class="sd">        str or sklearn.neighbors.DistanceMetric.</span>
 <span class="sd">    pvalue_threshold : float, optional</span>
 <span class="sd">        Threshold to use with the p-value to define if H0 is rejected, by default</span>
 <span class="sd">        is ``0.05``.</span>
@@ -443,7 +444,7 @@
 <span class="sd">        The comparison method to use to determine the rejection of H0, by default is</span>
 <span class="sd">        &quot;ripley&quot;. Allowed values are:</span>
 
-<span class="sd">        #.  &quot;ripley&quot;: H0 rejected if ``s &gt; ripley_factor * sqrt(area) / n`` where</span>
+<span class="sd">        #. &quot;ripley&quot;: H0 rejected if ``s &gt; ripley_factor * sqrt(area) / n`` where</span>
 
 <span class="sd">            *   area: is the area of the 2D data set taken as a square window.</span>
 <span class="sd">            *   n: is the number of points in the data set.</span>
@@ -604,8 +605,8 @@
 <span class="sd">            Result of the Ripleys K test.</span>
 
 
-<span class="sd">        Warnings</span>
-<span class="sd">        --------</span>
+<span class="sd">        Warns</span>
+<span class="sd">        -----</span>
 <span class="sd">        UserWarning</span>
 <span class="sd">            Warns if some dataset points are repeated (exactly equal). In that case,</span>
 <span class="sd">            the RipleysKEstimator will not be able to calculate the L function,</span>

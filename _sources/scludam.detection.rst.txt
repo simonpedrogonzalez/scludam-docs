@@ -1,6 +1,6 @@
-synthetic module
+detection module
 ================
 
-.. automodule:: scludam.synthetic
+.. automodule:: scludam.detection
    :members:
    :show-inheritance:

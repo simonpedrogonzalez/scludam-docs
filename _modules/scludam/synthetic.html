@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.synthetic &mdash; scludam 0.0.2 documentation</title>
+  <title>scludam.synthetic &mdash; scludam 0.0.3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -37,7 +37,8 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">scludam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../diagrams.html">Diagrams</a></li>
 </ul>
 
@@ -594,6 +595,10 @@
 <span class="sd">    scales : Vector3</span>
 <span class="sd">        Size of the frustum in (ra, dec, parallax) polar coordinates in ICRS,</span>
 <span class="sd">        in (degree, degree, mas).</span>
+<span class="sd">    max_size_per_iter: int, optional</span>
+<span class="sd">        Maximum number of samples to be generated per iteration, by default</span>
+<span class="sd">        1e7. A bigger value can reduce the amount of time needed to</span>
+<span class="sd">        generate the sample, but take more memory.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -607,6 +612,7 @@
     <span class="n">locs</span><span class="p">:</span> <span class="n">Vector3</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="n">Vector3</span><span class="p">))</span>
     <span class="n">scales</span><span class="p">:</span> <span class="n">Vector3</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="n">Vector3</span><span class="p">))</span>
     <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">max_size_per_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">1e7</span><span class="p">),</span> <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_get_vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">vertices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
@@ -703,10 +709,16 @@
         <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">zmin</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">extremes</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
 
         <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+
+        <span class="n">size_per_iter</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+            <span class="nb">int</span><span class="p">((</span><span class="n">ymax</span> <span class="o">-</span> <span class="n">ymin</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">xmax</span> <span class="o">-</span> <span class="n">xmin</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">zmax</span> <span class="o">-</span> <span class="n">zmin</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_volume</span><span class="p">()</span> <span class="o">*</span> <span class="n">size</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_size_per_iter</span><span class="p">,</span>
+        <span class="p">)</span>
+
         <span class="k">while</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">xmin</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">xmax</span> <span class="o">-</span> <span class="n">xmin</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">ymin</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">ymax</span> <span class="o">-</span> <span class="n">ymin</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
-            <span class="n">z</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">zmin</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">zmax</span> <span class="o">-</span> <span class="n">zmin</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">xmin</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">xmax</span> <span class="o">-</span> <span class="n">xmin</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">size_per_iter</span><span class="p">)</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">ymin</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">ymax</span> <span class="o">-</span> <span class="n">ymin</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">size_per_iter</span><span class="p">)</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">zmin</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">zmax</span> <span class="o">-</span> <span class="n">zmin</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">size_per_iter</span><span class="p">)</span>
             <span class="n">current_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
             <span class="n">current_data</span> <span class="o">=</span> <span class="n">current_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_inside_shape</span><span class="p">(</span><span class="n">current_data</span><span class="p">)]</span>
             <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
