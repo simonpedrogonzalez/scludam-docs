@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>fetcher module &mdash; scludam 0.0.4 documentation</title>
+  <title>scludam.fetcher module &mdash; scludam 0.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="stat_tests module" href="scludam.stat_tests.html" />
-    <link rel="prev" title="detection module" href="scludam.detection.html" /> 
+    <link rel="next" title="scludam.plots module" href="scludam.plots.html" />
+    <link rel="prev" title="scludam.detection module" href="scludam.detection.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -41,13 +41,15 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">modules</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">scludam</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="scludam.html">scludam package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="scludam.html#submodules">Submodules</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html">detection module</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">fetcher module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html">stat_tests module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html">synthetic module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html">scludam.detection module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">scludam.fetcher module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html">scludam.plots module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.shdbscan.html">scludam.shdbscan module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html">scludam.stat_tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html">scludam.synthetic module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="scludam.html#module-scludam">Module contents</a></li>
@@ -72,9 +74,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="modules.html">modules</a> &raquo;</li>
+          <li><a href="modules.html">scludam</a> &raquo;</li>
           <li><a href="scludam.html">scludam package</a> &raquo;</li>
-      <li>fetcher module</li>
+      <li>scludam.fetcher module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/scludam.fetcher.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -85,7 +87,7 @@
            <div itemprop="articleBody">
              
   <section id="module-scludam.fetcher">
-<span id="fetcher-module"></span><h1>fetcher module<a class="headerlink" href="#module-scludam.fetcher" title="Permalink to this heading"></a></h1>
+<span id="scludam-fetcher-module"></span><h1>scludam.fetcher module<a class="headerlink" href="#module-scludam.fetcher" title="Permalink to this heading"></a></h1>
 <p>Module for remote catalog data fetching.</p>
 <p>The module provides functions for searching objects and tables, and to
 fetch the data from the remote catalog. Currently the data fetching
@@ -230,8 +232,8 @@ in the documentation below.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>search_query</strong> (<em>str, optional</em>) – query to match, by default None</p></li>
-<li><p><strong>only_names</strong> (<em>bool, optional</em>) – return only table names and descriptions, by default False</p></li>
+<li><p><strong>search_query</strong> (<em>str, optional</em>) – query to match, by default <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>only_names</strong> (<em>bool, optional</em>) – return only table names and descriptions, by default <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -470,7 +472,7 @@ astroquery.gaia.Gaia.launch_job_async.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dump_to_file</strong> (<em>bool</em>) – If True, results will be stored in file, false by default.</p></li>
+<li><p><strong>dump_to_file</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, results will be stored in file, false by default.</p></li>
 <li><p><strong>output_file</strong> (<em>str</em>) – Name of the output file if dump_to_file is True.</p></li>
 </ul>
 </dd>
@@ -494,7 +496,7 @@ passed through kwargs to astroquery.gaia.Gaia.launch_job_async.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dump_to_file</strong> (<em>bool</em>) – If True, results will be stored in file, false by default.</p></li>
+<li><p><strong>dump_to_file</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, results will be stored in file, false by default.</p></li>
 <li><p><strong>output_file</strong> (<em>str</em>) – Name of the output file if dump_to_file is True.</p></li>
 </ul>
 </dd>
@@ -515,8 +517,8 @@ passed through kwargs to astroquery.gaia.Gaia.launch_job_async.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="scludam.detection.html" class="btn btn-neutral float-left" title="detection module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="scludam.stat_tests.html" class="btn btn-neutral float-right" title="stat_tests module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="scludam.detection.html" class="btn btn-neutral float-left" title="scludam.detection module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scludam.plots.html" class="btn btn-neutral float-right" title="scludam.plots module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

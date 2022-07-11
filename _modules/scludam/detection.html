@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.detection &mdash; scludam 0.0.3 documentation</title>
+  <title>scludam.detection &mdash; scludam 0.1.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -38,7 +38,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">scludam</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../diagrams.html">Diagrams</a></li>
 </ul>
 
@@ -109,7 +109,7 @@
 <span class="kn">from</span> <span class="nn">skimage.feature</span> <span class="kn">import</span> <span class="n">peak_local_max</span>
 
 <span class="kn">from</span> <span class="nn">scludam.masker</span> <span class="kn">import</span> <span class="n">RangeMasker</span>
-<span class="kn">from</span> <span class="nn">scludam.plots</span> <span class="kn">import</span> <span class="n">_heatmap2D</span>
+<span class="kn">from</span> <span class="nn">scludam.plots</span> <span class="kn">import</span> <span class="n">heatmap2D</span>
 <span class="kn">from</span> <span class="nn">scludam.type_utils</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ArrayLike</span><span class="p">,</span>
     <span class="n">Numeric1DArrayLike</span><span class="p">,</span>
@@ -255,7 +255,7 @@
 <span class="sd">    bin_shape : Numeric1DArrayLike</span>
 <span class="sd">        Bin shape (each dimension) to be used.</span>
 <span class="sd">    offsets : OptionalNumeric1DArrayLike, optional</span>
-<span class="sd">        Offsets to be added to the edges, by default None</span>
+<span class="sd">        Offsets to be added to the edges, by default ``None``</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -308,7 +308,7 @@
 <span class="sd">    bin_shape : Numeric1DArrayLike</span>
 <span class="sd">        Bin shape (in each dimension) to be used.</span>
 <span class="sd">    offsets : OptionalNumeric1DArrayLike, optional</span>
-<span class="sd">        Offsets to shift the edges of the histogram, by default None</span>
+<span class="sd">        Offsets to shift the edges of the histogram, by default ``None``</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -480,15 +480,15 @@
 <span class="sd">        The mask must have same dimensions as the data and its weights</span>
 <span class="sd">        must sum to 1 and be appropriate for smoothing.</span>
 <span class="sd">    nyquist_offsets : bool, optional</span>
-<span class="sd">        If True, the Nyquist spatial sampling interval is used to shift the</span>
-<span class="sd">        histogram edges, by default True. It helps to underestimating</span>
+<span class="sd">        If ``True``, the Nyquist spatial sampling interval is used to shift the</span>
+<span class="sd">        histogram edges, by default ``True``. It helps to underestimating</span>
 <span class="sd">        the bin count due to an arbitrarily</span>
 <span class="sd">        chosen bin edge shift. It uses :func:`~scludam.detection.nyquist_offsets`.</span>
 <span class="sd">    min_count: Number, optional</span>
 <span class="sd">        Mimimum count for a bin to be elegible as a peak, by default 5. Also used to</span>
 <span class="sd">        ``remove_low_density_regions`` if that option is enabled.</span>
 <span class="sd">    remove_low_density_regions : bool, optional</span>
-<span class="sd">        If True, low density bins are removed from the histogram, by default</span>
+<span class="sd">        If ``True``, low density bins are removed from the histogram, by default</span>
 <span class="sd">        True. It removes low density bins from the edges of the histogram,</span>
 <span class="sd">        trimming down the region of interest and reducing the size of the</span>
 <span class="sd">        histogram, which in turn reduces memory usage for sparse data. It uses</span>
@@ -503,7 +503,7 @@
 <span class="sd">        obtained by using filtering the histogram with the provided ``mask``.</span>
 <span class="sd">    min_sigma_dif: Number, optional</span>
 <span class="sd">        Sigma value to be used to calculate difference between the background and the</span>
-<span class="sd">        bin count for a bin to be elegible as peak, by default None (deactivated).</span>
+<span class="sd">        bin count for a bin to be elegible as peak, by default ``None`` (deactivated).</span>
 <span class="sd">        The formula used is:</span>
 <span class="sd">        ``elegible if histogram - background &gt; min_sigma_dif*std`` where ``background``</span>
 <span class="sd">        is obtained by using filtering the histogram with the provided</span>
@@ -920,7 +920,7 @@
 <span class="sd">            :class:`~scludam.detection.CountPeakDetector`.</span>
 
 <span class="sd">        labels : Union[[List[str]], None], optional</span>
-<span class="sd">            List of variable names, by default None. If None,</span>
+<span class="sd">            List of variable names, by default ``None``. If ``None``,</span>
 <span class="sd">            then the variables are called &#39;var1&#39;, &#39;var2&#39;, and so on.</span>
 <span class="sd">        cut_label_prec : int, optional</span>
 <span class="sd">            Decimal places for the cut message in the title, by default 4.</span>
@@ -1021,7 +1021,7 @@
         <span class="c1"># get the bin_shape for xy in the correct order</span>
         <span class="n">bin_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bin_shape</span><span class="o">.</span><span class="n">copy</span><span class="p">()[</span><span class="n">xydims</span><span class="p">]</span>
 
-        <span class="n">hm</span> <span class="o">=</span> <span class="n">_heatmap2D</span><span class="p">(</span>
+        <span class="n">hm</span> <span class="o">=</span> <span class="n">heatmap2D</span><span class="p">(</span>
             <span class="n">hist2D</span><span class="o">=</span><span class="n">hist2D</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="n">edges2D</span><span class="p">,</span> <span class="n">bin_shape</span><span class="o">=</span><span class="n">bin_shape</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">pindex2D</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
         <span class="p">)</span>
         <span class="n">hm</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>

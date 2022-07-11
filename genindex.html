@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; scludam 0.0.4 documentation</title>
+  <title>Index &mdash; scludam 0.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -38,7 +38,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">scludam</a></li>
 <li class="toctree-l1"><a class="reference internal" href="diagrams.html">Diagrams</a></li>
 </ul>
 
@@ -79,12 +79,14 @@
  | <a href="#I"><strong>I</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#Q"><strong>Q</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
  
 </div>
@@ -108,6 +110,8 @@
       <li><a href="scludam.synthetic.html#scludam.synthetic.cartesian_to_polar">cartesian_to_polar() (in module scludam.synthetic)</a>
 </li>
       <li><a href="scludam.synthetic.html#scludam.synthetic.EDSD.cdf">cdf() (scludam.synthetic.EDSD method)</a>
+</li>
+      <li><a href="scludam.plots.html#scludam.plots.color_from_proba">color_from_proba() (in module scludam.plots)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -156,6 +160,10 @@
       <li><a href="scludam.detection.html#scludam.detection.fast_std_filter">fast_std_filter() (in module scludam.detection)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN.fit">fit() (scludam.shdbscan.SHDBSCAN method)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="G">G</h2>
@@ -173,6 +181,8 @@
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="scludam.plots.html#scludam.plots.heatmap2D">heatmap2D() (in module scludam.plots)</a>
+</li>
       <li><a href="scludam.detection.html#scludam.detection.histogram">histogram() (in module scludam.detection)</a>
 </li>
   </ul></td>
@@ -209,6 +219,10 @@
 </li>
         <li><a href="scludam.fetcher.html#module-scludam.fetcher">scludam.fetcher</a>
 </li>
+        <li><a href="scludam.plots.html#module-scludam.plots">scludam.plots</a>
+</li>
+        <li><a href="scludam.shdbscan.html#module-scludam.shdbscan">scludam.shdbscan</a>
+</li>
         <li><a href="scludam.stat_tests.html#module-scludam.stat_tests">scludam.stat_tests</a>
 </li>
         <li><a href="scludam.synthetic.html#module-scludam.synthetic">scludam.synthetic</a>
@@ -225,9 +239,21 @@
   </ul></td>
 </tr></table>
 
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN.outlierplot">outlierplot() (scludam.shdbscan.SHDBSCAN method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN.pairplot">pairplot() (scludam.shdbscan.SHDBSCAN method)</a>
+</li>
+      <li><a href="scludam.plots.html#scludam.plots.pairprobaplot">pairprobaplot() (in module scludam.plots)</a>
+</li>
       <li><a href="scludam.synthetic.html#scludam.synthetic.BivariateUniform.pdf">pdf() (scludam.synthetic.BivariateUniform method)</a>
 
       <ul>
@@ -304,6 +330,10 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN.scatter3dplot">scatter3dplot() (scludam.shdbscan.SHDBSCAN method)</a>
+</li>
+      <li><a href="scludam.plots.html#scludam.plots.scatter3dprobaplot">scatter3dprobaplot() (in module scludam.plots)</a>
+</li>
       <li>
     scludam
 
@@ -326,12 +356,28 @@
 </li>
       </ul></li>
       <li>
+    scludam.plots
+
+      <ul>
+        <li><a href="scludam.plots.html#module-scludam.plots">module</a>
+</li>
+      </ul></li>
+      <li>
+    scludam.shdbscan
+
+      <ul>
+        <li><a href="scludam.shdbscan.html#module-scludam.shdbscan">module</a>
+</li>
+      </ul></li>
+      <li>
     scludam.stat_tests
 
       <ul>
         <li><a href="scludam.stat_tests.html#module-scludam.stat_tests">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     scludam.synthetic
 
@@ -339,13 +385,13 @@
         <li><a href="scludam.synthetic.html#module-scludam.synthetic">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="scludam.fetcher.html#scludam.fetcher.search_object">search_object() (in module scludam.fetcher)</a>
 </li>
       <li><a href="scludam.fetcher.html#scludam.fetcher.search_table">search_table() (in module scludam.fetcher)</a>
 </li>
       <li><a href="scludam.fetcher.html#scludam.fetcher.Query.select">select() (scludam.fetcher.Query method)</a>
+</li>
+      <li><a href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN">SHDBSCAN (class in scludam.shdbscan)</a>
 </li>
       <li><a href="scludam.fetcher.html#scludam.fetcher.SimbadResult">SimbadResult (class in scludam.fetcher)</a>
 </li>
@@ -360,6 +406,10 @@
       <li><a href="scludam.synthetic.html#scludam.synthetic.StarField">StarField (class in scludam.synthetic)</a>
 </li>
       <li><a href="scludam.stat_tests.html#scludam.stat_tests.StatTest">StatTest (class in scludam.stat_tests)</a>
+</li>
+      <li><a href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN.surfplot">surfplot() (scludam.shdbscan.SHDBSCAN method)</a>
+</li>
+      <li><a href="scludam.plots.html#scludam.plots.surfprobaplot">surfprobaplot() (in module scludam.plots)</a>
 </li>
       <li><a href="scludam.synthetic.html#scludam.synthetic.Synthetic">Synthetic (class in scludam.synthetic)</a>
 </li>
@@ -389,6 +439,10 @@
 </li>
       <li><a href="scludam.synthetic.html#scludam.synthetic.TrivariateUniform">TrivariateUniform (class in scludam.synthetic)</a>
 </li>
+      <li><a href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN.tsneplot">tsneplot() (scludam.shdbscan.SHDBSCAN method)</a>
+</li>
+      <li><a href="scludam.plots.html#scludam.plots.tsneprobaplot">tsneprobaplot() (in module scludam.plots)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -402,6 +456,14 @@
       <li><a href="scludam.synthetic.html#scludam.synthetic.UniformFrustum">UniformFrustum (class in scludam.synthetic)</a>
 </li>
       <li><a href="scludam.synthetic.html#scludam.synthetic.UniformSphere">UniformSphere (class in scludam.synthetic)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN.validity_index">validity_index() (scludam.shdbscan.SHDBSCAN method)</a>
 </li>
   </ul></td>
 </tr></table>

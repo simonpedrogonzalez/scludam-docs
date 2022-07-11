@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scludam.shdbscan &mdash; scludam 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> scludam
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">scludam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../diagrams.html">Diagrams</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">scludam</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>scludam.shdbscan</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for scludam.shdbscan</h1><div class="highlight"><pre>
+<span></span><span class="c1"># scludam, Star CLUster Detection And Membership estimation package</span>
+<span class="c1"># Copyright (C) 2022  Simón Pedro González</span>
+
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
+
+
+<span class="sd">&quot;&quot;&quot;Module for soft clustering numerical data using the HDBSCAN [1]_, [2]_ method.</span>
+
+<span class="sd">This module provides a wrapper class for HDBSCAN [3]_ that adds some</span>
+<span class="sd">extra functionality:</span>
+
+<span class="sd">*   Calculation of probability-like scores from the soft clustering method.</span>
+<span class="sd">*   Cluster selection based on geometric centers.</span>
+<span class="sd">*   Custom plots to visualize the results.</span>
+
+<span class="sd">References</span>
+<span class="sd">----------</span>
+<span class="sd">.. [1] McInnes, L., Healy, J., Astels, S. (2017). HDBSCAN: Hierarchical</span>
+<span class="sd">    density based clustering. Journal of Open Source Software, 2, 11.</span>
+<span class="sd">.. [2] Campello R.J.G.B., Moulavi D. y Sander J. (2013). Density-Based</span>
+<span class="sd">    Clustering Based on Hierarchical Density Estimates. Advances in</span>
+<span class="sd">    Knowledge Discovery and Data Mining, PAKDD 2013, Lecture Notes</span>
+<span class="sd">    in Computer Science, 7819. doi: 10.1007/978-3-642-37456-2_14</span>
+<span class="sd">.. [3] HDBSCAN: Hierarchical density-based spatial clustering of</span>
+<span class="sd">    applications with noise. https://hdbscan.readthedocs.io/en/latest/</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">permutations</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">astropy.stats.sigma_clipping</span> <span class="kn">import</span> <span class="n">sigma_clipped_stats</span>
+<span class="kn">from</span> <span class="nn">attrs</span> <span class="kn">import</span> <span class="n">define</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">validators</span>
+<span class="kn">from</span> <span class="nn">beartype</span> <span class="kn">import</span> <span class="n">beartype</span>
+<span class="kn">from</span> <span class="nn">hdbscan</span> <span class="kn">import</span> <span class="n">HDBSCAN</span><span class="p">,</span> <span class="n">all_points_membership_vectors</span>
+<span class="kn">from</span> <span class="nn">hdbscan.validity</span> <span class="kn">import</span> <span class="n">validity_index</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">TransformerMixin</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">pairwise_distances</span>
+
+<span class="kn">from</span> <span class="nn">scludam.plots</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">pairprobaplot</span><span class="p">,</span>
+    <span class="n">scatter3dprobaplot</span><span class="p">,</span>
+    <span class="n">surfprobaplot</span><span class="p">,</span>
+    <span class="n">tsneprobaplot</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">scludam.type_utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Numeric1DArray</span><span class="p">,</span>
+    <span class="n">Numeric2DArray</span><span class="p">,</span>
+    <span class="n">Numeric2DArrayLike</span><span class="p">,</span>
+    <span class="n">OptionalNumeric1DArrayLike</span><span class="p">,</span>
+    <span class="n">OptionalNumeric2DArrayLike</span><span class="p">,</span>
+    <span class="n">_type</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">scludam.utils</span> <span class="kn">import</span> <span class="n">one_hot_encode</span>
+
+
+<div class="viewcode-block" id="SHDBSCAN"><a class="viewcode-back" href="../../scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN">[docs]</a><span class="nd">@define</span>
+<span class="k">class</span> <span class="nc">SHDBSCAN</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Soft Hierarchical Density-Based Spatial Clustering of Applications with Noise.</span>
+
+<span class="sd">    Class that wraps the HDBSCAN class to provide soft clustering</span>
+<span class="sd">    calculations, cluster selection and custom plots.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    min_cluster_size : Optional[int]</span>
+<span class="sd">        Minimum size of cluster. Argument passed to HDBSCAN, by default ``None``.</span>
+<span class="sd">        It is mandatory to provide this argument if the ``clusterer`` attribute</span>
+<span class="sd">        is not provided.</span>
+<span class="sd">    allow_single_cluster : bool</span>
+<span class="sd">        Whether to allow single cluster or not, by default ``False``.</span>
+<span class="sd">        Argument passed to HDBSCAN. In case that the data only</span>
+<span class="sd">        contains one cluster and noise, the hierarchical clustering</span>
+<span class="sd">        algorithm will not identify the cluster unless this option</span>
+<span class="sd">        is set to ``True``.</span>
+<span class="sd">    auto_allow_single_cluster : bool</span>
+<span class="sd">        If ``True``, HDBSCAN will automatically toggle ``allow_single_cluster``</span>
+<span class="sd">        to True if no clusters are found, to return at least 1 cluster. By</span>
+<span class="sd">        default ``False``.</span>
+<span class="sd">    min_samples : Optional[int]</span>
+<span class="sd">        Minimum number of samples in a cluster, by default ``None``.</span>
+<span class="sd">        Argument passed to HDBSCAN.</span>
+<span class="sd">    metric : Union[str, Callable]</span>
+<span class="sd">        Metric to be used in HDBSCAN, by default &quot;euclidean&quot;.</span>
+<span class="sd">    noise_proba_mode : str</span>
+<span class="sd">        Method to calculate the noise probability, by default &quot;score&quot;.</span>
+<span class="sd">        Valid options are:</span>
+
+<span class="sd">        *   score: Use only HDBSCAN cluster membership scores to calculate</span>
+<span class="sd">            noise probability, as ``score = 1 - cluster_membership_score``,</span>
+<span class="sd">            where ``cluster_membership_score`` is the HDBSCAN</span>
+<span class="sd">            ``probabilities_`` value, which indicates how tied is</span>
+<span class="sd">            a point to any cluster.</span>
+<span class="sd">        *   outlier: Use ``scores`` as in the &quot;score&quot; option, and ``outlier_scores``</span>
+<span class="sd">            to calculate the noise probability, as</span>
+<span class="sd">            ``noise_proba = max(score, outlier_score)``.</span>
+<span class="sd">            Outlier scores are calculated by HDBSCAN using the GLOSH [4]_ algorithm.</span>
+<span class="sd">        *   conservative: Same method as the &quot;outlier&quot; option but does not</span>
+<span class="sd">            allow for any point classified as noise to</span>
+<span class="sd">            have a ``noise_proba`` lower than 1.</span>
+
+<span class="sd">    cluster_proba_mode : str</span>
+<span class="sd">        Method to calculate the cluster probability, by default &quot;soft&quot;.</span>
+<span class="sd">        Valid options are:</span>
+
+<span class="sd">        *   soft: Use the HDBSCAN ``all_points_membership_vectors`` to calculate</span>
+<span class="sd">            cluster probability, allowing for a point to be a member of multiple</span>
+<span class="sd">            clusters.</span>
+<span class="sd">        *   hard: Does not allow for a point to be a member of multiple clusters.</span>
+<span class="sd">            A point can be considered noise or member of only one cluster.</span>
+
+<span class="sd">    outlier_quantile : Optional[float]</span>
+<span class="sd">        Quantile of outlier scores to be used as a threshold that defines a point</span>
+<span class="sd">        as outlier, classified as noise, by default ``None``.</span>
+<span class="sd">        It must be a value between 0 and 1. If provided,</span>
+<span class="sd">        ``noise_proba_mode`` is set to &quot;outlier&quot;.</span>
+<span class="sd">        It scales HDBSCAN outlier scores so</span>
+<span class="sd">        any point with an outlier score higher</span>
+<span class="sd">        than the value of the provided quantile will</span>
+<span class="sd">        be considered as noise.</span>
+
+<span class="sd">    scaler : Optional[sklearn.base.TransformerMixin]</span>
+<span class="sd">        Scaler to be used to scale the data before clustering, by default ``None``.</span>
+
+<span class="sd">    clusterer : Optional[hdbscan.HDBSCAN [3]_]</span>
+<span class="sd">        HDBSCAN clusterer to be used, by default ``None``. Used if more control is needed</span>
+<span class="sd">        over the clustering algorithm. It is mandatory to provide this argument if</span>
+<span class="sd">        the ``min_cluster_size`` attribute is not provided.</span>
+
+<span class="sd">    n_classes : int</span>
+<span class="sd">        Number of detected classes in the data sample. Only available after the</span>
+<span class="sd">        :func:`~scludam.shdbscan.SHDBSCAN.fit` method is called.</span>
+<span class="sd">    labels : Numeric1DArray</span>
+<span class="sd">        Labels of the data sample. Only available after the</span>
+<span class="sd">        :func:`~scludam.shdbscan.SHDBSCAN.fit` method is called. Noise</span>
+<span class="sd">        points are labeled as -1, and the rest of the points are labeled</span>
+<span class="sd">        with the cluster index.</span>
+<span class="sd">    proba : Numeric2DArray</span>
+<span class="sd">        Probability of each point to belog to each class, including.</span>
+<span class="sd">        Only available after the</span>
+<span class="sd">        :func:`~scludam.shdbscan.SHDBSCAN.fit` method is called. Array of shape</span>
+<span class="sd">        ``(n_samples, n_classes)``. The first column corresponds to the noise class.</span>
+<span class="sd">    outlier_scores : Numeric1DArray</span>
+<span class="sd">        Outlier scores of each point. Only available after the</span>
+<span class="sd">        :func:`~scludam.shdbscan.SHDBSCAN.fit` method is called.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If the ``min_cluster_size`` nor the ``clusterer`` attributes are provided.</span>
+
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    .. literalinclude:: ../../examples/shdbscan/shdbscan.py</span>
+<span class="sd">        :language: python</span>
+<span class="sd">        :linenos:</span>
+<span class="sd">    .. image:: ../../examples/shdbscan/shdbscan_pairplot.png</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    .. [4] https://hdbscan.readthedocs.io/en/latest/outlier_detection.html?highlight=glosh#outlier-detection</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+
+    <span class="c1"># input attrs</span>
+    <span class="n">min_cluster_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="n">auto_allow_single_cluster</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="nb">bool</span><span class="p">))</span>
+    <span class="n">allow_single_cluster</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="nb">bool</span><span class="p">))</span>
+    <span class="n">min_samples</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]))</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">)</span>
+    <span class="n">noise_proba_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;score&quot;</span><span class="p">,</span>
+        <span class="n">validator</span><span class="o">=</span><span class="p">[</span><span class="n">_type</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span> <span class="n">validators</span><span class="o">.</span><span class="n">in_</span><span class="p">([</span><span class="s2">&quot;score&quot;</span><span class="p">,</span> <span class="s2">&quot;outlier&quot;</span><span class="p">,</span> <span class="s2">&quot;conservative&quot;</span><span class="p">])],</span>
+    <span class="p">)</span>
+    <span class="n">cluster_proba_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;soft&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">[</span><span class="n">_type</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span> <span class="n">validators</span><span class="o">.</span><span class="n">in_</span><span class="p">([</span><span class="s2">&quot;soft&quot;</span><span class="p">,</span> <span class="s2">&quot;hard&quot;</span><span class="p">])]</span>
+    <span class="p">)</span>
+    <span class="n">outlier_quantile</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">validator</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">_type</span><span class="p">(</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]),</span>
+            <span class="n">validators</span><span class="o">.</span><span class="n">optional</span><span class="p">([</span><span class="n">validators</span><span class="o">.</span><span class="n">ge</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">validators</span><span class="o">.</span><span class="n">le</span><span class="p">(</span><span class="mi">1</span><span class="p">)]),</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">scaler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TransformerMixin</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="n">Optional</span><span class="p">[</span><span class="n">TransformerMixin</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="n">clusterer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">HDBSCAN</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="n">Optional</span><span class="p">[</span><span class="n">HDBSCAN</span><span class="p">])</span>
+    <span class="p">)</span>
+
+    <span class="c1"># internal attrs</span>
+    <span class="n">_data</span><span class="p">:</span> <span class="n">Numeric2DArray</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_centers_provided</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">_centers</span><span class="p">:</span> <span class="n">OptionalNumeric2DArrayLike</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_d</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_unique_labels</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># output attrs</span>
+    <span class="n">n_classes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">proba</span><span class="p">:</span> <span class="n">Numeric2DArray</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">labels</span><span class="p">:</span> <span class="n">Numeric1DArray</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">outlier_scores</span><span class="p">:</span> <span class="n">Numeric1DArray</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@min_cluster_size</span><span class="o">.</span><span class="n">validator</span>
+    <span class="k">def</span> <span class="nf">_min_cluster_size_validator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Either min_cluster_size or clusterer must be provided.&quot;</span>
+                <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;min_cluster_size must be greater than 1.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_centers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_allow_single_cluster</span><span class="p">:</span>
+            <span class="n">allow_single_cluster</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">allow_single_cluster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">allow_single_cluster</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">min_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_cluster_size</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">min_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_samples</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span> <span class="o">=</span> <span class="n">HDBSCAN</span><span class="p">(</span>
+                <span class="n">min_samples</span><span class="o">=</span><span class="n">min_samples</span><span class="p">,</span>
+                <span class="n">min_cluster_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_cluster_size</span><span class="p">,</span>
+                <span class="n">allow_single_cluster</span><span class="o">=</span><span class="n">allow_single_cluster</span><span class="p">,</span>
+                <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span>
+                <span class="n">prediction_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">allow_single_cluster</span> <span class="o">=</span> <span class="n">allow_single_cluster</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">prediction_data</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="n">unique_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">labels_</span><span class="p">))</span>
+
+        <span class="c1"># if no clusters found &amp; auto_toggle_single_cluster &amp; not allow_single_cluster</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">unique_labels</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_allow_single_cluster</span><span class="p">:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span> <span class="o">=</span> <span class="n">HDBSCAN</span><span class="p">(</span>
+                <span class="n">min_samples</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">min_samples</span><span class="p">,</span>
+                <span class="n">min_cluster_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">min_cluster_size</span><span class="p">,</span>
+                <span class="n">allow_single_cluster</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span>
+                <span class="n">prediction_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span>
+
+    <span class="c1"># get the most &quot;conservative&quot; cluster probabilities</span>
+    <span class="c1"># accounting for outlier scores and labeling given</span>
+    <span class="c1"># by the clusterer</span>
+    <span class="k">def</span> <span class="nf">_get_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># Outlier score is an implementation of GLOSH, it catches local outliers as</span>
+        <span class="c1"># well as just points that are far away from everything.</span>
+        <span class="c1"># Thus a point can be &quot;in&quot;</span>
+        <span class="c1"># a cluster, and have a label, but be sufficiently far from an</span>
+        <span class="c1"># otherwise very</span>
+        <span class="c1"># dense core that is is anomalous in that local region of space</span>
+        <span class="c1"># (i.e. it is weird</span>
+        <span class="c1"># to have a point there when almost everything else is far more</span>
+        <span class="c1"># tightly grouped).</span>
+
+        <span class="c1"># The probabilties are slightly misnamed. It is essentially a</span>
+        <span class="c1"># &quot;cluster membership score&quot;</span>
+        <span class="c1"># that is, if the point is in a cluster how relatively well tied to the</span>
+        <span class="c1"># cluster is it?</span>
+        <span class="c1"># It is effectively the ratio of the distance scale at which this point</span>
+        <span class="c1"># fell out of the cluster</span>
+        <span class="c1"># with the distance scale of the core of the cluster.</span>
+
+        <span class="c1"># Any noise points are assigned a probability 0 as it is the</span>
+        <span class="c1"># &quot;membership score&quot;</span>
+        <span class="c1"># for the cluster that they are a member of, and noise points are not</span>
+        <span class="c1"># a member of any cluster.</span>
+
+        <span class="c1"># https://github.com/scikit-learn-contrib/hdbscan/issues/80</span>
+
+        <span class="n">one_hot_code</span> <span class="o">=</span> <span class="n">one_hot_encode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">labels_</span><span class="p">)</span>
+        <span class="c1"># in case no noise points are found, add a column of zeros for noise</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_unique_labels</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">one_hot_code</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">one_hot_code</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">one_hot_code</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="n">n</span><span class="p">,</span> <span class="n">n_classes</span> <span class="o">=</span> <span class="n">one_hot_code</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">n_clusters</span> <span class="o">=</span> <span class="n">n_classes</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="c1"># get sanitized outlier scores</span>
+        <span class="n">outlier_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">outlier_scores_</span><span class="p">)</span>
+        <span class="n">outlier_scores</span><span class="p">[</span><span class="n">outlier_scores</span> <span class="o">==</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">outlier_scores</span><span class="p">[</span><span class="n">outlier_scores</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># if quantile is used, set mode to &quot;outlier&quot; and</span>
+        <span class="c1"># scale the outlier scores considering that</span>
+        <span class="c1"># scores &gt; quantile(scores, q) are outliers, so</span>
+        <span class="c1"># new score is 1 for them, and the others get</span>
+        <span class="c1"># rescaled with max = quantile(scores, q) and min = 0</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outlier_quantile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># self.outlier_quantile is a float between 0 and 1</span>
+            <span class="c1"># self.outlier_quantile = 0 == self.outlier_quantile = None</span>
+            <span class="c1"># use quantile to determine scale outlier score</span>
+            <span class="c1"># if we consider outlier for score &gt; quantile</span>
+            <span class="c1"># then we scale de outlier score with that threshold</span>
+            <span class="c1"># as being the defining point when p(outlier) = 1</span>
+            <span class="n">top</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">outlier_scores</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outlier_quantile</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">top</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;outlier_quantile selected is too low, the value for it is 0.&quot;</span>
+                <span class="p">)</span>
+            <span class="n">outlier_scores</span><span class="p">[</span><span class="n">outlier_scores</span> <span class="o">&gt;</span> <span class="n">top</span><span class="p">]</span> <span class="o">=</span> <span class="n">top</span>
+            <span class="n">outlier_scores</span> <span class="o">/=</span> <span class="n">top</span>
+            <span class="c1"># last line is equivalent to</span>
+            <span class="c1"># outlier_scores = (</span>
+            <span class="c1">#     MinMaxScaler().fit_transform(outlier_scores.reshape(-1, 1)).ravel()</span>
+            <span class="c1"># )</span>
+            <span class="c1"># considering that we want data in 0,1 interval and that</span>
+            <span class="c1"># we want to use 0 as min, instead of outlier_scores.min()</span>
+            <span class="c1"># as the inf limit for outlier_scores should be fixed in 0</span>
+            <span class="c1"># no mather the values of the outlier_scores.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">noise_proba_mode</span> <span class="o">=</span> <span class="s2">&quot;outlier&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">outlier_scores</span> <span class="o">=</span> <span class="n">outlier_scores</span>
+        <span class="n">noise_score_arrays</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">probabilities_</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_proba_mode</span> <span class="o">==</span> <span class="s2">&quot;outlier&quot;</span><span class="p">:</span>
+            <span class="c1"># take into account outlier_scores as indicative</span>
+            <span class="c1"># of noise</span>
+            <span class="n">noise_score_arrays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">outlier_scores</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_proba_mode</span> <span class="o">==</span> <span class="s2">&quot;conservative&quot;</span><span class="p">:</span>
+            <span class="c1"># take into account labels</span>
+            <span class="c1"># so no point classified as noise can</span>
+            <span class="c1"># have any cluster probability</span>
+            <span class="n">noise_score_arrays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">one_hot_code</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">noise_proba</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">noise_score_arrays</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># array with the repeated sum of cluster proba to multiply</span>
+        <span class="n">cluster_proba_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">noise_proba</span><span class="p">),</span> <span class="p">(</span><span class="n">n_clusters</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">allow_single_cluster</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cluster_proba_mode</span> <span class="o">==</span> <span class="s2">&quot;soft&quot;</span>
+        <span class="p">):</span>
+            <span class="c1"># can calculate membership vectors and soft mode selected</span>
+            <span class="n">membership</span> <span class="o">=</span> <span class="n">all_points_membership_vectors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="p">)</span>
+            <span class="c1"># calculate membership only considering clusters, no noise</span>
+            <span class="n">only_cluster_membership</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">membership</span><span class="p">)</span>
+            <span class="n">non_zero_cluster_mem</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">probabilities_</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">only_cluster_membership</span><span class="p">[</span><span class="n">non_zero_cluster_mem</span><span class="p">]</span> <span class="o">=</span> <span class="n">membership</span><span class="p">[</span>
+                <span class="n">non_zero_cluster_mem</span>
+            <span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">probabilities_</span><span class="p">[</span><span class="n">non_zero_cluster_mem</span><span class="p">][</span>
+                <span class="p">:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span>
+            <span class="p">]</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span>
+                <span class="n">n_clusters</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+            <span class="p">)</span>
+            <span class="c1"># scale membership taking noise into account so noise + cluster = 1</span>
+            <span class="c1"># if noise_proba = 1 - probabilities_ (mode=score)</span>
+            <span class="c1"># then this is not necessary but the result is nevertheless correct.</span>
+            <span class="n">cluster_proba</span> <span class="o">=</span> <span class="n">only_cluster_membership</span> <span class="o">*</span> <span class="n">cluster_proba_sum</span>
+
+            <span class="c1"># check for the possible errors in membership vector</span>
+            <span class="c1"># and fix them. This error should not happen often</span>
+            <span class="c1"># but can happen.</span>
+            <span class="c1"># This part of the code can be removed when hdbscan is fixed</span>
+            <span class="c1"># https://github.com/scikit-learn-contrib/hdbscan/issues/246</span>
+            <span class="c1"># the probability diff is absorbed by the cluster_proba</span>
+            <span class="c1"># because the origin of the error is in the cluster membership</span>
+            <span class="n">has_error</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">noise_proba</span> <span class="o">+</span> <span class="n">cluster_proba</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">has_error</span><span class="p">):</span>
+                <span class="n">diff</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span>
+                    <span class="n">noise_proba</span><span class="p">[</span><span class="n">has_error</span><span class="p">]</span> <span class="o">+</span> <span class="n">cluster_proba</span><span class="p">[</span><span class="n">has_error</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">diff_per_cluster</span> <span class="o">=</span> <span class="n">diff</span> <span class="o">/</span> <span class="n">n_clusters</span>
+                <span class="n">cluster_proba</span><span class="p">[</span><span class="n">has_error</span><span class="p">]</span> <span class="o">+=</span> <span class="n">diff_per_cluster</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># can&#39;t calculate membership vectors, or hard mode selected</span>
+            <span class="c1"># in this mode, no point can have a mixture of cluster proba</span>
+            <span class="c1"># so it is classifying the points as either one cluster</span>
+            <span class="c1"># or another.</span>
+            <span class="n">cluster_proba</span> <span class="o">=</span> <span class="n">one_hot_code</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">*</span> <span class="n">cluster_proba_sum</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cluster_proba</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">cluster_proba</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">cluster_proba</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="n">proba</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">))</span>
+        <span class="n">proba</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">noise_proba</span>
+        <span class="n">proba</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">cluster_proba</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">proba</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">proba</span>
+
+    <span class="k">def</span> <span class="nf">_center_based_cluster_selection</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span>
+        <span class="n">labels</span><span class="p">:</span> <span class="n">Numeric1DArray</span><span class="p">,</span>
+        <span class="n">input_centers</span><span class="p">:</span> <span class="n">Numeric2DArrayLike</span><span class="p">,</span>
+    <span class="p">):</span>
+
+        <span class="c1"># compares input cluster centers with obtained cluster centers</span>
+        <span class="c1"># if input cluster centers are less than obtained, then select</span>
+        <span class="c1"># onbtained clusters that match input centers the best</span>
+
+        <span class="n">cluster_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unique_labels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_unique_labels</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">cluster_centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">[</span>
+                    <span class="n">sigma_clipped_stats</span><span class="p">(</span>
+                        <span class="n">data</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="n">label</span><span class="p">][:,</span> <span class="n">i</span><span class="p">],</span>
+                        <span class="n">cenfunc</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">,</span>
+                        <span class="n">stdfunc</span><span class="o">=</span><span class="s2">&quot;mad_std&quot;</span><span class="p">,</span>
+                        <span class="n">maxiters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">)</span>
+                <span class="p">]</span>
+                <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">cluster_labels</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="c1"># there are obtained clusters to label as noise</span>
+        <span class="c1"># we should select those that match input centers the best</span>
+
+        <span class="n">short</span> <span class="o">=</span> <span class="n">input_centers</span>
+        <span class="n">long</span> <span class="o">=</span> <span class="n">cluster_centers</span>
+
+        <span class="n">center_distances</span> <span class="o">=</span> <span class="n">pairwise_distances</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">short</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="n">long</span><span class="p">)</span>
+        <span class="n">idx_columns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="nb">list</span><span class="p">(</span><span class="n">permutations</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">long</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">short</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="p">)</span>
+        <span class="n">idx_rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">short</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">short</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">distance_sum_per_solution</span> <span class="o">=</span> <span class="n">center_distances</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dist_idcs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+                    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+                        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">idx_rows</span><span class="p">,</span> <span class="p">(</span><span class="n">idx_columns</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">idx_columns</span><span class="p">),</span>
+                        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">distance_sum_per_solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">center_distances</span><span class="p">[</span><span class="n">dist_idcs</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dist_idcs</span><span class="p">))]</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">best_solution</span> <span class="o">=</span> <span class="n">idx_columns</span><span class="p">[</span>
+            <span class="n">distance_sum_per_solution</span> <span class="o">==</span> <span class="n">distance_sum_per_solution</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+        <span class="c1"># lets delete some clusters</span>
+        <span class="c1"># shot is self.class_centers</span>
+        <span class="c1"># long is class_centers</span>
+        <span class="c1"># labels are in class_centers order</span>
+        <span class="c1"># i need to keep labels that are in best_solution</span>
+        <span class="c1"># the rest should be noise</span>
+
+        <span class="n">new_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+        <span class="n">new_labels</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">best_solution</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="n">posteriors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_proba</span><span class="p">()</span>
+
+        <span class="n">noise_proba</span> <span class="o">=</span> <span class="n">posteriors</span><span class="p">[</span>
+            <span class="p">:,</span>
+            <span class="nb">tuple</span><span class="p">(</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="o">+</span> <span class="nb">list</span><span class="p">((</span><span class="n">cluster_labels</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">cluster_labels</span><span class="p">,</span> <span class="n">best_solution</span><span class="p">)])</span>
+            <span class="p">),</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">cluster_proba</span> <span class="o">=</span> <span class="n">posteriors</span><span class="p">[</span>
+            <span class="p">:,</span> <span class="nb">tuple</span><span class="p">((</span><span class="n">cluster_labels</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">cluster_labels</span><span class="p">,</span> <span class="n">best_solution</span><span class="p">)])</span>
+        <span class="p">]</span>
+
+        <span class="n">new_n_classes</span> <span class="o">=</span> <span class="n">short</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="c1"># create new posteriors array</span>
+        <span class="n">new_posteriors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">,</span> <span class="n">new_n_classes</span><span class="p">))</span>
+        <span class="n">new_posteriors</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">noise_proba</span>
+        <span class="n">new_posteriors</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">cluster_proba</span>
+
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">new_posteriors</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># reorder kept labels</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">best_solution</span><span class="p">):</span>
+            <span class="n">new_labels</span><span class="p">[</span><span class="n">new_labels</span> <span class="o">==</span> <span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+
+        <span class="k">return</span> <span class="n">new_labels</span><span class="p">,</span> <span class="n">new_posteriors</span>
+
+    <span class="k">def</span> <span class="nf">_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="n">centers</span><span class="p">:</span> <span class="n">OptionalNumeric2DArrayLike</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_centers_provided</span><span class="p">:</span>
+            <span class="n">centers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">centers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">centers</span>
+
+<div class="viewcode-block" id="SHDBSCAN.fit"><a class="viewcode-back" href="../../scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN.fit">[docs]</a>    <span class="nd">@beartype</span>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span>
+        <span class="n">centers</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">OptionalNumeric2DArrayLike</span><span class="p">,</span> <span class="n">OptionalNumeric1DArrayLike</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit the clusterer to the data.</span>
+
+<span class="sd">        It uses the provided configuration to identify clusters,</span>
+<span class="sd">        classify the data and provide membership probabilities. The results</span>
+<span class="sd">        are stored in the :class:`~scludam.shdbscan.SHDBSCAN` instance. The</span>
+<span class="sd">        attributes storing results are :attr:`~scludam.shdbscan.SHDBSCAN.n_classes`,</span>
+<span class="sd">        :attr:`~scludam.shdbscan.SHDBSCAN.labels`,</span>
+<span class="sd">        :attr:`~scludam.shdbscan.SHDBSCAN.proba` and</span>
+<span class="sd">        :attr:`~scludam.shdbscan.SHDBSCAN.outlier_scores`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : Numeric2DArray</span>
+<span class="sd">            Data to be clustered.</span>
+<span class="sd">        centers : Union[Numeric2DArrayLike, Numeric1DArrayLike], optional</span>
+<span class="sd">            Center or array of centers of clusters, by default ``None``.</span>
+<span class="sd">            If provided,</span>
+<span class="sd">            only the clusters that are geometrically closer to the</span>
+<span class="sd">            provided centers will be considered. This option is useful for</span>
+<span class="sd">            ignoring clusters in a multiple cluster scenario.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        SHDBSCAN</span>
+<span class="sd">            Fitted instance of the :class:`~scludam.shdbscan.SHDBSCAN` class.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the dimensions of the centers array do not match the dimensions</span>
+<span class="sd">            of the data array.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">centers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">centers</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_centers_provided</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;Provided centers have different number of dimensions than data&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_centers_provided</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_centers_provided</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaler</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_centers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_centers</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cluster</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">labels_</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_unique_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unique_labels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># case only noise or only 1 cluster with no noise</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">proba</span> <span class="o">=</span> <span class="n">one_hot_encode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="n">n_clusters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unique_labels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_unique_labels</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># case cluster selection required</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">allow_single_cluster</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_centers_provided</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">n_clusters</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proba</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_center_based_cluster_selection</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_centers</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">proba</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_proba</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proba</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_unique_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unique_labels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_unique_labels</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="c1"># noise label should always be present even if there is no noise</span>
+            <span class="c1"># because probability column is included</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_unique_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_unique_labels</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="k">def</span> <span class="nf">_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">proba</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">outlier_scores</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="SHDBSCAN.validity_index"><a class="viewcode-back" href="../../scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN.validity_index">[docs]</a>    <span class="k">def</span> <span class="nf">validity_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute the validity index of the clustering.</span>
+
+<span class="sd">        Calculates HDBSCAN density validity index [5]_ for the</span>
+<span class="sd">        labels obtained from the clustering. ``kwargs`` are passed to</span>
+<span class="sd">        the HDBSCAN ``validity_index`` method.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Density based cluster validity index between -1 and 1. A</span>
+<span class="sd">            higher value means a better clustering.</span>
+<span class="sd">        Numeric1DArray</span>
+<span class="sd">            Array of cluster validity indices for each cluster, only if</span>
+<span class="sd">            ``per_cluster_scores`` kwarg is set to True.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        Exception</span>
+<span class="sd">            If the clustering has not been performed yet.</span>
+
+<span class="sd">        References</span>
+<span class="sd">        ----------</span>
+<span class="sd">        .. [5] https://hdbscan.readthedocs.io/en/latest/api.html?highlight=validity_index#hdbscan.validity.validity_index</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Clusterer not fitted. Try excecuting fit function first.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">validity_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SHDBSCAN.pairplot"><a class="viewcode-back" href="../../scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN.pairplot">[docs]</a>    <span class="k">def</span> <span class="nf">pairplot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot the clustering results in a pairplot.</span>
+
+<span class="sd">        It uses the :func:`~scludam.plots.pairprobaplot`. The colors</span>
+<span class="sd">        of the points represent class labels. The sizes</span>
+<span class="sd">        of the points reresent the probability of belonging to</span>
+<span class="sd">        the most probable class.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        seaborn.PairGrid</span>
+<span class="sd">            Pairplot of the clustering results.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        Exception</span>
+<span class="sd">            If the clustering has not been performed yet.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Clusterer not fitted. Try excecuting fit function first.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pairprobaplot</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="n">proba</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">proba</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SHDBSCAN.tsneplot"><a class="viewcode-back" href="../../scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN.tsneplot">[docs]</a>    <span class="k">def</span> <span class="nf">tsneplot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot the clustering results in a t-SNE plot.</span>
+
+<span class="sd">        It uses the :func:`~scludam.plots.tsneprobaplot` function.</span>
+<span class="sd">        It represents the data in a 2 dimensional space using t-SNE.</span>
+<span class="sd">        The colors of the points represent class labels.</span>
+<span class="sd">        The sizes of the points represent the probability of belonging</span>
+<span class="sd">        to the most probable class.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        matplotlib.axes.Axes</span>
+<span class="sd">            Plot of the clustering results.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        Exception</span>
+<span class="sd">            If the clustering has not been performed yet.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Clusterer not fitted. Try excecuting fit function first.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tsneprobaplot</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="n">proba</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">proba</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SHDBSCAN.scatter3dplot"><a class="viewcode-back" href="../../scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN.scatter3dplot">[docs]</a>    <span class="k">def</span> <span class="nf">scatter3dplot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot the clustering results in a 3D scatter plot.</span>
+
+<span class="sd">        It uses the :func:`~scludam.plots.scatter3dprobaplot` function.</span>
+<span class="sd">        It represents the data in a 3 dimensional space using the</span>
+<span class="sd">        variables given by the user. The colors of the points</span>
+<span class="sd">        represent class labels. The sizes of the points represent</span>
+<span class="sd">        the probability of belonging to the most probable class.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        matplotlib.collections.PathCollection</span>
+<span class="sd">            Plot of the clustering results.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        Exception</span>
+<span class="sd">            If the clustering has not been performed yet.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Clusterer not fitted. Try excecuting fit function first.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">scatter3dprobaplot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proba</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SHDBSCAN.surfplot"><a class="viewcode-back" href="../../scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN.surfplot">[docs]</a>    <span class="k">def</span> <span class="nf">surfplot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot the clustering results in a 3D surface plot.</span>
+
+<span class="sd">        It uses the :func:`~scludam.plots.surfprobaplot` function.</span>
+<span class="sd">        The heights of the surface and colors of the points represent</span>
+<span class="sd">        the probability of belonging to the most probable cluster,</span>
+<span class="sd">        excluding the noise class. The data is represented in two</span>
+<span class="sd">        dimensions, given by the user.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        matplotlib.collections.PathCollection</span>
+<span class="sd">            Plot of the clustering results.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        Exception</span>
+<span class="sd">            If the clustering has not been performed yet.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Clusterer not fitted. Try excecuting fit function first.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">surfprobaplot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proba</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SHDBSCAN.outlierplot"><a class="viewcode-back" href="../../scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN.outlierplot">[docs]</a>    <span class="k">def</span> <span class="nf">outlierplot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot the distribution of outlier scores.</span>
+
+<span class="sd">        Includes an indicator of ``outlier_quantile`` if provided.</span>
+<span class="sd">        It is useful for choosing an appropriate value for</span>
+<span class="sd">        ``outlier_quantile``. Uses seaborn displot function [6]_.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        matplotlib.axes.Axes</span>
+<span class="sd">            Plot of the outlier scores distribution.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        Exception</span>
+<span class="sd">            If the clustering has not been performed yet.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        .. literalinclude:: ../../examples/shdbscan/outlierplot.py</span>
+<span class="sd">            :language: python</span>
+<span class="sd">            :linenos:</span>
+<span class="sd">        .. image:: ../../examples/shdbscan/outlierplot.png</span>
+
+<span class="sd">        References</span>
+<span class="sd">        ----------</span>
+<span class="sd">        .. [6] https://seaborn.pydata.org/generated/seaborn.distplot.html?highlight=distplot#seaborn.distplot</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa E501</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Clusterer not fitted or no outlier were calculated.&quot;</span><span class="p">)</span>
+        <span class="n">outlier_scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">outlier_scores_</span><span class="p">[</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">outlier_scores_</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="n">rug</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rug&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;rug&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rug</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="s2">&quot;darkcyan&quot;</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="n">kde_kws</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;kde_kws&quot;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">cut</span> <span class="o">=</span> <span class="n">kde_kws</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cut&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">kde_kws</span><span class="p">[</span><span class="s2">&quot;cut&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cut</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;kde_kws&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kde_kws</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">outlier_scores</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Outlier score&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outlier_quantile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">outlier_scores</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outlier_quantile</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span>
+                <span class="n">x</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+                <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_yticks</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+                <span class="n">x</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span>
+                <span class="n">y</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;quantile: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">outlier_quantile</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="se">\n</span><span class="s2">value: </span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+                <span class="n">verticalalignment</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ax</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Simón Pedro González.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scludam.shdbscan module &mdash; scludam 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="scludam.stat_tests module" href="scludam.stat_tests.html" />
+    <link rel="prev" title="scludam.plots module" href="scludam.plots.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> scludam
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">scludam</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="scludam.html">scludam package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="scludam.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html">scludam.detection module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html">scludam.fetcher module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html">scludam.plots module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">scludam.shdbscan module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html">scludam.stat_tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html">scludam.synthetic module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.html#module-scludam">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="diagrams.html">Diagrams</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">scludam</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">scludam</a> &raquo;</li>
+          <li><a href="scludam.html">scludam package</a> &raquo;</li>
+      <li>scludam.shdbscan module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/scludam.shdbscan.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-scludam.shdbscan">
+<span id="scludam-shdbscan-module"></span><h1>scludam.shdbscan module<a class="headerlink" href="#module-scludam.shdbscan" title="Permalink to this heading"></a></h1>
+<p>Module for soft clustering numerical data using the HDBSCAN <a class="footnote-reference brackets" href="#id4" id="id1">1</a>, <a class="footnote-reference brackets" href="#id5" id="id2">2</a> method.</p>
+<p>This module provides a wrapper class for HDBSCAN <a class="footnote-reference brackets" href="#id6" id="id3">3</a> that adds some
+extra functionality:</p>
+<ul class="simple">
+<li><p>Calculation of probability-like scores from the soft clustering method.</p></li>
+<li><p>Cluster selection based on geometric centers.</p></li>
+<li><p>Custom plots to visualize the results.</p></li>
+</ul>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>McInnes, L., Healy, J., Astels, S. (2017). HDBSCAN: Hierarchical
+density based clustering. Journal of Open Source Software, 2, 11.</p>
+</dd>
+<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>Campello R.J.G.B., Moulavi D. y Sander J. (2013). Density-Based
+Clustering Based on Hierarchical Density Estimates. Advances in
+Knowledge Discovery and Data Mining, PAKDD 2013, Lecture Notes
+in Computer Science, 7819. doi: 10.1007/978-3-642-37456-2_14</p>
+</dd>
+<dt class="label" id="id6"><span class="brackets">3</span><span class="fn-backref">(<a href="#id3">1</a>,<a href="#id8">2</a>)</span></dt>
+<dd><p>HDBSCAN: Hierarchical density-based spatial clustering of
+applications with noise. <a class="reference external" href="https://hdbscan.readthedocs.io/en/latest/">https://hdbscan.readthedocs.io/en/latest/</a></p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="scludam.shdbscan.SHDBSCAN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scludam.shdbscan.</span></span><span class="sig-name descname"><span class="pre">SHDBSCAN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_cluster_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_allow_single_cluster</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_single_cluster</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise_proba_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_proba_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'soft'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outlier_quantile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">TransformerMixin</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusterer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">HDBSCAN</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centers_provided</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proba</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outlier_scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/shdbscan.html#SHDBSCAN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.shdbscan.SHDBSCAN" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Soft Hierarchical Density-Based Spatial Clustering of Applications with Noise.</p>
+<p>Class that wraps the HDBSCAN class to provide soft clustering
+calculations, cluster selection and custom plots.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>min_cluster_size</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Minimum size of cluster. Argument passed to HDBSCAN, by default <code class="docutils literal notranslate"><span class="pre">None</span></code>.
+It is mandatory to provide this argument if the <code class="docutils literal notranslate"><span class="pre">clusterer</span></code> attribute
+is not provided.</p></li>
+<li><p><strong>allow_single_cluster</strong> (<em>bool</em>) – Whether to allow single cluster or not, by default <code class="docutils literal notranslate"><span class="pre">False</span></code>.
+Argument passed to HDBSCAN. In case that the data only
+contains one cluster and noise, the hierarchical clustering
+algorithm will not identify the cluster unless this option
+is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>auto_allow_single_cluster</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, HDBSCAN will automatically toggle <code class="docutils literal notranslate"><span class="pre">allow_single_cluster</span></code>
+to True if no clusters are found, to return at least 1 cluster. By
+default <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>min_samples</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Minimum number of samples in a cluster, by default <code class="docutils literal notranslate"><span class="pre">None</span></code>.
+Argument passed to HDBSCAN.</p></li>
+<li><p><strong>metric</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Callable</em><em>]</em>) – Metric to be used in HDBSCAN, by default “euclidean”.</p></li>
+<li><p><strong>noise_proba_mode</strong> (<em>str</em>) – <p>Method to calculate the noise probability, by default “score”.
+Valid options are:</p>
+<ul>
+<li><p>score: Use only HDBSCAN cluster membership scores to calculate
+noise probability, as <code class="docutils literal notranslate"><span class="pre">score</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">-</span> <span class="pre">cluster_membership_score</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">cluster_membership_score</span></code> is the HDBSCAN
+<code class="docutils literal notranslate"><span class="pre">probabilities_</span></code> value, which indicates how tied is
+a point to any cluster.</p></li>
+<li><p>outlier: Use <code class="docutils literal notranslate"><span class="pre">scores</span></code> as in the “score” option, and <code class="docutils literal notranslate"><span class="pre">outlier_scores</span></code>
+to calculate the noise probability, as
+<code class="docutils literal notranslate"><span class="pre">noise_proba</span> <span class="pre">=</span> <span class="pre">max(score,</span> <span class="pre">outlier_score)</span></code>.
+Outlier scores are calculated by HDBSCAN using the GLOSH <a class="footnote-reference brackets" href="#id9" id="id7">4</a> algorithm.</p></li>
+<li><p>conservative: Same method as the “outlier” option but does not
+allow for any point classified as noise to
+have a <code class="docutils literal notranslate"><span class="pre">noise_proba</span></code> lower than 1.</p></li>
+</ul>
+</p></li>
+<li><p><strong>cluster_proba_mode</strong> (<em>str</em>) – <p>Method to calculate the cluster probability, by default “soft”.
+Valid options are:</p>
+<ul>
+<li><p>soft: Use the HDBSCAN <code class="docutils literal notranslate"><span class="pre">all_points_membership_vectors</span></code> to calculate
+cluster probability, allowing for a point to be a member of multiple
+clusters.</p></li>
+<li><p>hard: Does not allow for a point to be a member of multiple clusters.
+A point can be considered noise or member of only one cluster.</p></li>
+</ul>
+</p></li>
+<li><p><strong>outlier_quantile</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – Quantile of outlier scores to be used as a threshold that defines a point
+as outlier, classified as noise, by default <code class="docutils literal notranslate"><span class="pre">None</span></code>.
+It must be a value between 0 and 1. If provided,
+<code class="docutils literal notranslate"><span class="pre">noise_proba_mode</span></code> is set to “outlier”.
+It scales HDBSCAN outlier scores so
+any point with an outlier score higher
+than the value of the provided quantile will
+be considered as noise.</p></li>
+<li><p><strong>scaler</strong> (<em>Optional</em><em>[</em><em>sklearn.base.TransformerMixin</em><em>]</em>) – Scaler to be used to scale the data before clustering, by default <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>clusterer</strong> (Optional[hdbscan.HDBSCAN <a class="footnote-reference brackets" href="#id6" id="id8">3</a>]) – HDBSCAN clusterer to be used, by default <code class="docutils literal notranslate"><span class="pre">None</span></code>. Used if more control is needed
+over the clustering algorithm. It is mandatory to provide this argument if
+the <code class="docutils literal notranslate"><span class="pre">min_cluster_size</span></code> attribute is not provided.</p></li>
+<li><p><strong>n_classes</strong> (<em>int</em>) – Number of detected classes in the data sample. Only available after the
+<a class="reference internal" href="#scludam.shdbscan.SHDBSCAN.fit" title="scludam.shdbscan.SHDBSCAN.fit"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit()</span></code></a> method is called.</p></li>
+<li><p><strong>labels</strong> (<em>Numeric1DArray</em>) – Labels of the data sample. Only available after the
+<a class="reference internal" href="#scludam.shdbscan.SHDBSCAN.fit" title="scludam.shdbscan.SHDBSCAN.fit"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit()</span></code></a> method is called. Noise
+points are labeled as -1, and the rest of the points are labeled
+with the cluster index.</p></li>
+<li><p><strong>proba</strong> (<em>Numeric2DArray</em>) – Probability of each point to belog to each class, including.
+Only available after the
+<a class="reference internal" href="#scludam.shdbscan.SHDBSCAN.fit" title="scludam.shdbscan.SHDBSCAN.fit"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit()</span></code></a> method is called. Array of shape
+<code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_classes)</span></code>. The first column corresponds to the noise class.</p></li>
+<li><p><strong>outlier_scores</strong> (<em>Numeric1DArray</em>) – Outlier scores of each point. Only available after the
+<a class="reference internal" href="#scludam.shdbscan.SHDBSCAN.fit" title="scludam.shdbscan.SHDBSCAN.fit"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit()</span></code></a> method is called.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the <code class="docutils literal notranslate"><span class="pre">min_cluster_size</span></code> nor the <code class="docutils literal notranslate"><span class="pre">clusterer</span></code> attributes are provided.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="linenos"> 2</span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="kn">from</span> <span class="nn">scludam</span> <span class="kn">import</span> <span class="n">SHDBSCAN</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="n">shdbscan</span> <span class="o">=</span> <span class="n">SHDBSCAN</span><span class="p">(</span><span class="n">min_cluster_size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="nb">print</span><span class="p">(</span><span class="n">shdbscan</span><span class="o">.</span><span class="n">proba</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="linenos">11</span><span class="c1"># [[0.   1.   0.  ]</span>
+<span class="linenos">12</span><span class="c1">#  [0.02 0.95 0.03]</span>
+<span class="linenos">13</span><span class="c1">#  ...</span>
+<span class="linenos">14</span><span class="c1">#  [0.18 0.08 0.74]</span>
+<span class="linenos">15</span><span class="c1">#  [0.03 0.05 0.92]]</span>
+<span class="linenos">16</span><span class="nb">print</span><span class="p">(</span><span class="n">shdbscan</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
+<span class="linenos">17</span><span class="c1"># [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1,  0,</span>
+<span class="linenos">18</span><span class="c1">#   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,</span>
+<span class="linenos">19</span><span class="c1"># ...</span>
+<span class="linenos">20</span><span class="c1">#   1,  1,  1, -1,  1,  1,  1,  1,  1,  1,  1,  1, -1,  1,  1,  1, -1,</span>
+<span class="linenos">21</span><span class="c1">#   1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1]</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="n">shdbscan</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span>
+<span class="linenos">24</span>    <span class="n">diag_kind</span><span class="o">=</span><span class="s2">&quot;hist&quot;</span><span class="p">,</span>
+<span class="linenos">25</span>    <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;copper&quot;</span><span class="p">,</span>
+<span class="linenos">26</span>    <span class="n">corner</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="linenos">27</span>    <span class="n">cols</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">,</span>
+<span class="linenos">28</span>    <span class="n">diag_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;bins&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">},</span>
+<span class="linenos">29</span><span class="p">)</span>
+<span class="linenos">30</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="_images/shdbscan_pairplot.png" src="_images/shdbscan_pairplot.png" />
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id7">4</a></span></dt>
+<dd><p><a class="reference external" href="https://hdbscan.readthedocs.io/en/latest/outlier_detection.html?highlight=glosh#outlier-detection">https://hdbscan.readthedocs.io/en/latest/outlier_detection.html?highlight=glosh#outlier-detection</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.shdbscan.SHDBSCAN.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/shdbscan.html#SHDBSCAN.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.shdbscan.SHDBSCAN.fit" title="Permalink to this definition"></a></dt>
+<dd><p>Fit the clusterer to the data.</p>
+<p>It uses the provided configuration to identify clusters,
+classify the data and provide membership probabilities. The results
+are stored in the <a class="reference internal" href="#scludam.shdbscan.SHDBSCAN" title="scludam.shdbscan.SHDBSCAN"><code class="xref py py-class docutils literal notranslate"><span class="pre">SHDBSCAN</span></code></a> instance. The
+attributes storing results are <code class="xref py py-attr docutils literal notranslate"><span class="pre">n_classes</span></code>,
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">labels</span></code>,
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">proba</span></code> and
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">outlier_scores</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Numeric2DArray</em>) – Data to be clustered.</p></li>
+<li><p><strong>centers</strong> (<em>Union[Numeric2DArrayLike, Numeric1DArrayLike], optional</em>) – Center or array of centers of clusters, by default <code class="docutils literal notranslate"><span class="pre">None</span></code>.
+If provided,
+only the clusters that are geometrically closer to the
+provided centers will be considered. This option is useful for
+ignoring clusters in a multiple cluster scenario.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Fitted instance of the <a class="reference internal" href="#scludam.shdbscan.SHDBSCAN" title="scludam.shdbscan.SHDBSCAN"><code class="xref py py-class docutils literal notranslate"><span class="pre">SHDBSCAN</span></code></a> class.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#scludam.shdbscan.SHDBSCAN" title="scludam.shdbscan.SHDBSCAN">SHDBSCAN</a></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the dimensions of the centers array do not match the dimensions
+    of the data array.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.shdbscan.SHDBSCAN.validity_index">
+<span class="sig-name descname"><span class="pre">validity_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/shdbscan.html#SHDBSCAN.validity_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.shdbscan.SHDBSCAN.validity_index" title="Permalink to this definition"></a></dt>
+<dd><p>Compute the validity index of the clustering.</p>
+<p>Calculates HDBSCAN density validity index <a class="footnote-reference brackets" href="#id11" id="id10">5</a> for the
+labels obtained from the clustering. <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> are passed to
+the HDBSCAN <code class="docutils literal notranslate"><span class="pre">validity_index</span></code> method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>float</em> – Density based cluster validity index between -1 and 1. A
+higher value means a better clustering.</p></li>
+<li><p><em>Numeric1DArray</em> – Array of cluster validity indices for each cluster, only if
+<code class="docutils literal notranslate"><span class="pre">per_cluster_scores</span></code> kwarg is set to True.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the clustering has not been performed yet.</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id10">5</a></span></dt>
+<dd><p><a class="reference external" href="https://hdbscan.readthedocs.io/en/latest/api.html?highlight=validity_index#hdbscan.validity.validity_index">https://hdbscan.readthedocs.io/en/latest/api.html?highlight=validity_index#hdbscan.validity.validity_index</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.shdbscan.SHDBSCAN.pairplot">
+<span class="sig-name descname"><span class="pre">pairplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/shdbscan.html#SHDBSCAN.pairplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.shdbscan.SHDBSCAN.pairplot" title="Permalink to this definition"></a></dt>
+<dd><p>Plot the clustering results in a pairplot.</p>
+<p>It uses the <a class="reference internal" href="scludam.plots.html#scludam.plots.pairprobaplot" title="scludam.plots.pairprobaplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">pairprobaplot()</span></code></a>. The colors
+of the points represent class labels. The sizes
+of the points reresent the probability of belonging to
+the most probable class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Pairplot of the clustering results.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>seaborn.PairGrid</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If the clustering has not been performed yet.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.shdbscan.SHDBSCAN.tsneplot">
+<span class="sig-name descname"><span class="pre">tsneplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/shdbscan.html#SHDBSCAN.tsneplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.shdbscan.SHDBSCAN.tsneplot" title="Permalink to this definition"></a></dt>
+<dd><p>Plot the clustering results in a t-SNE plot.</p>
+<p>It uses the <a class="reference internal" href="scludam.plots.html#scludam.plots.tsneprobaplot" title="scludam.plots.tsneprobaplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">tsneprobaplot()</span></code></a> function.
+It represents the data in a 2 dimensional space using t-SNE.
+The colors of the points represent class labels.
+The sizes of the points represent the probability of belonging
+to the most probable class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Plot of the clustering results.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>matplotlib.axes.Axes</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If the clustering has not been performed yet.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.shdbscan.SHDBSCAN.scatter3dplot">
+<span class="sig-name descname"><span class="pre">scatter3dplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/shdbscan.html#SHDBSCAN.scatter3dplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.shdbscan.SHDBSCAN.scatter3dplot" title="Permalink to this definition"></a></dt>
+<dd><p>Plot the clustering results in a 3D scatter plot.</p>
+<p>It uses the <a class="reference internal" href="scludam.plots.html#scludam.plots.scatter3dprobaplot" title="scludam.plots.scatter3dprobaplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">scatter3dprobaplot()</span></code></a> function.
+It represents the data in a 3 dimensional space using the
+variables given by the user. The colors of the points
+represent class labels. The sizes of the points represent
+the probability of belonging to the most probable class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Plot of the clustering results.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>matplotlib.collections.PathCollection</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If the clustering has not been performed yet.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.shdbscan.SHDBSCAN.surfplot">
+<span class="sig-name descname"><span class="pre">surfplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/shdbscan.html#SHDBSCAN.surfplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.shdbscan.SHDBSCAN.surfplot" title="Permalink to this definition"></a></dt>
+<dd><p>Plot the clustering results in a 3D surface plot.</p>
+<p>It uses the <a class="reference internal" href="scludam.plots.html#scludam.plots.surfprobaplot" title="scludam.plots.surfprobaplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">surfprobaplot()</span></code></a> function.
+The heights of the surface and colors of the points represent
+the probability of belonging to the most probable cluster,
+excluding the noise class. The data is represented in two
+dimensions, given by the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Plot of the clustering results.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>matplotlib.collections.PathCollection</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If the clustering has not been performed yet.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.shdbscan.SHDBSCAN.outlierplot">
+<span class="sig-name descname"><span class="pre">outlierplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/shdbscan.html#SHDBSCAN.outlierplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.shdbscan.SHDBSCAN.outlierplot" title="Permalink to this definition"></a></dt>
+<dd><p>Plot the distribution of outlier scores.</p>
+<p>Includes an indicator of <code class="docutils literal notranslate"><span class="pre">outlier_quantile</span></code> if provided.
+It is useful for choosing an appropriate value for
+<code class="docutils literal notranslate"><span class="pre">outlier_quantile</span></code>. Uses seaborn displot function <a class="footnote-reference brackets" href="#id13" id="id12">6</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Plot of the outlier scores distribution.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>matplotlib.axes.Axes</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If the clustering has not been performed yet.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="linenos"> 2</span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="kn">from</span> <span class="nn">scludam</span> <span class="kn">import</span> <span class="n">SHDBSCAN</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="n">shdbscan</span> <span class="o">=</span> <span class="n">SHDBSCAN</span><span class="p">(</span><span class="n">min_cluster_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">outlier_quantile</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="n">shdbscan</span><span class="o">.</span><span class="n">outlierplot</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="linenos">11</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="_images/outlierplot.png" src="_images/outlierplot.png" />
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id13"><span class="brackets"><a class="fn-backref" href="#id12">6</a></span></dt>
+<dd><p><a class="reference external" href="https://seaborn.pydata.org/generated/seaborn.distplot.html?highlight=distplot#seaborn.distplot">https://seaborn.pydata.org/generated/seaborn.distplot.html?highlight=distplot#seaborn.distplot</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="scludam.plots.html" class="btn btn-neutral float-left" title="scludam.plots module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scludam.stat_tests.html" class="btn btn-neutral float-right" title="scludam.stat_tests module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Simón Pedro González.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
