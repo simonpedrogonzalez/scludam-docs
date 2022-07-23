@@ -1,5 +1,5 @@
-type\_utils module
-==================
+scludam.type\_utils module
+==========================
 
 .. automodule:: scludam.type_utils
    :members:

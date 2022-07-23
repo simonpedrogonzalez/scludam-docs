@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scludam.masker module &mdash; scludam 0.2.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="scludam.plots module" href="scludam.plots.html" />
+    <link rel="prev" title="scludam.hkde module" href="scludam.hkde.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> scludam
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">scludam</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="scludam.html">scludam package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="scludam.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html">scludam.detection module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html">scludam.fetcher module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.hkde.html">scludam.hkde module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">scludam.masker module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html">scludam.plots module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.rutils.html">scludam.rutils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.shdbscan.html">scludam.shdbscan module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html">scludam.stat_tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html">scludam.synthetic module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.type_utils.html">scludam.type_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.utils.html">scludam.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.html#module-scludam">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="diagrams.html">Diagrams</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">scludam</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">scludam</a> &raquo;</li>
+          <li><a href="scludam.html">scludam package</a> &raquo;</li>
+      <li>scludam.masker module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/scludam.masker.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-scludam.masker">
+<span id="scludam-masker-module"></span><h1>scludam.masker module<a class="headerlink" href="#module-scludam.masker" title="Permalink to this heading"></a></h1>
+<p>Module for helper masking functions.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="scludam.masker.DataMasker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scludam.masker.</span></span><span class="sig-name descname"><span class="pre">DataMasker</span></span><a class="reference internal" href="_modules/scludam/masker.html#DataMasker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.masker.DataMasker" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Abstract class for data masking.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.masker.DataMasker.mask">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/scludam/masker.html#DataMasker.mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.masker.DataMasker.mask" title="Permalink to this definition"></a></dt>
+<dd><p>Mask data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – Data to mask.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Boolean array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scludam.masker.RangeMasker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scludam.masker.</span></span><span class="sig-name descname"><span class="pre">RangeMasker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/masker.html#RangeMasker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.masker.RangeMasker" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#scludam.masker.DataMasker" title="scludam.masker.DataMasker"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataMasker</span></code></a></p>
+<p>Mask data outsude a hypercube according to limits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><p><strong>limits</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>list</em><em>]</em>) – Limits of the hypercube as
+<code class="docutils literal notranslate"><span class="pre">[[dim1_min,</span> <span class="pre">dim1_max],</span> <span class="pre">[dim2_min,</span> <span class="pre">dim2_max],</span> <span class="pre">...]</span></code>.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.masker.RangeMasker.mask">
+<span class="sig-name descname"><span class="pre">mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/masker.html#RangeMasker.mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.masker.RangeMasker.mask" title="Permalink to this definition"></a></dt>
+<dd><p>Mask the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – data to be masked.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Mask as 1D boolean array</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If limits do not have the correct shape.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scludam.masker.CenterMasker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scludam.masker.</span></span><span class="sig-name descname"><span class="pre">CenterMasker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/masker.html#CenterMasker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.masker.CenterMasker" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#scludam.masker.DataMasker" title="scludam.masker.DataMasker"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataMasker</span></code></a></p>
+<p>Mask from data center and radius.</p>
+<p>Only works for 2d or 3d.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>center</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>list</em><em>]</em>) – Center of the mask.</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – Radius of the mask.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.masker.CenterMasker.mask">
+<span class="sig-name descname"><span class="pre">mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/masker.html#CenterMasker.mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.masker.CenterMasker.mask" title="Permalink to this definition"></a></dt>
+<dd><p>Mask the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – data to be masked.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Mask as 1D boolean array</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If center has incorrect shape.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scludam.masker.DistanceMasker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scludam.masker.</span></span><span class="sig-name descname"><span class="pre">DistanceMasker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'geometric'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percentage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'furthest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/masker.html#DistanceMasker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.masker.DistanceMasker" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#scludam.masker.DataMasker" title="scludam.masker.DataMasker"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataMasker</span></code></a></p>
+<p>Mask data according to distance from center.</p>
+<p>Get a percentage of the observations closest or
+furthest from  and to the center.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>center</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>list</em><em>, </em><em>str</em><em>]</em>) – Center, if str, it must be “geometric”, by default “geometric”.
+Geometric center is the center of the data given its ranges.</p></li>
+<li><p><strong>percentage</strong> (<em>float</em>) – Percentage of observations to take, by default 10.</p></li>
+<li><p><strong>metric</strong> (<em>str</em>) – Metric to use for distance calculation, by default “euclidean”.</p></li>
+<li><p><strong>mode</strong> (<em>str</em>) – Mode of the mask, by default “closest”. Can be one of
+“closest” or “furthest”.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.masker.DistanceMasker.mask">
+<span class="sig-name descname"><span class="pre">mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/masker.html#DistanceMasker.mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.masker.DistanceMasker.mask" title="Permalink to this definition"></a></dt>
+<dd><p>Mask the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – Data to mask</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Mask as 1D boolean array</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>NotImplementedError</strong> – center kind not implemented.</p></li>
+<li><p><strong>ValueError</strong> – Mode is invalid</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scludam.masker.CrustMasker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scludam.masker.</span></span><span class="sig-name descname"><span class="pre">CrustMasker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">percentage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'crust'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/masker.html#CrustMasker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.masker.CrustMasker" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#scludam.masker.DataMasker" title="scludam.masker.DataMasker"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataMasker</span></code></a></p>
+<p>Mask data according to crust.</p>
+<p>The crust is calculated as the convex hull of the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>percentage</strong> (<em>float</em>) – Percentage of observations to take, by default 10.</p></li>
+<li><p><strong>mode</strong> (<em>str</em>) – Mode of the calculation, by default “crust”.
+Can only be “crust”.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.masker.CrustMasker.mask">
+<span class="sig-name descname"><span class="pre">mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/masker.html#CrustMasker.mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.masker.CrustMasker.mask" title="Permalink to this definition"></a></dt>
+<dd><p>Mask the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – Data to mask</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Mask as a 1D boolean array</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="scludam.hkde.html" class="btn btn-neutral float-left" title="scludam.hkde module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scludam.plots.html" class="btn btn-neutral float-right" title="scludam.plots module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Simón Pedro González.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

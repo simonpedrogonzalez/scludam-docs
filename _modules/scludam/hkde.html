@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scludam.hkde &mdash; scludam 0.2.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> scludam
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">scludam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../diagrams.html">Diagrams</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">scludam</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>scludam.hkde</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for scludam.hkde</h1><div class="highlight"><pre>
+<span></span><span class="c1"># scludam, Star CLUster Detection And Membership estimation package</span>
+<span class="c1"># Copyright (C) 2022  Simón Pedro González</span>
+
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;Module for Kernel Density Estimation with variable bandwidth matrices.</span>
+
+<span class="sd">The module provides a class for multivariate Kernel Density Estimation with a bandwidth</span>
+<span class="sd">matrix per observation. Such matrices are created from a baseline bandwidth calculated</span>
+<span class="sd">from the Plugin method. Variable errors and covariances can be added to the matrices.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">attrs</span> <span class="kn">import</span> <span class="n">define</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">beartype</span> <span class="kn">import</span> <span class="n">beartype</span>
+<span class="kn">from</span> <span class="nn">rpy2.robjects</span> <span class="kn">import</span> <span class="n">r</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">multivariate_normal</span>
+<span class="kn">from</span> <span class="nn">statsmodels.stats.correlation_tools</span> <span class="kn">import</span> <span class="n">corr_nearest</span>
+
+<span class="kn">from</span> <span class="nn">scludam.plots</span> <span class="kn">import</span> <span class="n">bivariate_density_plot</span><span class="p">,</span> <span class="n">univariate_density_plot</span>
+<span class="kn">from</span> <span class="nn">scludam.rutils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">assign_r_args</span><span class="p">,</span>
+    <span class="n">clean_r_session</span><span class="p">,</span>
+    <span class="n">disable_r_console_output</span><span class="p">,</span>
+    <span class="n">disable_r_warnings</span><span class="p">,</span>
+    <span class="n">load_r_packages</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">scludam.type_utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="n">Numeric1DArray</span><span class="p">,</span>
+    <span class="n">Numeric1DArrayLike</span><span class="p">,</span>
+    <span class="n">Numeric2DArray</span><span class="p">,</span>
+    <span class="n">NumericArray</span><span class="p">,</span>
+    <span class="n">OptionalNumeric1DArrayLike</span><span class="p">,</span>
+    <span class="n">OptionalNumeric2DArray</span><span class="p">,</span>
+    <span class="n">OptionalNumericArray</span><span class="p">,</span>
+    <span class="n">_type</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">disable_r_warnings</span><span class="p">()</span>
+<span class="n">disable_r_console_output</span><span class="p">()</span>
+<span class="n">load_r_packages</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;ks&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="BandwidthSelector"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.BandwidthSelector">[docs]</a><span class="k">class</span> <span class="nc">BandwidthSelector</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Base class for bandwidth selector.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BandwidthSelector.get_bw"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.BandwidthSelector.get_bw">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_bw</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the bandwidth for the given data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : Numeric2DArray</span>
+<span class="sd">            Data.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div></div>
+
+
+<div class="viewcode-block" id="PluginSelector"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.PluginSelector">[docs]</a><span class="nd">@define</span>
+<span class="k">class</span> <span class="nc">PluginSelector</span><span class="p">(</span><span class="n">BandwidthSelector</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Bandwidth selector based on the Plugin method.</span>
+
+<span class="sd">    It uses the Plugin method with unconstraned pilot bandwidth</span>
+<span class="sd">    [1]_ [2]_ implementation in the</span>
+<span class="sd">    `ks` R package [3]_. See the `ks` package documentation for</span>
+<span class="sd">    more information on</span>
+<span class="sd">    parameter values. All attributes are passed</span>
+<span class="sd">    to ``ks::Hpi`` function.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    nstage : int, optional</span>
+<span class="sd">        Number of calculation stages, can be</span>
+<span class="sd">        1 or 2, by default 2.</span>
+<span class="sd">    pilot: str, optional</span>
+<span class="sd">        Kind of pilot bandwidth.</span>
+<span class="sd">    binned: bool, optional</span>
+<span class="sd">        Use binned estimation, by default False.</span>
+<span class="sd">    diag: bool, optional</span>
+<span class="sd">        Whether to use the diagonal bandwidth,</span>
+<span class="sd">        by default False. If true, ``ks::Hpi.diag``</span>
+<span class="sd">        is used.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    .. [1] Chacon, J.E., Duong, T. (2010) Multivariate plug-in bandwidth</span>
+<span class="sd">        selection with unconstrained pilot</span>
+<span class="sd">        matrices. Test, 19, 375-398.</span>
+<span class="sd">    .. [2] Chacon, J.E., Duong, T. (2018) Multivariate Kernel Smoothing</span>
+<span class="sd">        and Its Applications (pp. 43-66).</span>
+<span class="sd">    .. [3] Duong, T. (2013). ks: Kernel Smoothing. R package version 1.13.3.</span>
+<span class="sd">        https://CRAN.R-project.org/package=ks</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">nstage</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">pilot</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">binned</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">diag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_build_r_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;nstage&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">nstage</span><span class="p">,</span>
+            <span class="s2">&quot;pilot&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pilot</span><span class="p">,</span>
+            <span class="s2">&quot;binned&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">binned</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="c1"># delete all previous session variables</span>
+        <span class="n">clean_r_session</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s2">&quot;var&quot;</span><span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">rparams</span> <span class="o">=</span> <span class="n">assign_r_args</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;ks::Hpi</span><span class="si">{</span><span class="s2">&quot;.diag&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">diag</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="si">}</span><span class="s1">(</span><span class="si">{</span><span class="n">rparams</span><span class="si">}</span><span class="s1">)&#39;</span>
+
+<div class="viewcode-block" id="PluginSelector.get_bw"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.PluginSelector.get_bw">[docs]</a>    <span class="nd">@beartype</span>
+    <span class="k">def</span> <span class="nf">get_bw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the bandwidth for the given data.</span>
+
+<span class="sd">        Builds R ``ks::Hpi`` command and executes it.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : Numeric2DArray</span>
+<span class="sd">            Data.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Numeric2DArray</span>
+<span class="sd">            Optimal bandwidth matrix H acoording to the</span>
+<span class="sd">            Plugin Method.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_r_command</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">r</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="HKDE"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.HKDE">[docs]</a><span class="nd">@define</span>
+<span class="k">class</span> <span class="nc">HKDE</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Kernel Density Estimation with variable bandwidth matrices (H).</span>
+
+<span class="sd">    Only for multivariate data (2d-nd). As it does not uses</span>
+<span class="sd">    KDE by Fast Fourier Transform, it may take some time for</span>
+<span class="sd">    big datasets.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bw: Union[BandwidthSelector, Number, NumericArray], optional</span>
+<span class="sd">        Bandwidth to be used, by default an instance</span>
+<span class="sd">        of :class:`~scludam.hkde.PluginSelector`. It can be:</span>
+
+<span class="sd">        *  an instance of :class:`~scludam.hkde.BandwidthSelector`:</span>
+<span class="sd">           the base bandwidth is calculated using the given selector.</span>
+<span class="sd">        *  a Number: the base bandwidth is calculated as a diagonal</span>
+<span class="sd">           matrix with the given value.</span>
+<span class="sd">        *  an Array: the base bandwidth is taken as the given</span>
+<span class="sd">           array. The array shape must be (n, d, d) where n is the</span>
+<span class="sd">           number of observations and d is the number of dimensions.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    .. literalinclude:: ../../examples/hkde/hkde.py</span>
+<span class="sd">        :language: python</span>
+<span class="sd">        :linenos:</span>
+<span class="sd">    .. image:: ../../examples/hkde/hkde.png</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># input attrs</span>
+    <span class="n">bw</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">BandwidthSelector</span><span class="p">,</span> <span class="n">Number</span><span class="p">,</span> <span class="n">NumericArray</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">PluginSelector</span><span class="p">(),</span>
+        <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="n">Union</span><span class="p">[</span><span class="n">BandwidthSelector</span><span class="p">,</span> <span class="n">Number</span><span class="p">,</span> <span class="n">NumericArray</span><span class="p">]),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># internal attrs</span>
+    <span class="n">_kernels</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_weights</span><span class="p">:</span> <span class="n">Numeric1DArrayLike</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_covariances</span><span class="p">:</span> <span class="n">NumericArray</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_data</span><span class="p">:</span> <span class="n">Numeric2DArray</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_d</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_n_eff</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_eff_mask</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_maxs</span><span class="p">:</span> <span class="n">Numeric1DArray</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_mins</span><span class="p">:</span> <span class="n">Numeric1DArray</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="HKDE.set_weights"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.HKDE.set_weights">[docs]</a>    <span class="nd">@beartype</span>
+    <span class="k">def</span> <span class="nf">set_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the weights for each data point.</span>
+
+<span class="sd">        Set a weight value for each data point,</span>
+<span class="sd">        between 0 and 1.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        weights : ArrayLike</span>
+<span class="sd">            Weights for each data point.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        HKDE</span>
+<span class="sd">            Instance of :class:`~scludam.hkde.HKDE`.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If weights are not between 0 and 1 or do</span>
+<span class="sd">            not match the correct dimensions (Array</span>
+<span class="sd">            of shape (n,)).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Weights must be 1d np ndarray.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">weights</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Weight values must belong to [0,1].&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data must have same n as weights.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span> <span class="o">=</span> <span class="n">weights</span>
+        <span class="c1"># default atol used by numpy isclose is 1e-08</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_eff_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span> <span class="o">&gt;</span> <span class="mf">1e-08</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_n_eff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_weights</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_eff_mask</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_err_matrices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="n">corr</span><span class="p">:</span> <span class="n">NumericArray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">err</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;error array must have the same shape as data array.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">corr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+        <span class="n">corr_matrices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_corr_matrices</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+            <span class="o">*</span> <span class="n">corr_matrices</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_corr_matrices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">corr</span><span class="p">:</span> <span class="n">NumericArray</span><span class="p">):</span>
+        <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">)</span>
+        <span class="c1"># correlation is given</span>
+        <span class="c1"># is array</span>
+        <span class="k">if</span> <span class="n">corr</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+            <span class="c1"># correlation is given as global correlation matrix per dims</span>
+            <span class="c1"># first try to find nearest correct correlation</span>
+            <span class="c1"># it ensures matrix is positive semidefinite</span>
+            <span class="n">corr</span> <span class="o">=</span> <span class="n">corr_nearest</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">corr</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">d</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Correlation matrix must have 1 in diagonal&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">repeats</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">elif</span> <span class="n">corr</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="p">(</span><span class="n">d</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)):</span>
+            <span class="c1"># correlation is given per observation per obs, per dims</span>
+            <span class="c1"># pairwise corr coef</span>
+            <span class="c1"># (no need for the 1s given by corr(samevar, samevar))</span>
+            <span class="c1"># per observation. Example: for 1 obs and 4 vars, lower triangle of corr</span>
+            <span class="c1"># matrix looks like:</span>
+            <span class="c1"># 12</span>
+            <span class="c1"># 13 23</span>
+            <span class="c1"># 14 24 34</span>
+            <span class="c1"># method should receive obs1 =&gt; [12, 13, 23, 14, 24, 34]</span>
+            <span class="n">n_corrs</span> <span class="o">=</span> <span class="n">corr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">corrs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
+            <span class="n">tril_idcs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+                <span class="nb">map</span><span class="p">(</span>
+                    <span class="nb">tuple</span><span class="p">,</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span>
+                        <span class="p">(</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">n_corrs</span><span class="p">),</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span>
+                                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tril_indices</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">k</span><span class="o">=-</span><span class="mi">1</span><span class="p">)),</span>
+                                <span class="p">(</span><span class="n">n</span><span class="p">,),</span>
+                            <span class="p">),</span>
+                        <span class="p">)</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">corrs</span><span class="p">[</span><span class="n">tril_idcs</span><span class="p">]</span> <span class="o">=</span> <span class="n">corr</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+            <span class="n">corrs</span> <span class="o">=</span> <span class="n">corrs</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">corrs</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">diag_idcs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+                <span class="nb">map</span><span class="p">(</span>
+                    <span class="nb">tuple</span><span class="p">,</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span>
+                        <span class="p">(</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">d</span><span class="p">),</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag_indices</span><span class="p">(</span><span class="n">d</span><span class="p">)),</span> <span class="p">(</span><span class="n">n</span><span class="p">,)),</span>
+                        <span class="p">)</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">corrs</span><span class="p">[</span><span class="n">diag_idcs</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">corrs</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong corr dimensions&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_bw_matrices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">,</span> <span class="n">BandwidthSelector</span><span class="p">):</span>
+            <span class="n">bw_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="o">.</span><span class="n">get_bw</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_eff_mask</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">:</span>
+                <span class="n">bw_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">):</span>
+                <span class="n">bw_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bw</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Incorrect shape of bandwidth array&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">bw_matrix</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_cov_matrices</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span>
+        <span class="n">err</span><span class="p">:</span> <span class="n">Numeric2DArray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">corr</span><span class="p">:</span> <span class="n">NumericArray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">bw_matrices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_bw_matrices</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">err</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">corr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">bw_matrices</span>
+        <span class="n">err_matrices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_err_matrices</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">corr</span><span class="p">)</span>
+        <span class="c1"># sum of covariance matrices convolves a kernel for bw and a kernel for error</span>
+        <span class="k">return</span> <span class="n">bw_matrices</span> <span class="o">+</span> <span class="n">err_matrices</span>
+
+<div class="viewcode-block" id="HKDE.fit"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.HKDE.fit">[docs]</a>    <span class="nd">@beartype</span>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span>
+        <span class="n">err</span><span class="p">:</span> <span class="n">OptionalNumeric2DArray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">corr</span><span class="p">:</span> <span class="n">OptionalNumericArray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">weights</span><span class="p">:</span> <span class="n">OptionalNumeric1DArrayLike</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit a KDE model to the provided data.</span>
+
+<span class="sd">        Creates covariances matrices and kernel</span>
+<span class="sd">        instances.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : Numeric2DArray</span>
+<span class="sd">            Data.</span>
+<span class="sd">        err : OptionalNumeric2DArray, optional</span>
+<span class="sd">            Error array of shape (n, d), by default None.</span>
+<span class="sd">            Errors are added to the base bandwidth matrix</span>
+<span class="sd">            to create individual H matrices per datapoint.</span>
+<span class="sd">        corr : OptionalNumericArray, optional</span>
+<span class="sd">            Correlation coeficients, by default None.</span>
+<span class="sd">            Coeficients are added to the base bandwith matrix</span>
+<span class="sd">            to create individual H matrices per datapoint.</span>
+<span class="sd">            Can be one of:</span>
+
+<span class="sd">            *  NumericArray of shape (d, d): global correlation</span>
+<span class="sd">               matrix. Applied in every bandwidth matrix H.</span>
+<span class="sd">            *  Numeric2DArray of shape (n, (d * (d - 1) / 2):</span>
+<span class="sd">               individual correlation matrices. Each column of</span>
+<span class="sd">               the array represents a correlation between two</span>
+<span class="sd">               variables, for all observations. Order of columns</span>
+<span class="sd">               must follow a lower triangle matrix. For example:</span>
+<span class="sd">               for four variables, lower triangle of corr</span>
+<span class="sd">               matrix looks like:</span>
+
+<span class="sd">               .. code-block:: python</span>
+
+<span class="sd">                    corr(v1, v2)</span>
+<span class="sd">                    corr(v1, v3), corr(v2, v3)</span>
+<span class="sd">                    corr(v1, v4), corr(v2, v4), corr(v3, v4)</span>
+
+<span class="sd">               So a valid ``corr`` array for two datapoints would be:</span>
+<span class="sd">               </span>
+<span class="sd">               .. code-block:: python</span>
+
+<span class="sd">                    np.array([</span>
+<span class="sd">                        [ corr1(v1, v2), corr1(v1, v3), corr1(v2, v3),</span>
+<span class="sd">                          corr1(v1, v4), corr1(v2, v4), corr1(v3, v4) ],</span>
+<span class="sd">                        [ corr2(v1, v2), corr2(v1, v3), corr2(v2, v3),</span>
+<span class="sd">                          corr2(v1, v4), corr2(v2, v4), corr2(v3, v4) ],</span>
+<span class="sd">                    ])</span>
+
+<span class="sd">        weights : OptionalNumeric1DArrayLike, optional</span>
+<span class="sd">            Weights to be used for each data point, by default None.</span>
+<span class="sd">            If None, all datapoints have the same</span>
+<span class="sd">            weight.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        HKDE</span>
+<span class="sd">            Instance of :class:`~scludam.hkde.HKDE`.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        Base bandwidth matrix is calculated from the ``bw`` parameter. If no additional</span>
+<span class="sd">        parameters are provided, the base bandwidth matrix is</span>
+<span class="sd">        used for all datapoints. If ``err`` and/or ``corr`` are provided, they are</span>
+<span class="sd">        used to create individual covariance matrices for each datapoint [5]_. The final</span>
+<span class="sd">        matrix used for each kernel is the sum of the base matrix and the individual</span>
+<span class="sd">        covariance matrix, which is equivalent to convolving two gaussian kernels, one</span>
+<span class="sd">        for the base bandwidth matrix and one for the individual covariance matrix.</span>
+<span class="sd">        The base bandwidth is considered as the minimum bandwidth of the KDE process,</span>
+<span class="sd">        for a data point without uncertainty, while the final matrix incorporates the</span>
+<span class="sd">        uncertainty if provided.</span>
+
+<span class="sd">        References</span>
+<span class="sd">        ----------</span>
+<span class="sd">        .. [5] Luri, X. et al. (2018). Gaia Data Release 2: using Gaia parallaxes.</span>
+<span class="sd">            Astronomy and Astrophysics, 616, A9. doi: 10.1051/0004-6361/201832964</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa E501</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maxs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mins</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span> <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_weights</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_covariances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_cov_matrices</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="n">corr</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kernels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">multivariate_normal</span><span class="p">(</span>
+                    <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_covariances</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="k">def</span> <span class="nf">_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kernels</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_eff</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eff_mask</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_covariances</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="HKDE.pdf"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.HKDE.pdf">[docs]</a>    <span class="k">def</span> <span class="nf">pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eval_points</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="n">leave1out</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Probability density function.</span>
+
+<span class="sd">        Evaluate the probability density function at the provided</span>
+<span class="sd">        points, using the fitted KDE model.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        eval_points : Numeric2DArray</span>
+<span class="sd">            Observation or observations to evaluate the PDF at.</span>
+<span class="sd">        leave1out : bool, optional</span>
+<span class="sd">            Wether to set weigth to 0 for the point being evaluated,</span>
+<span class="sd">            by default True.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Numeric1DArray</span>
+<span class="sd">            PDF values for the provided points.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        Exception</span>
+<span class="sd">            If the KDE model is not fitted.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the shape of the provided points is not compatible with</span>
+<span class="sd">            the fitted KDE model.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Model not fitted. Try excecuting fit function first.&quot;</span><span class="p">)</span>
+        <span class="n">eval_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">eval_points</span><span class="p">)</span>
+        <span class="n">obs</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">eval_points</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">if</span> <span class="n">dims</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Eval points must have same dims as data.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">obs</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Eval points cannot be empty&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_eff</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+
+        <span class="n">pdf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+        <span class="n">kernels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kernels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_eff_mask</span><span class="p">]</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_eff_mask</span><span class="p">]</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_eff</span>
+
+        <span class="c1"># put weights and normalization toghether in each step</span>
+        <span class="c1"># pdf(point) = sum(ki(point)*wi/(sum(w)-wi))</span>
+
+        <span class="k">if</span> <span class="n">leave1out</span><span class="p">:</span>
+            <span class="n">norm_weights</span> <span class="o">=</span> <span class="n">weights</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">weights</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kernels</span><span class="p">):</span>
+                <span class="n">applied_k</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">eval_points</span><span class="p">)</span> <span class="o">*</span> <span class="n">norm_weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">applied_k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">pdf</span> <span class="o">+=</span> <span class="n">applied_k</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">norm_weights</span> <span class="o">=</span> <span class="n">weights</span> <span class="o">/</span> <span class="n">n</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kernels</span><span class="p">):</span>
+                <span class="n">applied_k</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">eval_points</span><span class="p">)</span> <span class="o">*</span> <span class="n">norm_weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">pdf</span> <span class="o">+=</span> <span class="n">applied_k</span>
+        <span class="k">if</span> <span class="n">obs</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># return as float value</span>
+            <span class="k">return</span> <span class="n">pdf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">pdf</span></div>
+
+<div class="viewcode-block" id="HKDE.plot"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.HKDE.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">gr</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+        <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+        <span class="n">cols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot the KDE model applied in a grid.</span>
+
+<span class="sd">        Creates a pairplot of the KDE model applied</span>
+<span class="sd">        in a grid that spans between the data max and min</span>
+<span class="sd">        values for each dimension.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        gr : int, optional</span>
+<span class="sd">            Grid resolution, number of bins to be taken into</span>
+<span class="sd">            account for each dimension, by default 50. Note that</span>
+<span class="sd">            data dimensions and grid resolution determine how many</span>
+<span class="sd">            points are evaluated, as ``eval_points=gr**dims``. A high</span>
+<span class="sd">            ``gr`` value can result in a long computation time.</span>
+<span class="sd">        figsize : Tuple[int, int], optional</span>
+<span class="sd">            Figure size, by default (8, 6)</span>
+<span class="sd">        cols : Optional[str], optional</span>
+<span class="sd">            Column names to plot over the axes, by default None.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        matplotlib.figure.Figure</span>
+<span class="sd">            Figure with the pairplot.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        Exception</span>
+<span class="sd">            If the KDE model is not fitted yet.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Model not fitted. Try excecuting fit function first.&quot;</span><span class="p">)</span>
+        <span class="c1"># prepare data to plot</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">gr</span>
+        <span class="n">linspaces</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maxs</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="o">*</span><span class="n">linspaces</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">,</span> <span class="n">grid</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">density</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">eval_points</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">data_and_density</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">density</span><span class="p">))</span>
+        <span class="n">grids</span> <span class="o">=</span> <span class="p">[</span><span class="n">axis</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">*</span><span class="nb">tuple</span><span class="p">([</span><span class="n">n</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">))</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">data_and_density</span><span class="p">]</span>
+        <span class="n">density_grid</span> <span class="o">=</span> <span class="n">grids</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">cols</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;var</span><span class="si">{</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">)]</span>
+
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="c1"># fig.subplots_adjust(hspace=.5, wspace=.001)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
+                    <span class="n">x</span> <span class="o">=</span> <span class="n">linspaces</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">axis_to_sum</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">)))</span> <span class="o">-</span> <span class="p">{</span><span class="n">i</span><span class="p">})</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis_to_sum</span><span class="p">):</span>
+                        <span class="n">y</span> <span class="o">=</span> <span class="n">density_grid</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis_to_sum</span><span class="p">)</span>
+                    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="n">gr</span>
+                    <span class="n">univariate_density_plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">linspaces</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">linspaces</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                    <span class="n">axis_to_sum</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">)))</span> <span class="o">-</span> <span class="p">{</span><span class="n">i</span><span class="p">}</span> <span class="o">-</span> <span class="p">{</span><span class="n">j</span><span class="p">})</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis_to_sum</span><span class="p">):</span>
+                        <span class="n">z</span> <span class="o">=</span> <span class="n">density_grid</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis_to_sum</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">z</span> <span class="o">=</span> <span class="n">density_grid</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">j</span><span class="p">:</span>
+                        <span class="n">z</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">T</span>
+                    <span class="n">z</span> <span class="o">=</span> <span class="n">z</span> <span class="o">/</span> <span class="n">gr</span>
+                    <span class="n">_</span><span class="p">,</span> <span class="n">im</span> <span class="o">=</span> <span class="n">bivariate_density_plot</span><span class="p">(</span>
+                        <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span>
+                    <span class="p">)</span>
+
+        <span class="n">y_axes_to_join</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">([])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+                    <span class="c1"># share x axis with univariate density of same column</span>
+                    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">sharex</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+                    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">j</span> <span class="ow">and</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+                                <span class="n">y_axes_to_join</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+                                <span class="n">y_axes_to_join</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">):</span>
+            <span class="n">yatj</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">y_axes_to_join</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">yatj</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">yatj</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_shared_y_axes</span><span class="p">()</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">yatj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">*</span><span class="n">yatj</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">):</span>
+            <span class="n">axes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">cols</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">cols</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Simón Pedro González.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
