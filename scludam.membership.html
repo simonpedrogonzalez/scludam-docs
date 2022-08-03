@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scludam.membership module &mdash; scludam 0.3.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="scludam.plots module" href="scludam.plots.html" />
+    <link rel="prev" title="scludam.masker module" href="scludam.masker.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> scludam
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">scludam</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="scludam.html">scludam package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="scludam.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html">scludam.detection module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html">scludam.fetcher module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.hkde.html">scludam.hkde module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.masker.html">scludam.masker module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">scludam.membership module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html">scludam.plots module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.rutils.html">scludam.rutils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.shdbscan.html">scludam.shdbscan module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html">scludam.stat_tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html">scludam.synthetic module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.type_utils.html">scludam.type_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.utils.html">scludam.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.html#module-scludam">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="diagrams.html">Diagrams</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">scludam</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">scludam</a> &raquo;</li>
+          <li><a href="scludam.html">scludam package</a> &raquo;</li>
+      <li>scludam.membership module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/scludam.membership.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-scludam.membership">
+<span id="scludam-membership-module"></span><h1>scludam.membership module<a class="headerlink" href="#module-scludam.membership" title="Permalink to this heading"></a></h1>
+<p>Module for Density Based Membership Estimation.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="scludam.membership.DBME">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scludam.membership.</span></span><span class="sig-name descname"><span class="pre">DBME</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_iters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kde_leave1out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_calculation_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'per_class'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pdf_estimator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="scludam.hkde.html#scludam.hkde.HKDE" title="scludam.hkde.HKDE"><span class="pre">HKDE</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">HKDE(bw=PluginSelector(nstage=None,</span> <span class="pre">pilot=None,</span> <span class="pre">binned=None,</span> <span class="pre">diag=False),</span> <span class="pre">_kernels=None,</span> <span class="pre">_weights=None,</span> <span class="pre">_covariances=None,</span> <span class="pre">_data=None,</span> <span class="pre">_n=None,</span> <span class="pre">_d=None,</span> <span class="pre">_n_eff=None,</span> <span class="pre">_eff_mask=None,</span> <span class="pre">_maxs=None,</span> <span class="pre">_mins=None)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimators</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iter_priors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iter_counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iter_label_diff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iter_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posteriors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/membership.html#DBME"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.membership.DBME" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Density Based Membership Estimation.</p>
+<p>It uses <a class="reference internal" href="scludam.hkde.html#scludam.hkde.HKDE" title="scludam.hkde.HKDE"><code class="xref py py-class docutils literal notranslate"><span class="pre">HKDE</span></code></a> to estimate the density and calculate
+smooth membership probabilities for each class, given data and
+initial probabilities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_iters</strong> (<em>int</em>) – Number of iterations, by default 2. In each iteration,
+prior probabilities are updated according to the posterior
+probabilities of the previous iteration.</p></li>
+<li><p><strong>kernel_calculation_mode</strong> (<em>str</em>) – <p>Mode of kernel calculation, by default <code class="docutils literal notranslate"><span class="pre">per_class</span></code>. It indicates how
+many <a class="reference internal" href="scludam.hkde.html#scludam.hkde.HKDE" title="scludam.hkde.HKDE"><code class="xref py py-class docutils literal notranslate"><span class="pre">HKDE</span></code></a> estimators will be used to estimate the
+density.
+Available modes are:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">same</span></code>: the bandwidth of the kernels is the same for all classes. There
+will be one estimator.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">per_class</span></code>: the bandwidth of the kernels is different for each class.
+There will be one estimator per class.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">per_class_per_iter</span></code>: the bandwidth of the kernels is different for
+each class and iteration. There will be one estimator per class which will
+be updated in each iteration, recalculating the bandwith each time.</p></li>
+</ul>
+</p></li>
+<li><p><strong>kde_leave1out</strong> (<em>bool</em>) – Whether to use leave-one-out KDE estimation, by default True.</p></li>
+<li><p><strong>pdf_estimator</strong> (<a class="reference internal" href="scludam.hkde.html#scludam.hkde.HKDE" title="scludam.hkde.HKDE"><code class="xref py py-class docutils literal notranslate"><span class="pre">HKDE</span></code></a>) – Estimator used to estimate the density, by default an instance of HKDE with
+default parameters.</p></li>
+<li><p><strong>n_classes</strong> (<em>int</em>) – Number of detected classes. Only available after the
+<a class="reference internal" href="#scludam.membership.DBME.fit" title="scludam.membership.DBME.fit"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit()</span></code></a> method is called.</p></li>
+<li><p><strong>labels</strong> (<em>Numeric1DArray</em>) – Labels of the classes, only available after the
+<a class="reference internal" href="#scludam.membership.DBME.fit" title="scludam.membership.DBME.fit"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit()</span></code></a> method is called.</p></li>
+<li><p><strong>counts</strong> (<em>Numeric1DArray</em>) – Number of data points in each class, only available after the
+<a class="reference internal" href="#scludam.membership.DBME.fit" title="scludam.membership.DBME.fit"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit()</span></code></a> method is called.</p></li>
+<li><p><strong>priors</strong> (<em>Numeric1DArray</em>) – Prior probabilities of each class, only available after the
+<a class="reference internal" href="#scludam.membership.DBME.fit" title="scludam.membership.DBME.fit"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit()</span></code></a> method is called.</p></li>
+<li><p><strong>posteriors</strong> (<em>Numeric2DArray</em>) – Posterior probabilities array of shape (n_datapoints, n_classes),
+only available after the
+<a class="reference internal" href="#scludam.membership.DBME.fit" title="scludam.membership.DBME.fit"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit()</span></code></a> method is called.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos"> 3</span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">multivariate_normal</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="kn">from</span> <span class="nn">scludam</span> <span class="kn">import</span> <span class="n">DBME</span><span class="p">,</span> <span class="n">SHDBSCAN</span>
+<span class="linenos"> 6</span><span class="kn">from</span> <span class="nn">scludam.synthetic</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="linenos"> 7</span>    <span class="n">BivariateUniform</span><span class="p">,</span>
+<span class="linenos"> 8</span>    <span class="n">StarCluster</span><span class="p">,</span>
+<span class="linenos"> 9</span>    <span class="n">StarField</span><span class="p">,</span>
+<span class="linenos">10</span>    <span class="n">Synthetic</span><span class="p">,</span>
+<span class="linenos">11</span>    <span class="n">UniformFrustum</span><span class="p">,</span>
+<span class="linenos">12</span>    <span class="n">polar_to_cartesian</span><span class="p">,</span>
+<span class="linenos">13</span><span class="p">)</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="c1"># generate some data</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="n">fmix</span> <span class="o">=</span> <span class="mf">0.9</span>
+<span class="linenos">18</span><span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="linenos">19</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos">20</span><span class="n">cmix</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">fmix</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_clusters</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="n">field</span> <span class="o">=</span> <span class="n">StarField</span><span class="p">(</span>
+<span class="linenos">23</span>    <span class="n">pm</span><span class="o">=</span><span class="n">BivariateUniform</span><span class="p">(</span><span class="n">locs</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">scales</span><span class="o">=</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">)),</span>
+<span class="linenos">24</span>    <span class="n">space</span><span class="o">=</span><span class="n">UniformFrustum</span><span class="p">(</span><span class="n">locs</span><span class="o">=</span><span class="p">(</span><span class="mi">118</span><span class="p">,</span> <span class="o">-</span><span class="mi">31</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="n">scales</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)),</span>
+<span class="linenos">25</span>    <span class="n">n_stars</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">fmix</span><span class="p">),</span>
+<span class="linenos">26</span><span class="p">)</span>
+<span class="linenos">27</span><span class="n">clusters</span> <span class="o">=</span> <span class="p">[</span>
+<span class="linenos">28</span>    <span class="n">StarCluster</span><span class="p">(</span>
+<span class="linenos">29</span>        <span class="n">space</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">polar_to_cartesian</span><span class="p">([</span><span class="mi">121</span><span class="p">,</span> <span class="o">-</span><span class="mi">28</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">]),</span> <span class="n">cov</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span>
+<span class="linenos">30</span>        <span class="n">pm</span><span class="o">=</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">5.75</span><span class="p">,</span> <span class="mf">7.25</span><span class="p">),</span> <span class="n">cov</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">34</span><span class="p">),</span>
+<span class="linenos">31</span>        <span class="n">n_stars</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">cmix</span><span class="p">),</span>
+<span class="linenos">32</span>    <span class="p">),</span>
+<span class="linenos">33</span><span class="p">]</span>
+<span class="linenos">34</span><span class="n">df</span> <span class="o">=</span> <span class="n">Synthetic</span><span class="p">(</span><span class="n">star_field</span><span class="o">=</span><span class="n">field</span><span class="p">,</span> <span class="n">clusters</span><span class="o">=</span><span class="n">clusters</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">()</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span><span class="c1"># create some random observational error</span>
+<span class="linenos">39</span><span class="n">random_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="linenos">40</span>
+<span class="linenos">41</span><span class="c1"># calculate some initial probabilities</span>
+<span class="linenos">42</span><span class="n">shdbscan</span> <span class="o">=</span> <span class="n">SHDBSCAN</span><span class="p">(</span>
+<span class="linenos">43</span>    <span class="n">min_cluster_size</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">noise_proba_mode</span><span class="o">=</span><span class="s2">&quot;outlier&quot;</span><span class="p">,</span> <span class="n">auto_allow_single_cluster</span><span class="o">=</span><span class="kc">True</span>
+<span class="linenos">44</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos">45</span>
+<span class="linenos">46</span><span class="c1"># use DBME to fit HKDE models and calculate membership probabilities</span>
+<span class="linenos">47</span><span class="n">dbme</span> <span class="o">=</span> <span class="n">DBME</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">shdbscan</span><span class="o">.</span><span class="n">proba</span><span class="p">,</span> <span class="n">random_error</span><span class="p">)</span>
+<span class="linenos">48</span><span class="nb">print</span><span class="p">(</span><span class="n">dbme</span><span class="o">.</span><span class="n">posteriors</span><span class="p">)</span>
+<span class="linenos">49</span><span class="c1"># [[9.45802647e-01 5.41973532e-02]</span>
+<span class="linenos">50</span><span class="c1">#  ...</span>
+<span class="linenos">51</span><span class="c1">#  [2.77988823e-01 7.22011177e-01]]</span>
+<span class="linenos">52</span>
+<span class="linenos">53</span><span class="c1"># plot to compare initial probabilities with membership probabilities</span>
+<span class="linenos">54</span><span class="n">shdbscan</span><span class="o">.</span><span class="n">surfplot</span><span class="p">(</span><span class="n">cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">])</span>
+<span class="linenos">55</span><span class="n">dbme</span><span class="o">.</span><span class="n">surfplot</span><span class="p">(</span><span class="n">cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">])</span>
+<span class="linenos">56</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="_images/init_proba.png" src="_images/init_proba.png" />
+<img alt="_images/dbme.png" src="_images/dbme.png" />
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.membership.DBME.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_proba</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/membership.html#DBME.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.membership.DBME.fit" title="Permalink to this definition"></a></dt>
+<dd><p>Fit models and calculate posteriors probabilities.</p>
+<p>The method takes data and initial probabilities and
+creates density estimators. Prior probabilities are
+taken from the initial probabilities. In each iteration,
+the method calculates the posterior probabilities of each
+datapoint using the density estimates and prior probabilites.
+Also, the method updates the prior probabilities considering
+the posterior probabilities of the past iteration.
+<code class="docutils literal notranslate"><span class="pre">n_iters=1</span></code>
+uses prior probabilities as provided in the initial
+probabilities array. <code class="docutils literal notranslate"><span class="pre">n_iters=2</span></code> (recommended),
+updates the prior probabilities once.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Numeric2DArray</em>) – Data matrix.</p></li>
+<li><p><strong>init_proba</strong> (<em>Numeric2DArray</em>) – Initial posterior probability array.
+Must be of shape (n_samples, n_classes). This probabilities
+are used to create the initial density estimators per class.</p></li>
+<li><p><strong>err</strong> (<em>OptionalNumeric2DArray, optional</em>) – Error parameter to be passed to <a class="reference internal" href="scludam.hkde.html#scludam.hkde.HKDE.fit" title="scludam.hkde.HKDE.fit"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit()</span></code></a>,
+by default None.</p></li>
+<li><p><strong>corr</strong> (<em>OptionalNumericArray, optional</em>) – Correlation parameter to be passed to <a class="reference internal" href="scludam.hkde.html#scludam.hkde.HKDE.fit" title="scludam.hkde.HKDE.fit"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit()</span></code></a>,
+by default None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Fitted instance of the <a class="reference internal" href="#scludam.membership.DBME" title="scludam.membership.DBME"><code class="xref py py-class docutils literal notranslate"><span class="pre">DBME</span></code></a> class.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#scludam.membership.DBME" title="scludam.membership.DBME">DBME</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.membership.DBME.pairplot">
+<span class="sig-name descname"><span class="pre">pairplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/membership.html#DBME.pairplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.membership.DBME.pairplot" title="Permalink to this definition"></a></dt>
+<dd><p>Plot the clustering results in a pairplot.</p>
+<p>It uses the <a class="reference internal" href="scludam.plots.html#scludam.plots.pairprobaplot" title="scludam.plots.pairprobaplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">pairprobaplot()</span></code></a>. The colors
+of the points represent class labels. The sizes
+of the points reresent the probability of belonging to
+the most probable class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Pairplot of the clustering results.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>seaborn.PairGrid</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If the clustering has not been performed yet.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.membership.DBME.tsneplot">
+<span class="sig-name descname"><span class="pre">tsneplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/membership.html#DBME.tsneplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.membership.DBME.tsneplot" title="Permalink to this definition"></a></dt>
+<dd><p>Plot the clustering results in a t-SNE plot.</p>
+<p>It uses the <a class="reference internal" href="scludam.plots.html#scludam.plots.tsneprobaplot" title="scludam.plots.tsneprobaplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">tsneprobaplot()</span></code></a> function.
+It represents the data in a 2 dimensional space using t-SNE.
+The colors of the points represent class labels.
+The sizes of the points represent the probability of belonging
+to the most probable class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Plot of the clustering results.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>matplotlib.axes.Axes</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If the clustering has not been performed yet.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.membership.DBME.scatter3dplot">
+<span class="sig-name descname"><span class="pre">scatter3dplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/membership.html#DBME.scatter3dplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.membership.DBME.scatter3dplot" title="Permalink to this definition"></a></dt>
+<dd><p>Plot the clustering results in a 3D scatter plot.</p>
+<p>It uses the <a class="reference internal" href="scludam.plots.html#scludam.plots.scatter3dprobaplot" title="scludam.plots.scatter3dprobaplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">scatter3dprobaplot()</span></code></a> function.
+It represents the data in a 3 dimensional space using the
+variables given by the user. The colors of the points
+represent class labels. The sizes of the points represent
+the probability of belonging to the most probable class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Plot of the clustering results.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>matplotlib.collections.PathCollection</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If the clustering has not been performed yet.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.membership.DBME.surfplot">
+<span class="sig-name descname"><span class="pre">surfplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/membership.html#DBME.surfplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.membership.DBME.surfplot" title="Permalink to this definition"></a></dt>
+<dd><p>Plot the clustering results in a 3D surface plot.</p>
+<p>It uses the <a class="reference internal" href="scludam.plots.html#scludam.plots.surfprobaplot" title="scludam.plots.surfprobaplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">surfprobaplot()</span></code></a> function.
+The heights of the surface and colors of the points represent
+the probability of belonging to the most probable cluster,
+excluding the noise class. The data is represented in two
+dimensions, given by the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Plot of the clustering results.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>matplotlib.collections.PathCollection</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If the clustering has not been performed yet.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="scludam.masker.html" class="btn btn-neutral float-left" title="scludam.masker module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scludam.plots.html" class="btn btn-neutral float-right" title="scludam.plots module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Simón Pedro González.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
