@@ -872,14 +872,15 @@
                 <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
                 <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_yticks</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
-                <span class="n">x</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span>
-                <span class="n">y</span><span class="p">,</span>
-                <span class="sa">f</span><span class="s2">&quot;quantile: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">outlier_quantile</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="se">\n</span><span class="s2">value: </span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
-                <span class="n">verticalalignment</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">get_yticks</span><span class="p">()):</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_yticks</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+                    <span class="n">x</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span>
+                    <span class="n">y</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;quantile: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">outlier_quantile</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="se">\n</span><span class="s2">value: </span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+                    <span class="n">verticalalignment</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">ax</span></div></div>
 </pre></div>

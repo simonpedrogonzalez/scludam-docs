@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.plots &mdash; scludam 0.2.0 documentation</title>
+  <title>scludam.plots &mdash; scludam 0.3.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -85,17 +85,20 @@
 
 <span class="sd">&quot;&quot;&quot;Module for helper plotting functions.&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
+<span class="c1"># import matplotlib.patches as mp</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1.axes_divider</span> <span class="kn">import</span> <span class="n">make_axes_locatable</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">from</span> <span class="nn">matplotlib.axes</span> <span class="kn">import</span> <span class="n">Axes</span>
 <span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="kn">import</span> <span class="n">Figure</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1.axes_divider</span> <span class="kn">import</span> <span class="n">make_axes_locatable</span>
 <span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
 
 <span class="kn">from</span> <span class="nn">scludam.type_utils</span> <span class="kn">import</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">Numeric1DArray</span><span class="p">,</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="n">NumericArray</span>
 
@@ -145,16 +148,29 @@
 <span class="sd">        a color for each class.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">proba</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">proba</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">proba</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">n_classes</span> <span class="o">=</span> <span class="n">proba</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">color_palette</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="n">palette</span><span class="p">,</span> <span class="n">proba</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_palette</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">proba</span><span class="p">]</span>
-    <span class="n">proba_c</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">sns</span><span class="o">.</span><span class="n">desaturate</span><span class="p">(</span>
-            <span class="n">color_palette</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span>
-            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">n_classes</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">n_classes</span><span class="p">),</span>
-        <span class="p">)</span>
-        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">proba</span>
-    <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">n_classes</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">desaturation_factors</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">proba</span><span class="p">)</span>
+        <span class="n">proba_c</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">sns</span><span class="o">.</span><span class="n">desaturate</span><span class="p">(</span>
+                <span class="n">color_palette</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">des_fact</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">des_fact</span> <span class="ow">in</span> <span class="n">desaturation_factors</span>
+        <span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">proba_c</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">sns</span><span class="o">.</span><span class="n">desaturate</span><span class="p">(</span>
+                <span class="n">color_palette</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span>
+                <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">n_classes</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">n_classes</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">proba</span>
+        <span class="p">]</span>
     <span class="k">return</span> <span class="n">c</span><span class="p">,</span> <span class="n">proba_c</span><span class="p">,</span> <span class="n">color_palette</span></div>
 
 
@@ -217,7 +233,7 @@
     <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data must have at least 3 columns.&quot;</span><span class="p">)</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="s2">&quot;3d&quot;</span><span class="p">})</span>
-    <span class="n">c</span><span class="p">,</span> <span class="n">proba_c</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">color_from_proba</span><span class="p">(</span><span class="n">proba</span><span class="p">,</span> <span class="n">palette</span><span class="p">)</span>
+    <span class="n">c</span><span class="p">,</span> <span class="n">proba_c</span><span class="p">,</span> <span class="n">pal</span> <span class="o">=</span> <span class="n">color_from_proba</span><span class="p">(</span><span class="n">proba</span><span class="p">,</span> <span class="n">palette</span><span class="p">)</span>
     <span class="n">default_kws</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="n">proba_c</span> <span class="k">if</span> <span class="n">desaturate</span> <span class="k">else</span> <span class="n">c</span><span class="p">,</span>
         <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
@@ -233,6 +249,7 @@
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">cols</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">cols</span><span class="p">[</span><span class="n">y</span><span class="p">])</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="n">cols</span><span class="p">[</span><span class="n">z</span><span class="p">])</span>
+
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
 
 
@@ -520,6 +537,8 @@
         <span class="c1"># but only for those bins that are above a certain threshold</span>
         <span class="n">annot_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">hist2D</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">annot_prec</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">annot_threshold</span><span class="p">)</span>
         <span class="n">annot_values</span> <span class="o">=</span> <span class="n">hist2D</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="n">annot_indices</span><span class="o">.</span><span class="n">T</span><span class="p">))]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">annot_prec</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">annot_prec</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">annot_values</span> <span class="o">=</span> <span class="n">annot_values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
         <span class="n">annot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">hist2D</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">xy</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">annot_indices</span><span class="p">):</span>
             <span class="n">annot</span><span class="p">[</span><span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">xy</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">annot_values</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
@@ -620,6 +639,7 @@
         <span class="n">interpolate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">color</span><span class="o">=</span><span class="n">default_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">),</span>
     <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([],</span> <span class="p">[])</span>
     <span class="k">if</span> <span class="n">grid</span><span class="p">:</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;on&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ax</span></div>
@@ -717,6 +737,240 @@
     <span class="k">if</span> <span class="n">grid</span><span class="p">:</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;on&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ax</span><span class="p">,</span> <span class="n">im</span></div>
+
+
+<span class="c1"># def add_label_legend(labels, palette: List[tuple], ax):</span>
+<span class="c1">#     patches = [</span>
+<span class="c1">#         mp.Patch(color=palette[i], label=f&quot;Label {i}&quot;) for i in np.unique(labels)</span>
+<span class="c1">#     ]</span>
+<span class="c1">#     ax.legend(handles=patches)</span>
+<span class="c1">#     return ax</span>
+
+
+<div class="viewcode-block" id="scatter2dprobaplot"><a class="viewcode-back" href="../../scludam.plots.html#scludam.plots.scatter2dprobaplot">[docs]</a><span class="k">def</span> <span class="nf">scatter2dprobaplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">proba</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">labels</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">cols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">palette</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Set1&quot;</span><span class="p">,</span>
+    <span class="n">bg_kws</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span>
+    <span class="n">fr_kws</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a scatter plot with labels and probabilites.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : pd.DataFrame</span>
+<span class="sd">        dataframe with at least 2 columns.</span>
+<span class="sd">    proba : np.ndarray</span>
+<span class="sd">        Probability array.</span>
+<span class="sd">    labels : np.ndarray</span>
+<span class="sd">        Label array.</span>
+<span class="sd">    cols : Optional[List[str]], optional</span>
+<span class="sd">        Axes labels to be used, by default None.</span>
+<span class="sd">        If None, the columns of data are used.</span>
+<span class="sd">    palette : str, optional</span>
+<span class="sd">        Palette to be used to choolse label colors,</span>
+<span class="sd">        by default &quot;Set1&quot;</span>
+<span class="sd">    bg_kws : dict, optional</span>
+<span class="sd">        kwargs to be passed to sns.scatterplot for the</span>
+<span class="sd">        background (noise label [-1]) scatter plot, by default {}.</span>
+<span class="sd">    fr_kws : dict, optional</span>
+<span class="sd">        kwargs to be passed to sns.scatterplot for the</span>
+<span class="sd">        foreground (labels [0, 1, ...]), by default {}.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Axes</span>
+<span class="sd">        Axes with the plot.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If data has less than 2 columns.</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If probability and data have different number of rows.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data must have 2 columns&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">if</span> <span class="n">cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">cols</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+
+    <span class="k">if</span> <span class="n">proba</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;proba must have the same number of rows as data&quot;</span><span class="p">)</span>
+
+    <span class="n">plotdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">proba</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Probability&quot;</span><span class="p">])],</span>
+        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">c</span><span class="p">,</span> <span class="n">proba_c</span><span class="p">,</span> <span class="n">label_c</span> <span class="o">=</span> <span class="n">color_from_proba</span><span class="p">(</span><span class="n">proba</span><span class="p">,</span> <span class="n">palette</span><span class="p">)</span>
+    <span class="n">proba_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">proba_c</span><span class="p">)</span>
+    <span class="c1"># plot background</span>
+    <span class="n">default_kws</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="n">label_c</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">}</span>
+    <span class="n">default_kws</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">bg_kws</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">plotdf</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">cols</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">**</span><span class="n">default_kws</span><span class="p">)</span>
+
+    <span class="n">default_kws</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;sizes&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+        <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;Probability&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">default_kws</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">fr_kws</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+            <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">plotdf</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="n">i</span><span class="p">],</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">cols</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">c</span><span class="o">=</span><span class="n">proba_c</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="n">i</span><span class="p">],</span>
+            <span class="o">**</span><span class="n">default_kws</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1"># add_label_legend(labels, label_c, ax)</span>
+    <span class="k">return</span> <span class="n">ax</span></div>
+
+
+<div class="viewcode-block" id="cm_diagram"><a class="viewcode-back" href="../../scludam.plots.html#scludam.plots.cm_diagram">[docs]</a><span class="k">def</span> <span class="nf">cm_diagram</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">proba</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">labels</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">cols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">palette</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Set1&quot;</span><span class="p">,</span>
+    <span class="n">bg_kws</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span>
+    <span class="n">fr_kws</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot a color magnitude diagram.</span>
+
+<span class="sd">    Invert y axis.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : pd.DataFrame</span>
+<span class="sd">        Dataframe with at least 2 columns.</span>
+<span class="sd">    proba : np.ndarray</span>
+<span class="sd">        Probability array</span>
+<span class="sd">    labels : np.ndarray</span>
+<span class="sd">        Label array</span>
+<span class="sd">    cols : Optional[List[str]], optional</span>
+<span class="sd">        Axis labels, by default None. If None, dataframe</span>
+<span class="sd">        columns are used.</span>
+<span class="sd">    palette : str, optional</span>
+<span class="sd">        Palette to be used for selecting label colors,</span>
+<span class="sd">        by default &quot;Set1&quot;</span>
+<span class="sd">    bg_kws : dict, optional</span>
+<span class="sd">        kwargs to be passed to sns.scatterplot for the</span>
+<span class="sd">        background (noise label [-1]), by default {}</span>
+<span class="sd">    fr_kws : dict, optional</span>
+<span class="sd">        kwargs to be passed to sns.scatterplot for the</span>
+<span class="sd">        foreground (labels [0, 1, ...]), by default {}</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Axes</span>
+<span class="sd">        Axes of the plot.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">scatter2dprobaplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">proba</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">palette</span><span class="p">,</span> <span class="n">bg_kws</span><span class="p">,</span> <span class="n">fr_kws</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Color-Magnitude diagram&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ax</span></div>
+
+
+<span class="c1"># def scatter_with_coors(data, coors, palette=&quot;Paired&quot;, cols=[&quot;x&quot;, &quot;y&quot;], **kwargs):</span>
+<span class="c1">#     if len(coors.shape) == 1:</span>
+<span class="c1">#         coors = np.atleast_2d(coors)</span>
+<span class="c1">#     if isinstance(data, np.ndarray):</span>
+<span class="c1">#         df = pd.DataFrame(data, columns=cols)</span>
+<span class="c1">#     else:</span>
+<span class="c1">#         df = data</span>
+<span class="c1">#         cols = df.columns</span>
+<span class="c1">#     color_palette = sns.color_palette(palette, coors.shape[0])</span>
+<span class="c1">#     default_kws = {</span>
+<span class="c1">#         &quot;marker&quot;: &quot;o&quot;,</span>
+<span class="c1">#         &quot;s&quot;: 10,</span>
+<span class="c1">#         &quot;alpha&quot;: 0.5,</span>
+<span class="c1">#     }</span>
+<span class="c1">#     default_kws.update(kwargs)</span>
+<span class="c1">#     ax = sns.scatterplot(data=df, x=cols[0], y=cols[1], **default_kws)</span>
+
+<span class="c1">#     for i, c in enumerate(coors):</span>
+<span class="c1">#         ax.hlines(</span>
+<span class="c1">#             c[1], xmin=df[cols[0]].min(), xmax=df[cols[0]].max(),</span>
+<span class="c1">#               color=color_palette[i]</span>
+<span class="c1">#         )</span>
+<span class="c1">#         ax.vlines(</span>
+<span class="c1">#             c[0], ymin=df[cols[1]].min(), ymax=df[cols[1]].max(),</span>
+<span class="c1">#               color=color_palette[i]</span>
+<span class="c1">#         )</span>
+
+<span class="c1">#     return ax</span>
+
+
+<div class="viewcode-block" id="plot_objects"><a class="viewcode-back" href="../../scludam.plots.html#scludam.plots.plot_objects">[docs]</a><span class="k">def</span> <span class="nf">plot_objects</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span> <span class="n">Axes</span><span class="p">,</span> <span class="n">cols</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Plot object dataframe in an axis.</span>
+
+<span class="sd">    Object dataframe refers to a pandas dataframe</span>
+<span class="sd">    created from simbad Table result, translated with</span>
+<span class="sd">    :func:`~scludam.fetcher.simbad2gaiacolnames`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pd.DataFrame</span>
+<span class="sd">        Dataframe of objects. must contain at least</span>
+<span class="sd">        &quot;MAIN_ID&quot;, &quot;TYPED_ID&quot; and &quot;OTYPE&quot;.</span>
+<span class="sd">    ax : Axes</span>
+<span class="sd">        Axis to plot on.</span>
+<span class="sd">    cols : list, optional</span>
+<span class="sd">        Columns in the object dataframe to plot in the,</span>
+<span class="sd">        x y axes of ``ax``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Axes</span>
+<span class="sd">        axis with plotted objects.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        _description_</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">necessary_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;MAIN_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;TYPED_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;OTYPE&quot;</span><span class="p">,</span> <span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cols</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">necessary_cols</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)):</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Object dataframe must contain </span><span class="si">{</span><span class="n">necessary_cols</span><span class="si">}</span><span class="s2"> columns, not plotting&quot;</span>
+            <span class="s2">&quot; objects&quot;</span><span class="p">,</span>
+            <span class="ne">UserWarning</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;annot&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;MAIN_ID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;OTYPE&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;TYPED_ID&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">][</span><span class="s2">&quot;annot&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;annot&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;TYPED_ID&quot;</span><span class="p">]</span>
+
+    <span class="n">stardf</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;OTYPE&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Star&quot;</span><span class="p">]</span>
+    <span class="n">nonstardf</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;OTYPE&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;Star&quot;</span><span class="p">]</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">stardf</span><span class="p">[</span><span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">stardf</span><span class="p">[</span><span class="n">cols</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nonstardf</span><span class="p">[</span><span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">nonstardf</span><span class="p">[</span><span class="n">cols</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[[</span><span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cols</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;annot&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">itertuples</span><span class="p">():</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">,</span> <span class="n">annot</span> <span class="o">=</span> <span class="n">row</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">annot</span><span class="p">,</span> <span class="p">(</span><span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">ax</span></div>
 </pre></div>
 
            </div>

@@ -37,9 +37,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">SCLUDAM (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">scludam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="diagrams.html">Diagrams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diagrams.html">Software diagrams</a></li>
 </ul>
 
         </div>
@@ -129,13 +130,21 @@
 </li>
       <li><a href="scludam.rutils.html#scludam.rutils.clean_r_session">clean_r_session() (in module scludam.rutils)</a>
 </li>
-      <li><a href="scludam.utils.html#scludam.utils.Colnames">Colnames (class in scludam.utils)</a>
+      <li><a href="scludam.plots.html#scludam.plots.cm_diagram">cm_diagram() (in module scludam.plots)</a>
+
+      <ul>
+        <li><a href="scludam.pipeline.html#scludam.pipeline.DEP.cm_diagram">(scludam.pipeline.DEP method)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="scludam.utils.html#scludam.utils.Colnames">Colnames (class in scludam.utils)</a>
+</li>
       <li><a href="scludam.plots.html#scludam.plots.color_from_proba">color_from_proba() (in module scludam.plots)</a>
 </li>
       <li><a href="scludam.fetcher.html#scludam.fetcher.Config">Config (class in scludam.fetcher)</a>
+</li>
+      <li><a href="scludam.utils.html#scludam.utils.Colnames.corr">corr() (scludam.utils.Colnames method)</a>
 </li>
       <li><a href="scludam.fetcher.html#scludam.fetcher.Query.count">count() (scludam.fetcher.Query method)</a>
 </li>
@@ -149,18 +158,22 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="scludam.utils.html#scludam.utils.Colnames.data">data() (scludam.utils.Colnames method)</a>
+</li>
       <li><a href="scludam.masker.html#scludam.masker.DataMasker">DataMasker (class in scludam.masker)</a>
 </li>
       <li><a href="scludam.membership.html#scludam.membership.DBME">DBME (class in scludam.membership)</a>
 </li>
       <li><a href="scludam.detection.html#scludam.detection.default_mask">default_mask() (in module scludam.detection)</a>
 </li>
-      <li><a href="scludam.detection.html#scludam.detection.CountPeakDetector.detect">detect() (scludam.detection.CountPeakDetector method)</a>
+      <li><a href="scludam.pipeline.html#scludam.pipeline.DEP">DEP (class in scludam.pipeline)</a>
 </li>
-      <li><a href="scludam.detection.html#scludam.detection.DetectionResult">DetectionResult (class in scludam.detection)</a>
+      <li><a href="scludam.detection.html#scludam.detection.CountPeakDetector.detect">detect() (scludam.detection.CountPeakDetector method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="scludam.detection.html#scludam.detection.DetectionResult">DetectionResult (class in scludam.detection)</a>
+</li>
       <li><a href="scludam.stat_tests.html#scludam.stat_tests.DipDistTest">DipDistTest (class in scludam.stat_tests)</a>
 </li>
       <li><a href="scludam.stat_tests.html#scludam.stat_tests.DipDistTestResult">DipDistTestResult (class in scludam.stat_tests)</a>
@@ -178,6 +191,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="scludam.synthetic.html#scludam.synthetic.EDSD">EDSD (class in scludam.synthetic)</a>
+</li>
+      <li><a href="scludam.utils.html#scludam.utils.Colnames.error">error() (scludam.utils.Colnames method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -198,6 +213,8 @@
       <ul>
         <li><a href="scludam.membership.html#scludam.membership.DBME.fit">(scludam.membership.DBME method)</a>
 </li>
+        <li><a href="scludam.pipeline.html#scludam.pipeline.DEP.fit">(scludam.pipeline.DEP method)</a>
+</li>
         <li><a href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN.fit">(scludam.shdbscan.SHDBSCAN method)</a>
 </li>
       </ul></li>
@@ -217,13 +234,9 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="scludam.utils.html#scludam.utils.Colnames.get_corr_names">get_corr_names() (scludam.utils.Colnames method)</a>
-</li>
-      <li><a href="scludam.utils.html#scludam.utils.Colnames.get_data_names">get_data_names() (scludam.utils.Colnames method)</a>
-</li>
-      <li><a href="scludam.utils.html#scludam.utils.Colnames.get_error_names">get_error_names() (scludam.utils.Colnames method)</a>
-</li>
       <li><a href="scludam.detection.html#scludam.detection.get_histogram_bins">get_histogram_bins() (in module scludam.detection)</a>
+</li>
+      <li><a href="scludam.pipeline.html#scludam.pipeline.DEP.get_simbad_objects">get_simbad_objects() (scludam.pipeline.DEP method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -281,6 +294,10 @@
         <li><a href="scludam.masker.html#scludam.masker.RangeMasker.mask">(scludam.masker.RangeMasker method)</a>
 </li>
       </ul></li>
+      <li><a href="scludam.utils.html#scludam.utils.Colnames.missing_corr">missing_corr() (scludam.utils.Colnames method)</a>
+</li>
+      <li><a href="scludam.utils.html#scludam.utils.Colnames.missing_error">missing_error() (scludam.utils.Colnames method)</a>
+</li>
       <li>
     module
 
@@ -296,6 +313,8 @@
         <li><a href="scludam.masker.html#module-scludam.masker">scludam.masker</a>
 </li>
         <li><a href="scludam.membership.html#module-scludam.membership">scludam.membership</a>
+</li>
+        <li><a href="scludam.pipeline.html#module-scludam.pipeline">scludam.pipeline</a>
 </li>
         <li><a href="scludam.plots.html#module-scludam.plots">scludam.plots</a>
 </li>
@@ -374,6 +393,8 @@
         <li><a href="scludam.hkde.html#scludam.hkde.HKDE.plot">(scludam.hkde.HKDE method)</a>
 </li>
       </ul></li>
+      <li><a href="scludam.plots.html#scludam.plots.plot_objects">plot_objects() (in module scludam.plots)</a>
+</li>
       <li><a href="scludam.hkde.html#scludam.hkde.PluginSelector">PluginSelector (class in scludam.hkde)</a>
 </li>
       <li><a href="scludam.synthetic.html#scludam.synthetic.StarCluster.pm_pdf">pm_pdf() (scludam.synthetic.StarCluster method)</a>
@@ -385,6 +406,8 @@
       <li><a href="scludam.synthetic.html#scludam.synthetic.polar_to_cartesian">polar_to_cartesian() (in module scludam.synthetic)</a>
 </li>
       <li><a href="scludam.synthetic.html#scludam.synthetic.EDSD.ppf">ppf() (scludam.synthetic.EDSD method)</a>
+</li>
+      <li><a href="scludam.pipeline.html#scludam.pipeline.DEP.proba_df">proba_df() (scludam.pipeline.DEP method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -432,6 +455,8 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="scludam.plots.html#scludam.plots.scatter2dprobaplot">scatter2dprobaplot() (in module scludam.plots)</a>
+</li>
       <li><a href="scludam.membership.html#scludam.membership.DBME.scatter3dplot">scatter3dplot() (scludam.membership.DBME method)</a>
 
       <ul>
@@ -439,6 +464,8 @@
 </li>
       </ul></li>
       <li><a href="scludam.plots.html#scludam.plots.scatter3dprobaplot">scatter3dprobaplot() (in module scludam.plots)</a>
+</li>
+      <li><a href="scludam.pipeline.html#scludam.pipeline.DEP.scatterplot">scatterplot() (scludam.pipeline.DEP method)</a>
 </li>
       <li>
     scludam
@@ -483,6 +510,13 @@
 </li>
       </ul></li>
       <li>
+    scludam.pipeline
+
+      <ul>
+        <li><a href="scludam.pipeline.html#module-scludam.pipeline">module</a>
+</li>
+      </ul></li>
+      <li>
     scludam.plots
 
       <ul>
@@ -503,6 +537,8 @@
         <li><a href="scludam.shdbscan.html#module-scludam.shdbscan">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     scludam.stat_tests
 
@@ -510,8 +546,6 @@
         <li><a href="scludam.stat_tests.html#module-scludam.stat_tests">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     scludam.synthetic
 
@@ -535,6 +569,8 @@
       </ul></li>
       <li><a href="scludam.fetcher.html#scludam.fetcher.search_object">search_object() (in module scludam.fetcher)</a>
 </li>
+      <li><a href="scludam.fetcher.html#scludam.fetcher.search_objects_near_data">search_objects_near_data() (in module scludam.fetcher)</a>
+</li>
       <li><a href="scludam.fetcher.html#scludam.fetcher.search_table">search_table() (in module scludam.fetcher)</a>
 </li>
       <li><a href="scludam.fetcher.html#scludam.fetcher.Query.select">select() (scludam.fetcher.Query method)</a>
@@ -542,6 +578,8 @@
       <li><a href="scludam.hkde.html#scludam.hkde.HKDE.set_weights">set_weights() (scludam.hkde.HKDE method)</a>
 </li>
       <li><a href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN">SHDBSCAN (class in scludam.shdbscan)</a>
+</li>
+      <li><a href="scludam.fetcher.html#scludam.fetcher.simbad2gaiacolnames">simbad2gaiacolnames() (in module scludam.fetcher)</a>
 </li>
       <li><a href="scludam.fetcher.html#scludam.fetcher.SimbadResult">SimbadResult (class in scludam.fetcher)</a>
 </li>
@@ -635,13 +673,15 @@
 </li>
       <li><a href="scludam.fetcher.html#scludam.fetcher.Query.where_aen_criterion">where_aen_criterion() (scludam.fetcher.Query method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="scludam.fetcher.html#scludam.fetcher.Query.where_arenou_criterion">where_arenou_criterion() (scludam.fetcher.Query method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="scludam.fetcher.html#scludam.fetcher.Query.where_in_circle">where_in_circle() (scludam.fetcher.Query method)</a>
 </li>
       <li><a href="scludam.fetcher.html#scludam.fetcher.Query.where_or">where_or() (scludam.fetcher.Query method)</a>
+</li>
+      <li><a href="scludam.pipeline.html#scludam.pipeline.DEP.write">write() (scludam.pipeline.DEP method)</a>
 </li>
   </ul></td>
 </tr></table>

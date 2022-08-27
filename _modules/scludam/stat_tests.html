@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.stat_tests &mdash; scludam 0.2.0 documentation</title>
+  <title>scludam.stat_tests &mdash; scludam 0.3.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -91,6 +91,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
@@ -110,7 +111,7 @@
 <span class="kn">from</span> <span class="nn">scludam.type_utils</span> <span class="kn">import</span> <span class="n">Numeric1DArray</span><span class="p">,</span> <span class="n">Numeric2DArray</span>
 
 
-<div class="viewcode-block" id="TestResult"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.TestResult">[docs]</a><span class="nd">@define</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="TestResult"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.TestResult">[docs]</a><span class="nd">@define</span>
 <span class="k">class</span> <span class="nc">TestResult</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Base class to hold the results of a statistical test.</span>
 
@@ -145,7 +146,7 @@
         <span class="k">pass</span></div></div>
 
 
-<div class="viewcode-block" id="HopkinsTestResult"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.HopkinsTestResult">[docs]</a><span class="nd">@define</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="HopkinsTestResult"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.HopkinsTestResult">[docs]</a><span class="nd">@define</span>
 <span class="k">class</span> <span class="nc">HopkinsTestResult</span><span class="p">(</span><span class="n">TestResult</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Results of a Hopkins test.</span>
 
@@ -164,7 +165,7 @@
     <span class="n">pvalue</span><span class="p">:</span> <span class="n">Number</span></div>
 
 
-<div class="viewcode-block" id="HopkinsTest"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.HopkinsTest">[docs]</a><span class="nd">@define</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="HopkinsTest"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.HopkinsTest">[docs]</a><span class="nd">@define</span><span class="p">()</span>
 <span class="k">class</span> <span class="nc">HopkinsTest</span><span class="p">(</span><span class="n">StatTest</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class to perform a Hopkins spatial randomness test.</span>
 
@@ -173,9 +174,12 @@
 <span class="sd">    n_iters : int, optional</span>
 <span class="sd">        Number of iterations to perform the test. Final Hopkins statistic result</span>
 <span class="sd">        is taken as the median of the results, by default is 100.</span>
-<span class="sd">    n_samples : int, optional</span>
-<span class="sd">        Number of samples to take from the data, by default is ``0.1*n`` where n is</span>
-<span class="sd">        the number of points in the data set, as it is the recommended value.</span>
+<span class="sd">    sample_ratio : float, optional</span>
+<span class="sd">        Sample ratio to take from the data, by default is ``0.1``. The number</span>
+<span class="sd">        of samples is ``n*sample_ratio``.</span>
+<span class="sd">    max_samples : int, optional</span>
+<span class="sd">        Number of max samples to take from the data, by default is 100. If</span>
+<span class="sd">        ``n_samples`` is greater than this value, it is set to this value.</span>
 <span class="sd">    metric : Union[str, DistanceMetric], optional</span>
 <span class="sd">        Metric to use for the distance between points, by default is &#39;euclidean&#39;.</span>
 <span class="sd">        Can be str or sklearn.neighbors.DistanceMetric.</span>
@@ -225,9 +229,12 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">metric</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DistanceMetric</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span>
-    <span class="n">n_iters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">sample_ratio</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="p">[</span><span class="n">validators</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">validators</span><span class="o">.</span><span class="n">le</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="p">)</span>
+    <span class="n">max_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DistanceMetric</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">)</span>
+    <span class="n">n_iters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
     <span class="c1"># interpretation:</span>
     <span class="c1"># H0: data comes from uniform distribution</span>
     <span class="c1"># H1: data does not come from uniform distribution</span>
@@ -235,12 +242,23 @@
     <span class="c1"># if h = u/(u+w) ~ .5 =&gt; w ~ u luego no hay estructura</span>
     <span class="c1"># if h &gt; .75 =&gt; reject H0, and in general  indicates a clustering</span>
     <span class="c1"># tendency at the 90% confidence level.</span>
-    <span class="n">threshold</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">pvalue_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span>
+    <span class="n">threshold</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">pvalue_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_pvalue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">beta</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>
+            <span class="c1"># value is a random variate</span>
+            <span class="c1"># that distributes as a beta(n, n)</span>
+            <span class="c1"># that distribution is symmetric</span>
+            <span class="c1"># around .5</span>
+            <span class="c1"># let value = .5 +- e</span>
+            <span class="c1"># get the probability</span>
+            <span class="c1"># p of getting x ∈ (.5-4, .5+4)</span>
+            <span class="c1"># As value close to .5 means support for</span>
+            <span class="c1"># H0: data comes from uniform distribution</span>
+            <span class="c1"># we want to get 1 - p</span>
+            <span class="c1"># so we can compare with pvalue threshold</span>
             <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">-</span> <span class="n">b</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">value</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">value</span><span class="p">)</span> <span class="o">-</span> <span class="n">b</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
@@ -262,14 +280,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">obs</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">n_samples</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">obs</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">n_samples</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">)</span>
+        <span class="n">n_samples</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">obs</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_ratio</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_samples</span><span class="p">,</span> <span class="n">obs</span><span class="p">)</span>
 
         <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_iters</span><span class="p">):</span>
             <span class="n">sample</span> <span class="o">=</span> <span class="n">resample</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;mahalanobis&quot;</span><span class="p">:</span>
                 <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="n">tree</span> <span class="o">=</span> <span class="n">BallTree</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">leaf_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -287,11 +303,11 @@
 
             <span class="n">sample_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sample_nn_distance</span><span class="o">**</span><span class="n">dims</span><span class="p">)</span>
             <span class="n">uniform_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uniform_nn_distance</span><span class="o">**</span><span class="n">dims</span><span class="p">)</span>
-
             <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">uniform_sum</span> <span class="o">/</span> <span class="p">(</span><span class="n">uniform_sum</span> <span class="o">+</span> <span class="n">sample_sum</span><span class="p">))</span>
 
         <span class="n">value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results</span><span class="p">))</span>
         <span class="n">pvalue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_pvalue</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">rejectH0</span> <span class="o">=</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span>
         <span class="k">else</span><span class="p">:</span>
@@ -323,12 +339,14 @@
 <span class="k">class</span> <span class="nc">DipDistTest</span><span class="p">(</span><span class="n">StatTest</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class to perform a Dip-Dist test of multimodality over pairwise distances.</span>
 
+<span class="sd">    The Dip-Dist implementation is based on the Python Dip test wrapper built by</span>
+<span class="sd">    Ralph Ulrus, [2]_.</span>
+
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    n_samples : int, optional</span>
-<span class="sd">        number of samples to take from the data, by default is set to the number</span>
-<span class="sd">        of points in the data set. If n_samples is provided, then it is set to</span>
-<span class="sd">        min(n, n_samples).</span>
+<span class="sd">    max_samples : int, optional</span>
+<span class="sd">        Maximum number of samples to use, by default is ``1000``. If there are more</span>
+<span class="sd">        data points than ``max_samples``, then the data is sampled.</span>
 <span class="sd">    metric : Union[str, DistanceMetric], optional</span>
 <span class="sd">        Metric to use for the distance between points, by default is &#39;euclidean&#39;. Can be</span>
 <span class="sd">        str or sklearn.neighbors.DistanceMetric.</span>
@@ -338,7 +356,7 @@
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    The test analyzes the pairwise distance distribution [2]_ between points</span>
+<span class="sd">    The test analyzes the pairwise distance distribution [3]_ between points</span>
 <span class="sd">    in a data set to determine if said distribution is multimodal.</span>
 <span class="sd">    The null hypothesis is:</span>
 
@@ -348,18 +366,26 @@
 
 <span class="sd">    *  H0: The data set X does not present cluster structure.</span>
 
-<span class="sd">    Hartigan&#39;s Dip statistic [3]_ is the maximum difference between an</span>
-<span class="sd">    empirical distribution and its closest unimodal distribution</span>
-<span class="sd">    calculated using the greatest convex minorant</span>
+<span class="sd">    More specifically, the distance distribution will be unimodal</span>
+<span class="sd">    for uniform data distributions or single cluster distributions.</span>
+<span class="sd">    It will be multimodal when there are several clusters or when</span>
+<span class="sd">    there is an aggregate of a uniform distribution and a cluster.</span>
+<span class="sd">    The Hartigan&#39;s Dip statistic [4]_ can be defined as the maximum</span>
+<span class="sd">    difference between an empirical distribution and its closest</span>
+<span class="sd">    unimodal distribution calculated using the greatest convex minorant</span>
 <span class="sd">    and the least concave majorant of the bounded distribution function.</span>
 
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
+<span class="sd">    .. [3] R. Urlus (2022). A Python/C(++) implementation</span>
+<span class="sd">         of Hartigan &amp; Hartigan&#39;s dip test for unimodality.</span>
+<span class="sd">         https://pypi.org/project/diptest/</span>
 <span class="sd">    .. [2] A. Adolfsson, M. Ackerman, N. C. Brownstein (2018). To Cluster,</span>
 <span class="sd">         or Not to Cluster: An Analysis of Clusterability Methods</span>
 <span class="sd">         . https://doi.org/10.48550/arXiv.1808.08317</span>
-<span class="sd">    .. [3] J. A. Hartigan and P. M. Hartigan (1985). The Dip Test of Unimodality.</span>
-<span class="sd">         Annals of Statistics 13, 70–84. DOI: 10.1214/aos/1176346577</span>
+<span class="sd">    .. [4] J. A. Hartigan and P. M. Hartigan (1985). The Dip Test of Unimodality.</span>
+<span class="sd">         Annals of Statistics 13, 70–84. D</span>
+<span class="sd">         OI: 10.1214/aos/1176346577</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -370,7 +396,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">max_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span>
     <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span>
     <span class="n">pvalue_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span>
 
@@ -391,15 +417,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">obs</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">n_samples</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">n_samples</span> <span class="o">=</span> <span class="n">obs</span>
-
-        <span class="n">sample</span> <span class="o">=</span> <span class="n">resample</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tril</span><span class="p">(</span><span class="n">pairwise_distances</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">obs</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_samples</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">resample</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_samples</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tril</span><span class="p">(</span><span class="n">pairwise_distances</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">)))</span>
         <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">msort</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="n">dist</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">])</span>
-        <span class="n">dip</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">diptest</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">dip</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">diptest</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">sort_x</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">rejectH0</span> <span class="o">=</span> <span class="n">pval</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">pvalue_threshold</span>
         <span class="k">return</span> <span class="n">DipDistTestResult</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">dip</span><span class="p">,</span> <span class="n">pvalue</span><span class="o">=</span><span class="n">pval</span><span class="p">,</span> <span class="n">rejectH0</span><span class="o">=</span><span class="n">rejectH0</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="n">dist</span><span class="p">)</span></div></div>
 
@@ -436,7 +458,7 @@
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    rk_estimator : astropy.stats.RipleysKEstimator, optional</span>
-<span class="sd">        Estimator to use for the Ripleys K function [4]_, by default</span>
+<span class="sd">        Estimator to use for the Ripleys K function [5]_, by default</span>
 <span class="sd">        is None. Only used if</span>
 <span class="sd">        a custom RipleysKEstimator configuration is needed.</span>
 
@@ -448,14 +470,14 @@
 
 <span class="sd">            *   area: is the area of the 2D data set taken as a square window.</span>
 <span class="sd">            *   n: is the number of points in the data set.</span>
-<span class="sd">            *   ripley_factor: are the tabulated values calculated by Ripleys [4]_</span>
+<span class="sd">            *   ripley_factor: are the tabulated values calculated by Ripleys [5]_</span>
 <span class="sd">                to determine p-value significance. Available Ripleys factors</span>
 <span class="sd">                are ``p-value = 0.05`` -&gt; ``factor = 1.42`` and</span>
 <span class="sd">                ``p-value = 0.01`` -&gt; ``factor = 1.68``.</span>
 
 <span class="sd">        #. &quot;chiu&quot;: H0 rejected if ``s &gt; chiu_factor * sqrt(area) / n`` where:</span>
 
-<span class="sd">            *   chiu_factor: are the tabulated values suggested by Chiu [5]_ to</span>
+<span class="sd">            *   chiu_factor: are the tabulated values suggested by Chiu [6]_ to</span>
 <span class="sd">                determine p-value significance. Available Chiu factors are</span>
 <span class="sd">                ``p-value = 0.1 -&gt; factor = 1.31``,</span>
 <span class="sd">                ``p-value = 0.05 -&gt; factor = 1.45`` and</span>
@@ -474,12 +496,21 @@
 <span class="sd">        where max_radius is calculated as:</span>
 
 <span class="sd">            *  ``recommended_radius = short_side_of_rectangular_window / 4``</span>
-<span class="sd">            *  ``recommended_radius_for_large_data_sets = sqrt(100 / pi * n)``</span>
+<span class="sd">            *  ``recommended_radius_for_large_data_sets = sqrt(1000 / (pi * n))``</span>
 <span class="sd">            *  ``max_radius = min(recommended_radius, recommended_radius_for_large_data_sets)``</span>
 
 <span class="sd">        The steps between the radii values are calculated as</span>
 <span class="sd">        ``step = max_radius / 128 / 4``.</span>
-<span class="sd">        This procedure is the recommended one in R spatstat package [6]_.</span>
+<span class="sd">        This procedure is the recommended one in R spatstat package [7]_.</span>
+
+<span class="sd">    max_samples: int, optional</span>
+<span class="sd">        The maximum number of samples to use for the test, by default is 5000. If the</span>
+<span class="sd">        dataset has more than ``max_samples``, then the test is performed on a random sample</span>
+<span class="sd">        of ``max_samples``.</span>
+
+<span class="sd">    factor : float, optional</span>
+<span class="sd">        The factor to use to determine the rejection of H0, by default is None. If factor is</span>
+<span class="sd">        provided, then pvalue_threshold is ignored.</span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
@@ -489,7 +520,7 @@
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    The test calculates the value of an estimate for the L function [7]_ (a</span>
+<span class="sd">    The test calculates the value of an estimate for the L function [8]_ (a</span>
 <span class="sd">    form of Ripleys K function) for a set of radii taken from the</span>
 <span class="sd">    center of the data set, and compares it to the theoretical L</span>
 <span class="sd">    function of a uniform distribution. The null hypothesis is:</span>
@@ -510,16 +541,16 @@
 
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
-<span class="sd">    .. [4] B. D. Ripley (1979). Tests of Randomness for Spatial Point Patterns.</span>
+<span class="sd">    .. [5] B. D. Ripley (1979). Tests of Randomness for Spatial Point Patterns.</span>
 <span class="sd">         J. R. Statist. Soc. B (1979), 41, No.3, pp. 368-374.</span>
 <span class="sd">         https://doi.org/10.1111/j.2517-6161.1979.tb01091.x</span>
-<span class="sd">    .. [5] S. N. Chiu (2007). Correction to Koen&#39;s critical values in testing</span>
+<span class="sd">    .. [6] S. N. Chiu (2007). Correction to Koen&#39;s critical values in testing</span>
 <span class="sd">         spatial randomness. Journal of Statistical Computation and Simulation</span>
 <span class="sd">         2007 77(11-12):1001-1004. DOI: 10.1080/10629360600989147</span>
-<span class="sd">    .. [6] A. Baddeley, R. Turner (2005). Spatstat: An R Package for Analyzing</span>
+<span class="sd">    .. [7] A. Baddeley, R. Turner (2005). Spatstat: An R Package for Analyzing</span>
 <span class="sd">         Spatial Point Patterns. Journal of Statistical Software, 12(6), 1–42.</span>
 <span class="sd">         DOI: 10.18637/jss.v012.i06.</span>
-<span class="sd">    .. [7] J. Besag (1977). Contribution to the Discussion on Dr. Ripley’s</span>
+<span class="sd">    .. [8] J. Besag (1977). Contribution to the Discussion on Dr. Ripley’s</span>
 <span class="sd">         Paper. Journals of the Royal Statistical Society, B39, 193-195.</span>
 
 <span class="sd">    Examples</span>
@@ -532,6 +563,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="n">rk_estimator</span><span class="p">:</span> <span class="n">RipleysKEstimator</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">_used_fitted_rk_estimator</span><span class="p">:</span> <span class="n">RipleysKEstimator</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">_scaler</span><span class="p">:</span> <span class="n">TransformerMixin</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
 
@@ -555,6 +588,8 @@
     <span class="n">factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">pvalue_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+    <span class="n">max_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
 
     <span class="nd">@pvalue_threshold</span><span class="o">.</span><span class="n">validator</span>
     <span class="k">def</span> <span class="nf">_check_pvalue_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -618,10 +653,13 @@
         <span class="k">if</span> <span class="n">data_unique</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
             <span class="n">warn</span><span class="p">(</span>
                 <span class="s2">&quot;There are repeated data points that cause&quot;</span>
-                <span class="s2">&quot; astropy.stats.RipleysKEstimator to break, they will be removed.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot; astropy.stats.RipleysKEstimator to fail, they will be removed.&quot;</span><span class="p">,</span>
                 <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data_unique</span>
+
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_samples</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">resample</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_samples</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="n">obs</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
 
@@ -645,6 +683,8 @@
             <span class="n">radii_max</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">radii_max_ripley</span><span class="p">,</span> <span class="n">radii_max_large</span><span class="p">)</span>
             <span class="n">step</span> <span class="o">=</span> <span class="n">radii_max</span> <span class="o">/</span> <span class="mi">128</span> <span class="o">/</span> <span class="mi">4</span>
             <span class="n">radii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">radii_max</span> <span class="o">+</span> <span class="n">step</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">radii</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radii</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rk_estimator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># Could be extended to other shapes</span>
@@ -652,7 +692,7 @@
             <span class="c1"># available. Could use ConvexHull to get the</span>
             <span class="c1"># area.</span>
             <span class="n">area</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_max</span> <span class="o">-</span> <span class="n">x_min</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y_max</span> <span class="o">-</span> <span class="n">y_min</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rk_estimator</span> <span class="o">=</span> <span class="n">RipleysKEstimator</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fitted_rk_estimator</span> <span class="o">=</span> <span class="n">RipleysKEstimator</span><span class="p">(</span>
                 <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span>
                 <span class="n">x_min</span><span class="o">=</span><span class="n">x_min</span><span class="p">,</span>
                 <span class="n">x_max</span><span class="o">=</span><span class="n">x_max</span><span class="p">,</span>
@@ -660,13 +700,14 @@
                 <span class="n">y_max</span><span class="o">=</span><span class="n">y_max</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rk_estimator</span><span class="o">.</span><span class="n">area</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fitted_rk_estimator</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rk_estimator</span><span class="p">)</span>
+            <span class="n">area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fitted_rk_estimator</span><span class="o">.</span><span class="n">area</span>
 
         <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mode&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># Best mode for rectangular window</span>
             <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;ripley&quot;</span>
 
-        <span class="n">l_function</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rk_estimator</span><span class="o">.</span><span class="n">Lfunction</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">l_function</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fitted_rk_estimator</span><span class="o">.</span><span class="n">Lfunction</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;ks&quot;</span><span class="p">:</span>
             <span class="n">value</span><span class="p">,</span> <span class="n">rejectH0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ks_rule</span><span class="p">(</span><span class="n">l_function</span><span class="p">,</span> <span class="n">radii</span><span class="p">)</span>

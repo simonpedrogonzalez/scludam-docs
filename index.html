@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam (Star CLUster Detection And Membership estimation) &mdash; scludam 0.3.0 documentation</title>
+  <title>SCLUDAM (Star CLUster Detection And Membership estimation) &mdash; scludam 0.3.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="scludam (Star CLUster Detection And Membership estimation)" href="readme.html" /> 
+    <link rel="next" title="SCLUDAM (Star CLUster Detection And Membership estimation)" href="readme.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -39,9 +39,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">SCLUDAM (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">scludam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="diagrams.html">Diagrams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diagrams.html">Software diagrams</a></li>
 </ul>
 
         </div>
@@ -58,7 +59,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</li>
+      <li>SCLUDAM (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -69,7 +70,7 @@
            <div itemprop="articleBody">
              
   <section id="scludam-star-cluster-detection-and-membership-estimation">
-<h1>scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)<a class="headerlink" href="#scludam-star-cluster-detection-and-membership-estimation" title="Permalink to this heading"></a></h1>
+<h1>SCLUDAM (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)<a class="headerlink" href="#scludam-star-cluster-detection-and-membership-estimation" title="Permalink to this heading"></a></h1>
 <a class="reference external image-reference" href="https://travis-ci.com/simonpedrogonzalez/scludam"><img alt="Build Status" src="https://travis-ci.com/simonpedrogonzalez/scludam.svg?branch=main" /></a>
 <a class="reference external image-reference" href="https://simonpedrogonzalez.github.io/scludam-docs/index.html"><img alt="Documentation Status" src="https://readthedocs.org/projects/scludam/badge/?version=latest" /></a>
 <a class="reference external image-reference" href="https://pypi.org/project/scludam/"><img alt="PyPI" src="https://img.shields.io/pypi/v/scludam" /></a>
@@ -99,6 +100,7 @@ email: <a class="reference external" href="mailto:simon&#46;pedro&#46;g&#37;&#52
 <li><p><strong>shdbscan</strong>: soft clustering based on the <strong>HDBSCAN</strong> algorithm.</p></li>
 <li><p><strong>hkde</strong>: kernel density estimation with variable bandwidth.</p></li>
 <li><p><strong>membership</strong>: membership calculation based on <strong>hkde</strong> smoothing.</p></li>
+<li><p><strong>pipeline</strong>: pipeline for the detection and membership estimation, with default values and convenience functions.</p></li>
 </ul>
 </section>
 <hr class="docutils" />
@@ -147,7 +149,7 @@ Full dependencies list:</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">SCLUDAM (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="readme.html#repository-and-issues">Repository and issues</a></li>
 <li class="toctree-l2"><a class="reference internal" href="readme.html#authors">Authors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="readme.html#features">Features</a></li>
@@ -157,12 +159,18 @@ Full dependencies list:</p>
 <li class="toctree-l2"><a class="reference internal" href="readme.html#dev-install">Dev install</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#main-functionality-example">Main functionality example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#documentation-quick-guide">Documentation quick guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#documentation-module-guide">Documentation module guide</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">scludam</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="scludam.html">scludam package</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="diagrams.html">Diagrams</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="diagrams.html#package-diagram">Package diagram</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diagrams.html">Software diagrams</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="diagrams.html#dependency-diagram">Dependency diagram</a></li>
 <li class="toctree-l2"><a class="reference internal" href="diagrams.html#class-diagram">Class diagram</a></li>
 </ul>
 </li>
@@ -183,7 +191,7 @@ Full dependencies list:</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="readme.html" class="btn btn-neutral float-right" title="scludam (Star CLUster Detection And Membership estimation)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="readme.html" class="btn btn-neutral float-right" title="SCLUDAM (Star CLUster Detection And Membership estimation)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

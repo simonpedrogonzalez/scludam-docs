@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quickstart &mdash; scludam 0.3.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="scludam" href="modules.html" />
+    <link rel="prev" title="SCLUDAM (Star CLUster Detection And Membership estimation)" href="readme.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> scludam
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">SCLUDAM (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#main-functionality-example">Main functionality example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation-quick-guide">Documentation quick guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation-module-guide">Documentation module guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">scludam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diagrams.html">Software diagrams</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">scludam</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Quickstart</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading"></a></h1>
+<section id="main-functionality-example">
+<h2>Main functionality example<a class="headerlink" href="#main-functionality-example" title="Permalink to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="kn">from</span> <span class="nn">scludam</span> <span class="kn">import</span> <span class="n">DEP</span><span class="p">,</span> <span class="n">CountPeakDetector</span><span class="p">,</span> <span class="n">HopkinsTest</span><span class="p">,</span> <span class="n">Query</span><span class="p">,</span> <span class="n">RipleysKTest</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="c1"># search some data from GAIA</span>
+<span class="linenos"> 6</span><span class="c1"># with error and correlation</span>
+<span class="linenos"> 7</span><span class="c1"># columns for better KDE</span>
+<span class="linenos"> 8</span><span class="n">df</span> <span class="o">=</span> <span class="p">(</span>
+<span class="linenos"> 9</span>    <span class="n">Query</span><span class="p">()</span>
+<span class="linenos">10</span>    <span class="o">.</span><span class="n">select</span><span class="p">(</span>
+<span class="linenos">11</span>        <span class="s2">&quot;ra&quot;</span><span class="p">,</span>
+<span class="linenos">12</span>        <span class="s2">&quot;dec&quot;</span><span class="p">,</span>
+<span class="linenos">13</span>        <span class="s2">&quot;ra_error&quot;</span><span class="p">,</span>
+<span class="linenos">14</span>        <span class="s2">&quot;dec_error&quot;</span><span class="p">,</span>
+<span class="linenos">15</span>        <span class="s2">&quot;ra_dec_corr&quot;</span><span class="p">,</span>
+<span class="linenos">16</span>        <span class="s2">&quot;pmra&quot;</span><span class="p">,</span>
+<span class="linenos">17</span>        <span class="s2">&quot;pmra_error&quot;</span><span class="p">,</span>
+<span class="linenos">18</span>        <span class="s2">&quot;ra_pmra_corr&quot;</span><span class="p">,</span>
+<span class="linenos">19</span>        <span class="s2">&quot;dec_pmra_corr&quot;</span><span class="p">,</span>
+<span class="linenos">20</span>        <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span>
+<span class="linenos">21</span>        <span class="s2">&quot;pmdec_error&quot;</span><span class="p">,</span>
+<span class="linenos">22</span>        <span class="s2">&quot;ra_pmdec_corr&quot;</span><span class="p">,</span>
+<span class="linenos">23</span>        <span class="s2">&quot;dec_pmdec_corr&quot;</span><span class="p">,</span>
+<span class="linenos">24</span>        <span class="s2">&quot;pmra_pmdec_corr&quot;</span><span class="p">,</span>
+<span class="linenos">25</span>        <span class="s2">&quot;parallax&quot;</span><span class="p">,</span>
+<span class="linenos">26</span>        <span class="s2">&quot;parallax_error&quot;</span><span class="p">,</span>
+<span class="linenos">27</span>        <span class="s2">&quot;parallax_pmra_corr&quot;</span><span class="p">,</span>
+<span class="linenos">28</span>        <span class="s2">&quot;parallax_pmdec_corr&quot;</span><span class="p">,</span>
+<span class="linenos">29</span>        <span class="s2">&quot;ra_parallax_corr&quot;</span><span class="p">,</span>
+<span class="linenos">30</span>        <span class="s2">&quot;dec_parallax_corr&quot;</span><span class="p">,</span>
+<span class="linenos">31</span>        <span class="s2">&quot;phot_g_mean_mag&quot;</span><span class="p">,</span>
+<span class="linenos">32</span>    <span class="p">)</span>
+<span class="linenos">33</span>    <span class="c1"># search for this identifier in simbad</span>
+<span class="linenos">34</span>    <span class="c1"># and bring data in a circle of radius</span>
+<span class="linenos">35</span>    <span class="c1"># 1/2 degree</span>
+<span class="linenos">36</span>    <span class="o">.</span><span class="n">where_in_circle</span><span class="p">(</span><span class="s2">&quot;ngc2168&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="linenos">37</span>    <span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="s2">&quot;parallax&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="linenos">38</span>    <span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="s2">&quot;phot_g_mean_mag&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span> <span class="mi">18</span><span class="p">))</span>
+<span class="linenos">39</span>    <span class="c1"># include some common criteria</span>
+<span class="linenos">40</span>    <span class="c1"># for data precision</span>
+<span class="linenos">41</span>    <span class="o">.</span><span class="n">where_arenou_criterion</span><span class="p">()</span>
+<span class="linenos">42</span>    <span class="o">.</span><span class="n">where_aen_criterion</span><span class="p">()</span>
+<span class="linenos">43</span>    <span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="linenos">44</span>    <span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+<span class="linenos">45</span><span class="p">)</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span><span class="c1"># Build Detection-Estimation Pipeline</span>
+<span class="linenos">48</span><span class="n">dep</span> <span class="o">=</span> <span class="n">DEP</span><span class="p">(</span>
+<span class="linenos">49</span>    <span class="c1"># Detector configuration for the detection step</span>
+<span class="linenos">50</span>    <span class="n">detector</span><span class="o">=</span><span class="n">CountPeakDetector</span><span class="p">(</span>
+<span class="linenos">51</span>        <span class="n">bin_shape</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">],</span>
+<span class="linenos">52</span>        <span class="n">min_score</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="linenos">53</span>    <span class="p">),</span>
+<span class="linenos">54</span>    <span class="n">det_cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;parallax&quot;</span><span class="p">],</span>
+<span class="linenos">55</span>    <span class="n">sample_sigma_factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="linenos">56</span>    <span class="c1"># Clusterability test configuration</span>
+<span class="linenos">57</span>    <span class="n">tests</span><span class="o">=</span><span class="p">[</span>
+<span class="linenos">58</span>        <span class="n">RipleysKTest</span><span class="p">(</span><span class="n">pvalue_threshold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">max_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span>
+<span class="linenos">59</span>        <span class="n">HopkinsTest</span><span class="p">(),</span>
+<span class="linenos">60</span>    <span class="p">],</span>
+<span class="linenos">61</span>    <span class="n">test_cols</span><span class="o">=</span><span class="p">[[</span><span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
+<span class="linenos">62</span>    <span class="c1"># Membership columns to use</span>
+<span class="linenos">63</span>    <span class="n">mem_cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;parallax&quot;</span><span class="p">,</span> <span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">],</span>
+<span class="linenos">64</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="linenos">65</span>
+<span class="linenos">66</span><span class="c1"># plot the results</span>
+<span class="linenos">67</span><span class="n">dep</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">([</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">])</span>
+<span class="linenos">68</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="linenos">69</span>
+<span class="linenos">70</span><span class="c1"># write results to file</span>
+<span class="linenos">71</span><span class="n">dep</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ngc2168_result.fits&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="../../examples/pipeline/dep.png"><img alt="_images/dep.png" src="_images/dep.png" /></a>
+</section>
+<section id="documentation-quick-guide">
+<h2>Documentation quick guide<a class="headerlink" href="#documentation-quick-guide" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>Building queries for GAIA and retrieving data: <a class="reference internal" href="scludam.fetcher.html#scludam.fetcher.Query" title="scludam.fetcher.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a></p></li>
+<li><p>Detection and membership estimation pipeline: <a class="reference internal" href="scludam.pipeline.html#scludam.pipeline.DEP" title="scludam.pipeline.DEP"><code class="xref py py-class docutils literal notranslate"><span class="pre">DEP</span></code></a></p></li>
+<li><p>Detection method: <a class="reference internal" href="scludam.detection.html#scludam.detection.CountPeakDetector" title="scludam.detection.CountPeakDetector"><code class="xref py py-class docutils literal notranslate"><span class="pre">CountPeakDetector</span></code></a></p></li>
+<li><p>Clusterability tests: <a class="reference internal" href="scludam.stat_tests.html#module-scludam.stat_tests" title="scludam.stat_tests"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat_tests</span></code></a></p></li>
+<li><p>Clustering method: <a class="reference internal" href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN" title="scludam.shdbscan.SHDBSCAN"><code class="xref py py-class docutils literal notranslate"><span class="pre">SHDBSCAN</span></code></a></p></li>
+<li><p>Probability Estimation: <a class="reference internal" href="scludam.membership.html#scludam.membership.DBME" title="scludam.membership.DBME"><code class="xref py py-class docutils literal notranslate"><span class="pre">DBME</span></code></a></p></li>
+<li><p>Kernel Density Estimation with per observation bandwidth and plugin method: <a class="reference internal" href="scludam.hkde.html#scludam.hkde.HKDE" title="scludam.hkde.HKDE"><code class="xref py py-class docutils literal notranslate"><span class="pre">HKDE</span></code></a></p></li>
+</ul>
+</section>
+<section id="documentation-module-guide">
+<h2>Documentation module guide<a class="headerlink" href="#documentation-module-guide" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>Query building, SIMBAD object searching and data related functionality: <a class="reference internal" href="scludam.fetcher.html#module-scludam.fetcher" title="scludam.fetcher"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fetcher</span></code></a></p></li>
+<li><p>Detection and membership estimation pipeline: <a class="reference internal" href="scludam.pipeline.html#module-scludam.pipeline" title="scludam.pipeline"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pipeline</span></code></a></p></li>
+<li><p>Detection: <a class="reference internal" href="scludam.detection.html#scludam.detection.CountPeakDetector" title="scludam.detection.CountPeakDetector"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CountPeakDetector</span></code></a></p></li>
+<li><p>Clusterability tests: <a class="reference internal" href="scludam.stat_tests.html#module-scludam.stat_tests" title="scludam.stat_tests"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat_tests</span></code></a></p></li>
+<li><p>Clustering: <a class="reference internal" href="scludam.shdbscan.html#module-scludam.shdbscan" title="scludam.shdbscan"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shdbscan</span></code></a></p></li>
+<li><p>Probability estimation: <a class="reference internal" href="scludam.membership.html#module-scludam.membership" title="scludam.membership"><code class="xref py py-mod docutils literal notranslate"><span class="pre">membership</span></code></a></p></li>
+<li><p>Kernel Density Estimation:  <a class="reference internal" href="scludam.hkde.html#module-scludam.hkde" title="scludam.hkde"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hkde</span></code></a></p></li>
+<li><p>Utils such as GAIA column names interpretation and one hot encoding:  <a class="reference internal" href="scludam.utils.html#module-scludam.utils" title="scludam.utils"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a></p></li>
+<li><p>Custom ploting functions: <a class="reference internal" href="scludam.plots.html#module-scludam.plots" title="scludam.plots"><code class="xref py py-mod docutils literal notranslate"><span class="pre">plots</span></code></a></p></li>
+<li><p>Utils for R communication:  <a class="reference internal" href="scludam.rutils.html#module-scludam.rutils" title="scludam.rutils"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rutils</span></code></a></p></li>
+<li><p>Utils for masking data: <a class="reference internal" href="scludam.masker.html#module-scludam.masker" title="scludam.masker"><code class="xref py py-mod docutils literal notranslate"><span class="pre">masker</span></code></a></p></li>
+<li><p>Useful distributions for data generation: <a class="reference internal" href="scludam.synthetic.html#module-scludam.synthetic" title="scludam.synthetic"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthetic</span></code></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="readme.html" class="btn btn-neutral float-left" title="SCLUDAM (Star CLUster Detection And Membership estimation)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="scludam" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Simón Pedro González.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scludam.pipeline module &mdash; scludam 0.3.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="scludam.plots module" href="scludam.plots.html" />
+    <link rel="prev" title="scludam.membership module" href="scludam.membership.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> scludam
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">SCLUDAM (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">scludam</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="scludam.html">scludam package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="scludam.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html">scludam.detection module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html">scludam.fetcher module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.hkde.html">scludam.hkde module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.masker.html">scludam.masker module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.membership.html">scludam.membership module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">scludam.pipeline module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html">scludam.plots module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.rutils.html">scludam.rutils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.shdbscan.html">scludam.shdbscan module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html">scludam.stat_tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html">scludam.synthetic module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.type_utils.html">scludam.type_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.utils.html">scludam.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.html#module-scludam">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="diagrams.html">Software diagrams</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">scludam</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">scludam</a> &raquo;</li>
+          <li><a href="scludam.html">scludam package</a> &raquo;</li>
+      <li>scludam.pipeline module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/scludam.pipeline.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-scludam.pipeline">
+<span id="scludam-pipeline-module"></span><h1>scludam.pipeline module<a class="headerlink" href="#module-scludam.pipeline" title="Permalink to this heading"></a></h1>
+<p>Module with default Detection and Membership Estimation Pipeline.</p>
+<p>All steps of the process can be configured following the documentation
+for each function.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="kn">from</span> <span class="nn">scludam</span> <span class="kn">import</span> <span class="n">DEP</span><span class="p">,</span> <span class="n">CountPeakDetector</span><span class="p">,</span> <span class="n">HopkinsTest</span><span class="p">,</span> <span class="n">Query</span><span class="p">,</span> <span class="n">RipleysKTest</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="c1"># search some data from GAIA</span>
+<span class="linenos"> 6</span><span class="c1"># with error and correlation</span>
+<span class="linenos"> 7</span><span class="c1"># columns for better KDE</span>
+<span class="linenos"> 8</span><span class="n">df</span> <span class="o">=</span> <span class="p">(</span>
+<span class="linenos"> 9</span>    <span class="n">Query</span><span class="p">()</span>
+<span class="linenos">10</span>    <span class="o">.</span><span class="n">select</span><span class="p">(</span>
+<span class="linenos">11</span>        <span class="s2">&quot;ra&quot;</span><span class="p">,</span>
+<span class="linenos">12</span>        <span class="s2">&quot;dec&quot;</span><span class="p">,</span>
+<span class="linenos">13</span>        <span class="s2">&quot;ra_error&quot;</span><span class="p">,</span>
+<span class="linenos">14</span>        <span class="s2">&quot;dec_error&quot;</span><span class="p">,</span>
+<span class="linenos">15</span>        <span class="s2">&quot;ra_dec_corr&quot;</span><span class="p">,</span>
+<span class="linenos">16</span>        <span class="s2">&quot;pmra&quot;</span><span class="p">,</span>
+<span class="linenos">17</span>        <span class="s2">&quot;pmra_error&quot;</span><span class="p">,</span>
+<span class="linenos">18</span>        <span class="s2">&quot;ra_pmra_corr&quot;</span><span class="p">,</span>
+<span class="linenos">19</span>        <span class="s2">&quot;dec_pmra_corr&quot;</span><span class="p">,</span>
+<span class="linenos">20</span>        <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span>
+<span class="linenos">21</span>        <span class="s2">&quot;pmdec_error&quot;</span><span class="p">,</span>
+<span class="linenos">22</span>        <span class="s2">&quot;ra_pmdec_corr&quot;</span><span class="p">,</span>
+<span class="linenos">23</span>        <span class="s2">&quot;dec_pmdec_corr&quot;</span><span class="p">,</span>
+<span class="linenos">24</span>        <span class="s2">&quot;pmra_pmdec_corr&quot;</span><span class="p">,</span>
+<span class="linenos">25</span>        <span class="s2">&quot;parallax&quot;</span><span class="p">,</span>
+<span class="linenos">26</span>        <span class="s2">&quot;parallax_error&quot;</span><span class="p">,</span>
+<span class="linenos">27</span>        <span class="s2">&quot;parallax_pmra_corr&quot;</span><span class="p">,</span>
+<span class="linenos">28</span>        <span class="s2">&quot;parallax_pmdec_corr&quot;</span><span class="p">,</span>
+<span class="linenos">29</span>        <span class="s2">&quot;ra_parallax_corr&quot;</span><span class="p">,</span>
+<span class="linenos">30</span>        <span class="s2">&quot;dec_parallax_corr&quot;</span><span class="p">,</span>
+<span class="linenos">31</span>        <span class="s2">&quot;phot_g_mean_mag&quot;</span><span class="p">,</span>
+<span class="linenos">32</span>    <span class="p">)</span>
+<span class="linenos">33</span>    <span class="c1"># search for this identifier in simbad</span>
+<span class="linenos">34</span>    <span class="c1"># and bring data in a circle of radius</span>
+<span class="linenos">35</span>    <span class="c1"># 1/2 degree</span>
+<span class="linenos">36</span>    <span class="o">.</span><span class="n">where_in_circle</span><span class="p">(</span><span class="s2">&quot;ngc2168&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="linenos">37</span>    <span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="s2">&quot;parallax&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="linenos">38</span>    <span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="s2">&quot;phot_g_mean_mag&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span> <span class="mi">18</span><span class="p">))</span>
+<span class="linenos">39</span>    <span class="c1"># include some common criteria</span>
+<span class="linenos">40</span>    <span class="c1"># for data precision</span>
+<span class="linenos">41</span>    <span class="o">.</span><span class="n">where_arenou_criterion</span><span class="p">()</span>
+<span class="linenos">42</span>    <span class="o">.</span><span class="n">where_aen_criterion</span><span class="p">()</span>
+<span class="linenos">43</span>    <span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="linenos">44</span>    <span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+<span class="linenos">45</span><span class="p">)</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span><span class="c1"># Build Detection-Estimation Pipeline</span>
+<span class="linenos">48</span><span class="n">dep</span> <span class="o">=</span> <span class="n">DEP</span><span class="p">(</span>
+<span class="linenos">49</span>    <span class="c1"># Detector configuration for the detection step</span>
+<span class="linenos">50</span>    <span class="n">detector</span><span class="o">=</span><span class="n">CountPeakDetector</span><span class="p">(</span>
+<span class="linenos">51</span>        <span class="n">bin_shape</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">],</span>
+<span class="linenos">52</span>        <span class="n">min_score</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="linenos">53</span>    <span class="p">),</span>
+<span class="linenos">54</span>    <span class="n">det_cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;parallax&quot;</span><span class="p">],</span>
+<span class="linenos">55</span>    <span class="n">sample_sigma_factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="linenos">56</span>    <span class="c1"># Clusterability test configuration</span>
+<span class="linenos">57</span>    <span class="n">tests</span><span class="o">=</span><span class="p">[</span>
+<span class="linenos">58</span>        <span class="n">RipleysKTest</span><span class="p">(</span><span class="n">pvalue_threshold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">max_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span>
+<span class="linenos">59</span>        <span class="n">HopkinsTest</span><span class="p">(),</span>
+<span class="linenos">60</span>    <span class="p">],</span>
+<span class="linenos">61</span>    <span class="n">test_cols</span><span class="o">=</span><span class="p">[[</span><span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
+<span class="linenos">62</span>    <span class="c1"># Membership columns to use</span>
+<span class="linenos">63</span>    <span class="n">mem_cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;parallax&quot;</span><span class="p">,</span> <span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">],</span>
+<span class="linenos">64</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="linenos">65</span>
+<span class="linenos">66</span><span class="c1"># plot the results</span>
+<span class="linenos">67</span><span class="n">dep</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">([</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">])</span>
+<span class="linenos">68</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="linenos">69</span>
+<span class="linenos">70</span><span class="c1"># write results to file</span>
+<span class="linenos">71</span><span class="n">dep</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ngc2168_result.fits&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="../../examples/pipeline/dep.png"><img alt="_images/dep.png" src="_images/dep.png" /></a>
+<dl class="py class">
+<dt class="sig sig-object py" id="scludam.pipeline.DEP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scludam.pipeline.</span></span><span class="sig-name descname"><span class="pre">DEP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">detector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="scludam.detection.html#scludam.detection.CountPeakDetector" title="scludam.detection.CountPeakDetector"><span class="pre">CountPeakDetector</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">det_cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tests</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="scludam.stat_tests.html#scludam.stat_tests.StatTest" title="scludam.stat_tests.StatTest"><span class="pre">StatTest</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusterer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN" title="scludam.shdbscan.SHDBSCAN"><span class="pre">SHDBSCAN</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">SHDBSCAN(min_cluster_size=50,</span> <span class="pre">auto_allow_single_cluster=True,</span> <span class="pre">allow_single_cluster=False,</span> <span class="pre">min_samples=None,</span> <span class="pre">metric='euclidean',</span> <span class="pre">noise_proba_mode='conservative',</span> <span class="pre">cluster_proba_mode='hard',</span> <span class="pre">outlier_quantile=None,</span> <span class="pre">scaler=RobustScaler(),</span> <span class="pre">clusterer=None,</span> <span class="pre">_data=None,</span> <span class="pre">_centers_provided=False,</span> <span class="pre">_centers=None,</span> <span class="pre">_n=None,</span> <span class="pre">_d=None,</span> <span class="pre">_unique_labels=None,</span> <span class="pre">n_classes=None,</span> <span class="pre">proba=None,</span> <span class="pre">labels=None,</span> <span class="pre">outlier_scores=None)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="scludam.membership.html#scludam.membership.DBME" title="scludam.membership.DBME"><span class="pre">DBME</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DBME(n_iters=2,</span> <span class="pre">kde_leave1out=True,</span> <span class="pre">kernel_calculation_mode='per_class',</span> <span class="pre">pdf_estimator=HKDE(bw=PluginSelector(nstage=None,</span> <span class="pre">pilot=None,</span> <span class="pre">binned=None,</span> <span class="pre">diag=False),</span> <span class="pre">_kernels=None,</span> <span class="pre">_weights=None,</span> <span class="pre">_covariances=None,</span> <span class="pre">_data=None,</span> <span class="pre">_n=None,</span> <span class="pre">_d=None,</span> <span class="pre">_n_eff=None,</span> <span class="pre">_eff_mask=None,</span> <span class="pre">_maxs=None,</span> <span class="pre">_mins=None),</span> <span class="pre">_n=None,</span> <span class="pre">_d=None,</span> <span class="pre">_unique_labels=None,</span> <span class="pre">_data=None,</span> <span class="pre">_estimators=[],</span> <span class="pre">_iter_priors=[],</span> <span class="pre">_iter_counts=[],</span> <span class="pre">_iter_label_diff=[],</span> <span class="pre">_iter_labels=[],</span> <span class="pre">n_classes=None,</span> <span class="pre">labels=None,</span> <span class="pre">counts=None,</span> <span class="pre">posteriors=None,</span> <span class="pre">priors=None)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'any'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mem_cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_sigma_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_detected</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_estimated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="scludam.stat_tests.html#scludam.stat_tests.TestResult" title="scludam.stat_tests.TestResult"><span class="pre">TestResult</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detection_result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="scludam.detection.html#scludam.detection.DetectionResult" title="scludam.detection.DetectionResult"><span class="pre">DetectionResult</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proba</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">masks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusterers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimators</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_clusterable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colnames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="scludam.utils.html#scludam.utils.Colnames" title="scludam.utils.Colnames"><span class="pre">Colnames</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">objects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/pipeline.html#DEP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.pipeline.DEP" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Detection and membership estimation pipeline.</p>
+<p>Class for running detection and membership estimation
+in a dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>detector</strong> (<a class="reference internal" href="scludam.detection.html#scludam.detection.CountPeakDetector" title="scludam.detection.CountPeakDetector"><em>CountPeakDetector</em></a>) – Detector to use, it is required and should not be fitted.</p></li>
+<li><p><strong>det_cols</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Columns to use for detection. Should be a subset of
+the columns in the dataframe to be used.</p></li>
+<li><p><strong>sample_sigma_factor</strong> (<em>float</em><em>, </em><em>optional</em>) – Factor to multiply the sigma of the detection region, in order
+to get a region sample for the overdensity detected, by default 1.
+Take into account that the sigma used is currently the
+bin shape in each dimension.</p></li>
+<li><p><strong>tests</strong> (<em>List</em><em>[</em><a class="reference internal" href="scludam.stat_tests.html#scludam.stat_tests.StatTest" title="scludam.stat_tests.StatTest"><em>StatTest</em></a><em>]</em><em>, </em><em>optional</em>) – Statistical tests to use for detection, optional, by default [].
+The list can include a non fitted
+instance of <a class="reference internal" href="scludam.stat_tests.html#scludam.stat_tests.StatTest" title="scludam.stat_tests.StatTest"><code class="xref py py-class docutils literal notranslate"><span class="pre">StatTest</span></code></a>.</p></li>
+<li><p><strong>test_cols</strong> (<em>List</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Columns to use for statistical tests, optional, by default [].
+Note that the list must have the same length as the tests list,
+and each item is a list of columns to use for the statistical test.</p></li>
+<li><p><strong>test_mode</strong> (<em>str</em><em>, </em><em>optional</em>) – Mode to use for statistical tests, optional, by default ‘any’. If ‘any’,
+the test is considered passed if any of the stat tests results
+in the rejection of their null hypothesis. Other options
+are ‘all’ and ‘majority’.</p></li>
+<li><p><strong>clusterer</strong> (<a class="reference internal" href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN" title="scludam.shdbscan.SHDBSCAN"><em>SHDBSCAN</em></a><em>, </em><em>optional</em>) – Clusterer to be used to get the initial probabilities. By default,
+an instance of <a class="reference internal" href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN" title="scludam.shdbscan.SHDBSCAN"><code class="xref py py-class docutils literal notranslate"><span class="pre">SHDBSCAN</span></code></a> with the
+following parameters:
+auto_allow_single_cluster=True, noise_proba_mode=”conservative”,
+cluster_proba_mode=”hard”, scaler=RobustScaler()
+(from sklearn.preprocessing).</p></li>
+<li><p><strong>estimator</strong> (<a class="reference internal" href="scludam.membership.html#scludam.membership.DBME" title="scludam.membership.DBME"><em>DBME</em></a><em>, </em><em>optional</em>) – Estimator to use for membership estimation, by default an instance of
+<a class="reference internal" href="scludam.membership.html#scludam.membership.DBME" title="scludam.membership.DBME"><code class="xref py py-class docutils literal notranslate"><span class="pre">DBME</span></code></a> with the default parameters.</p></li>
+<li><p><strong>mem_cols</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Columns to use for membership estimation, by default, <code class="docutils literal notranslate"><span class="pre">det_cols</span></code>.
+Should be a subset of the columns in the dataframe to be used. It is
+recommended to use the same columns as for detection, or at least some
+of them, so center estimation can be used for better clustering. For the
+estimation process, error and correlation columns can be used if they are
+available in the dataframe. For example, if mem_cols is [‘x’, ‘y’],
+the program will check if columns ‘x_error’, ‘y_error’, ‘x_y_corr’ are
+present.</p></li>
+<li><p><strong>n_detected</strong> (<em>int</em>) – Output attribute, number of overdensities detected.</p></li>
+<li><p><strong>detection_result</strong> (<a class="reference internal" href="scludam.detection.html#scludam.detection.DetectionResult" title="scludam.detection.DetectionResult"><em>DetectionResult</em></a>) – Output attribute, result of the detection.</p></li>
+<li><p><strong>test_results</strong> (<em>List</em><em>[</em><a class="reference internal" href="scludam.stat_tests.html#scludam.stat_tests.TestResult" title="scludam.stat_tests.TestResult"><em>TestResult</em></a><em>]</em>) – Output attribute, list of statistical test results.</p></li>
+<li><p><strong>is_clusterable</strong> (<em>List</em><em>[</em><em>bool</em><em>]</em>) – Output attribute, list of decisions taken
+in the tests, whether the overdensity can be clustered.</p></li>
+<li><p><strong>n_estimated</strong> (<em>int</em>) – Output attribute, number of overdensities estimated, that is,
+overdensities that passed the tests.</p></li>
+<li><p><strong>proba</strong> (<em>np.ndarray</em>) – Output attribute, membership probabilities of each
+cluster found.</p></li>
+<li><p><strong>labels</strong> (<em>np.ndarray</em>) – Output attribute, label of each data point, starting
+from -1 (noise).</p></li>
+<li><p><strong>limits</strong> (<em>List</em><em>[</em><em>Numeric1DArray</em><em>]</em>) – Output attribute, list of limits used for each detection region.</p></li>
+<li><p><strong>masks</strong> (<em>List</em><em>[</em><em>NDArray</em><em>[</em><em>bool</em><em>]</em><em>]</em>) – Output attribute, list of masks used for each detection region.</p></li>
+<li><p><strong>clusterers</strong> (<em>List</em><em>[</em><a class="reference internal" href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN" title="scludam.shdbscan.SHDBSCAN"><em>SHDBSCAN</em></a><em>]</em>) – Output attribute, list of clusterers used for each detection region.</p></li>
+<li><p><strong>estimators</strong> (<em>List</em><em>[</em><a class="reference internal" href="scludam.membership.html#scludam.membership.DBME" title="scludam.membership.DBME"><em>DBME</em></a><em>]</em>) – Output attribute, list of estimators used for each detection region.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.pipeline.DEP.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/pipeline.html#DEP.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.pipeline.DEP.fit" title="Permalink to this definition"></a></dt>
+<dd><p>Perform the detection and membership estimation.</p>
+<p>NaNs are dropped from the dataframe copy and are
+not taken into account.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pd.DataFrame</em>) – Data frame.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Fitted instance of DEP.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#scludam.pipeline.DEP" title="scludam.pipeline.DEP">DEP</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.pipeline.DEP.proba_df">
+<span class="sig-name descname"><span class="pre">proba_df</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/pipeline.html#DEP.proba_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.pipeline.DEP.proba_df" title="Permalink to this definition"></a></dt>
+<dd><p>Return the data frame with the probabilities.</p>
+<p>Returns the full dataframe used for the process
+added columns for the labels and the probabilites.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Data with probabilities</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If DEP instance is not fitted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.pipeline.DEP.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/pipeline.html#DEP.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.pipeline.DEP.write" title="Permalink to this definition"></a></dt>
+<dd><p>Write the data frame with the probabilities to a file.</p>
+<p>Writes the data frame used for the process
+with labels and probabilities to a file. kwargs are
+passed to the astropy.table.Table.write method.
+Default kwargs are “overwrite”=True and
+“format”=”fits”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Full filepath with filename.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – If DEP instance is not fitted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.pipeline.DEP.cm_diagram">
+<span class="sig-name descname"><span class="pre">cm_diagram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['bp_rp',</span> <span class="pre">'phot_g_mean_mag']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotcols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_objects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/pipeline.html#DEP.cm_diagram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.pipeline.DEP.cm_diagram" title="Permalink to this definition"></a></dt>
+<dd><p>Color-magnitude diagram.</p>
+<p>Plots a 2d color magnitude diagram of the
+data, labels and probabilities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cols</strong> (<em>list, optional</em>) – Dataframe columns to be used,
+by default [“bp_rp”, “phot_g_mean_mag”].
+If the columns are not present in the dataframe, a KeyError
+is raised.</p></li>
+<li><p><strong>plotcols</strong> (<em>List[str], optional</em>) – Colnames used for the axis labels in the plot, by default None.</p></li>
+<li><p><strong>plot_objects</strong> (<em>bool, optional</em>) – Whether to plot objects found in the data region, by default True.
+By default the objects retrieved are of simbad otype “Cl*”, meaning
+star clusters. This can be changed executing the function
+<a class="reference internal" href="#scludam.pipeline.DEP.get_simbad_objects" title="scludam.pipeline.DEP.get_simbad_objects"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_simbad_objects()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Axis of the plot</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Axes</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – If DEP instance is not fitted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.pipeline.DEP.scatterplot">
+<span class="sig-name descname"><span class="pre">scatterplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['ra',</span> <span class="pre">'dec']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotcols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_objects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/pipeline.html#DEP.scatterplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.pipeline.DEP.scatterplot" title="Permalink to this definition"></a></dt>
+<dd><p>Scatter plot with results.</p>
+<p>Plots a 2d scatterplot of the data, labels and probabilities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cols</strong> (<em>List[str], optional</em>) – Dataframe columns to be used, by default [“ra”, “dec”].
+If the columns are not present in the dataframe, a KeyError
+is raised.</p></li>
+<li><p><strong>plotcols</strong> (<em>Optional[List[str]], optional</em>) – Names of the axes labels to be used, by default None. If
+None, <code class="docutils literal notranslate"><span class="pre">cols</span></code> are used.</p></li>
+<li><p><strong>plot_objects</strong> (<em>bool, optional</em>) – Whether to plot simbad objects found in the data region,
+by default True.
+By default the objects retrieved are of simbad otype “Cl*”, meaning
+star clusters. This can be changed executing the function
+<a class="reference internal" href="#scludam.pipeline.DEP.get_simbad_objects" title="scludam.pipeline.DEP.get_simbad_objects"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_simbad_objects()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Axis of the plot</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Axes</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – If DEP instance is not fitted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.pipeline.DEP.get_simbad_objects">
+<span class="sig-name descname"><span class="pre">get_simbad_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/pipeline.html#DEP.get_simbad_objects"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.pipeline.DEP.get_simbad_objects" title="Permalink to this definition"></a></dt>
+<dd><p>Get simbad objects found in the data region.</p>
+<p>kwargs are passed to the
+<a class="reference internal" href="scludam.fetcher.html#scludam.fetcher.search_objects_near_data" title="scludam.fetcher.search_objects_near_data"><code class="xref py py-func docutils literal notranslate"><span class="pre">search_objects_near_data()</span></code></a>
+function. If executed, scatterplot and cm_diagram will
+plot the objects found in the data region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Table with the objects found.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>astropy.table.Table</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If DEP instance is not fitted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="scludam.membership.html" class="btn btn-neutral float-left" title="scludam.membership module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scludam.plots.html" class="btn btn-neutral float-right" title="scludam.plots module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Simón Pedro González.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

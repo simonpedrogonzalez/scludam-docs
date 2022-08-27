@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.fetcher &mdash; scludam 0.1.0 documentation</title>
+  <title>scludam.fetcher &mdash; scludam 0.3.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -37,9 +37,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">SCLUDAM (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">scludam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../diagrams.html">Diagrams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../diagrams.html">Software diagrams</a></li>
 </ul>
 
         </div>
@@ -123,7 +124,7 @@
 <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Class to hold defaults for a query.&quot;&quot;&quot;</span>
 
-    <span class="n">MAIN_GAIA_TABLE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;gaiaedr3.gaia_source&quot;</span>
+    <span class="n">MAIN_GAIA_TABLE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;gaiadr3.gaia_source&quot;</span>
     <span class="n">MAIN_GAIA_RA</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ra&quot;</span>
     <span class="n">MAIN_GAIA_DEC</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;dec&quot;</span>
     <span class="n">ROW_LIMIT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
@@ -305,7 +306,7 @@
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
 <span class="sd">    It is recommended to not manually set the attributes of this class,</span>
-<span class="sd">    except for table: str.</span>
+<span class="sd">    except for ``table``.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -721,6 +722,162 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dump_to_file&quot;</span><span class="p">):</span>
             <span class="n">table</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_results</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">table</span></div></div>
+
+
+<span class="n">_gaia2criteria</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ra&quot;</span><span class="p">:</span> <span class="s2">&quot;ra&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dec&quot;</span><span class="p">:</span> <span class="s2">&quot;dec&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pmra&quot;</span><span class="p">:</span> <span class="s2">&quot;pmra&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pmdec&quot;</span><span class="p">:</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;parallax&quot;</span><span class="p">:</span> <span class="s2">&quot;plx&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;phot_g_mean_mag&quot;</span><span class="p">:</span> <span class="s2">&quot;Gmag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;phot_rp_mean_mag&quot;</span><span class="p">:</span> <span class="s2">&quot;Rmag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;phot_bp_mean_mag&quot;</span><span class="p">:</span> <span class="s2">&quot;Bmag&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">_gaia2simbad</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ra&quot;</span><span class="p">:</span> <span class="s2">&quot;RA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dec&quot;</span><span class="p">:</span> <span class="s2">&quot;DEC&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pmra&quot;</span><span class="p">:</span> <span class="s2">&quot;PMRA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pmdec&quot;</span><span class="p">:</span> <span class="s2">&quot;PMDEC&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;parallax&quot;</span><span class="p">:</span> <span class="s2">&quot;PLX_VALUE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;phot_g_mean_mag&quot;</span><span class="p">:</span> <span class="s2">&quot;FLUX_G&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;phot_rp_mean_mag&quot;</span><span class="p">:</span> <span class="s2">&quot;FLUX_R&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;phot_bp_mean_mag&quot;</span><span class="p">:</span> <span class="s2">&quot;FLUX_B&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">_simbad2gaia</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">_gaia2simbad</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+<span class="n">_supported_gaia_cols</span> <span class="o">=</span> <span class="n">_gaia2simbad</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+<span class="n">_supported_simbad_cols</span> <span class="o">=</span> <span class="n">_gaia2simbad</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_coords_to_radec</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s2">&quot;RA&quot;</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">colnames</span> <span class="ow">and</span> <span class="s2">&quot;DEC&quot;</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">colnames</span><span class="p">:</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span>
+            <span class="n">table</span><span class="p">[[</span><span class="s2">&quot;RA&quot;</span><span class="p">,</span> <span class="s2">&quot;DEC&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">hourangle</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">deg</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">table</span><span class="p">[</span><span class="s2">&quot;RA&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">ra</span><span class="o">.</span><span class="n">deg</span>
+        <span class="n">table</span><span class="p">[</span><span class="s2">&quot;DEC&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">dec</span><span class="o">.</span><span class="n">deg</span>
+    <span class="k">return</span> <span class="n">table</span>
+
+
+<div class="viewcode-block" id="search_objects_near_data"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.search_objects_near_data">[docs]</a><span class="k">def</span> <span class="nf">search_objects_near_data</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">allow_missing_values</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Search for objects in an area defined by dataframe.</span>
+
+<span class="sd">    search all simbad objects in an area</span>
+<span class="sd">    defined by a dataframe by the maxs and mins</span>
+<span class="sd">    of the columns in the dataframe with GAIA</span>
+<span class="sd">    colnames.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pd.DataFrame</span>
+<span class="sd">        dataframe with GAIA data. Must contain</span>
+<span class="sd">        ra and dec columns. May also contain &quot;pmra&quot;, &quot;pmdec&quot;, &quot;parallax&quot;,</span>
+<span class="sd">        &quot;phot_g_mean_mag&quot;, &quot;phot_rp_mean_mag&quot;, &quot;phot_bp_mean_mag&quot;. Other</span>
+<span class="sd">        fields are ignored</span>
+<span class="sd">    allow_missing_values : bool, optional</span>
+<span class="sd">        Allow simbad objects with missing value for the columns in the</span>
+<span class="sd">        dataframe to appear in the result table, by default True.</span>
+<span class="sd">    fields : list, optional</span>
+<span class="sd">        extra simbad fields to add, apart from</span>
+<span class="sd">        ``[&quot;parallax&quot;, &quot;propermotions&quot;, &quot;diameter&quot;,</span>
+<span class="sd">        &quot;fluxdata(G)&quot;, &quot;fluxdata(B)&quot;, &quot;fluxdata(R)&quot;]``,</span>
+<span class="sd">        by default []</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    astroquery.table.table.Table</span>
+<span class="sd">        Simbad result table. RA and DEC columns</span>
+<span class="sd">        are parsed into degrees with decimal places.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        No supported columns present in the dataframe.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">_supported_gaia_cols</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No supported columns found&quot;</span><span class="p">)</span>
+
+    <span class="n">simbad</span> <span class="o">=</span> <span class="n">Simbad</span><span class="p">()</span>
+    <span class="n">necessary_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;typed_id&quot;</span><span class="p">,</span> <span class="s2">&quot;coordinates&quot;</span><span class="p">,</span> <span class="s2">&quot;otype&quot;</span><span class="p">]</span>
+    <span class="n">default_fields</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;parallax&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;propermotions&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;diameter&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fluxdata(G)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fluxdata(B)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fluxdata(R)&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">simbad</span><span class="o">.</span><span class="n">add_votable_fields</span><span class="p">(</span><span class="o">*</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">necessary_fields</span> <span class="o">+</span> <span class="n">default_fields</span> <span class="o">+</span> <span class="n">fields</span><span class="p">)))</span>
+
+    <span class="n">mins</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">maxs</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">allow_missing_values</span> <span class="ow">or</span> <span class="s2">&quot;ra&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cols</span> <span class="ow">or</span> <span class="s2">&quot;dec&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+        <span class="n">min_conditions</span> <span class="o">=</span> <span class="s2">&quot; &amp; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_gaia2criteria</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="si">}</span><span class="s2"> &gt;= </span><span class="si">{</span><span class="n">mins</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">max_conditions</span> <span class="o">=</span> <span class="s2">&quot; &amp; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_gaia2criteria</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="si">}</span><span class="s2"> &lt;= </span><span class="si">{</span><span class="n">maxs</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">min_conditions</span> <span class="o">=</span> <span class="s2">&quot; &amp; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_gaia2criteria</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="si">}</span><span class="s2"> &gt;= </span><span class="si">{</span><span class="n">mins</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">]]</span>
+        <span class="p">)</span>
+        <span class="n">max_conditions</span> <span class="o">=</span> <span class="s2">&quot; &amp; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_gaia2criteria</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="si">}</span><span class="s2"> &lt;= </span><span class="si">{</span><span class="n">maxs</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">]]</span>
+        <span class="p">)</span>
+    <span class="n">conditions</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">min_conditions</span><span class="si">}</span><span class="s2"> &amp; </span><span class="si">{</span><span class="n">max_conditions</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">simbad</span><span class="o">.</span><span class="n">query_criteria</span><span class="p">(</span><span class="n">conditions</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">_coords_to_radec</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">allow_missing_values</span> <span class="ow">or</span> <span class="s2">&quot;ra&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cols</span> <span class="ow">or</span> <span class="s2">&quot;dec&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">table</span>
+
+    <span class="n">cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">([</span><span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">]))</span>
+    <span class="n">simbadcols</span> <span class="o">=</span> <span class="p">[</span><span class="n">_gaia2simbad</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">scol</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">simbadcols</span><span class="p">):</span>
+        <span class="n">to_remove</span> <span class="o">=</span> <span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">scol</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">maxs</span><span class="p">[</span><span class="n">col</span><span class="p">])</span><span class="o">.</span><span class="n">data</span> <span class="o">|</span> <span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">scol</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">mins</span><span class="p">[</span><span class="n">col</span><span class="p">])</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">to_remove</span><span class="p">[</span><span class="n">table</span><span class="p">[</span><span class="n">scol</span><span class="p">]</span><span class="o">.</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">mask</span><span class="p">[</span><span class="n">to_remove</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">table</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">table</span></div>
+
+
+<div class="viewcode-block" id="simbad2gaiacolnames"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.simbad2gaiacolnames">[docs]</a><span class="k">def</span> <span class="nf">simbad2gaiacolnames</span><span class="p">(</span><span class="n">table</span><span class="p">:</span> <span class="n">Table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert a simbad table colnames to a gaia table colnames.</span>
+
+<span class="sd">    Only supports translation for &#39;RA&#39;, &#39;DEC&#39;, &#39;PMRA&#39;, &#39;PMDEC&#39;,</span>
+<span class="sd">    &#39;PLX_VALUE&#39;, &#39;FLUX_G&#39;, &#39;FLUX_R&#39;, &#39;FLUX_B&#39;. It also adds</span>
+<span class="sd">    &#39;bp_rp&#39; if &#39;FLUX_B&#39; and &#39;FLUX_R&#39; are present.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    table : astroquery.table.table.Table</span>
+<span class="sd">        simbad table</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    astroquery.table.table.Table</span>
+<span class="sd">        gaia table</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;FLUX_R&quot;</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">colnames</span> <span class="ow">and</span> <span class="s2">&quot;FLUX_B&quot;</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">colnames</span><span class="p">:</span>
+        <span class="n">table</span><span class="p">[</span><span class="s2">&quot;bp_rp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s2">&quot;FLUX_B&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">table</span><span class="p">[</span><span class="s2">&quot;FLUX_R&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">colnames</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">_supported_simbad_cols</span><span class="p">:</span>
+            <span class="n">table</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">_simbad2gaia</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">table</span></div>
 </pre></div>
 
            </div>
