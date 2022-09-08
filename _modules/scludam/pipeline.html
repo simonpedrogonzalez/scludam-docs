@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.pipeline &mdash; scludam 0.3.0 documentation</title>
+  <title>scludam.pipeline &mdash; scludam 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -37,10 +37,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">scludam (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Basic usage of SCLUDAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">SCLUDAM (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">scludam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../diagrams.html">Diagrams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../diagrams.html">Software diagrams</a></li>
 </ul>
 
         </div>
@@ -98,6 +98,7 @@
 
 <span class="sd">.. image:: ../../examples/pipeline/dep.png</span>
 <span class="sd">    :target: ../../examples/pipeline/dep.png</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">copy</span>
@@ -114,7 +115,7 @@
 <span class="kn">from</span> <span class="nn">scludam.fetcher</span> <span class="kn">import</span> <span class="n">search_objects_near_data</span><span class="p">,</span> <span class="n">simbad2gaiacolnames</span>
 <span class="kn">from</span> <span class="nn">scludam.masker</span> <span class="kn">import</span> <span class="n">RangeMasker</span>
 <span class="kn">from</span> <span class="nn">scludam.membership</span> <span class="kn">import</span> <span class="n">DBME</span>
-<span class="kn">from</span> <span class="nn">scludam.plots</span> <span class="kn">import</span> <span class="n">cm_diagram</span><span class="p">,</span> <span class="n">plot_objects</span><span class="p">,</span> <span class="n">scatter2dprobaplot</span>
+<span class="kn">from</span> <span class="nn">scludam.plots</span> <span class="kn">import</span> <span class="n">plot_objects</span><span class="p">,</span> <span class="n">scatter2dprobaplot</span>
 <span class="kn">from</span> <span class="nn">scludam.shdbscan</span> <span class="kn">import</span> <span class="n">SHDBSCAN</span>
 <span class="kn">from</span> <span class="nn">scludam.stat_tests</span> <span class="kn">import</span> <span class="n">StatTest</span><span class="p">,</span> <span class="n">TestResult</span>
 <span class="kn">from</span> <span class="nn">scludam.utils</span> <span class="kn">import</span> <span class="n">Colnames</span>
@@ -505,7 +506,10 @@
         <span class="sd">&quot;&quot;&quot;Color-magnitude diagram.</span>
 
 <span class="sd">        Plots a 2d color magnitude diagram of the</span>
-<span class="sd">        data, labels and probabilities.</span>
+<span class="sd">        data, labels and probabilities. kwargs are passed to the</span>
+<span class="sd">        :func:`~scludam.plots.scatter2dprobaplot`,</span>
+<span class="sd">        some useful kwargs are &quot;select_labels&quot; for choosing which</span>
+<span class="sd">        clusters to plot and &quot;palette&quot; for choosing the color palette.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -536,14 +540,66 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">():</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Not fitted, try running fit()&quot;</span><span class="p">)</span>
         <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span>
-        <span class="n">ax</span> <span class="o">=</span> <span class="n">cm_diagram</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proba</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="n">plotcols</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">scatter2dprobaplot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proba</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="n">plotcols</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">plot_objects</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_plot_objects</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">cols</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ax</span></div>
+
+<div class="viewcode-block" id="DEP.radec_plot"><a class="viewcode-back" href="../../scludam.pipeline.html#scludam.pipeline.DEP.radec_plot">[docs]</a>    <span class="k">def</span> <span class="nf">radec_plot</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">cols</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">],</span>
+        <span class="n">plotcols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">plot_objects</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Color-magnitude diagram.</span>
+
+<span class="sd">        Plots a 2d color magnitude diagram of the</span>
+<span class="sd">        data, labels and probabilities. kwargs are passed to the</span>
+<span class="sd">        :func:`~scludam.plots.scatter2dprobaplot`,</span>
+<span class="sd">        some useful kwargs are &quot;select_labels&quot; for choosing which</span>
+<span class="sd">        clusters to plot and &quot;palette&quot; for choosing the color palette.</span>
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cols : list, optional</span>
+<span class="sd">            Dataframe columns to be used,</span>
+<span class="sd">            by default [&quot;bp_rp&quot;, &quot;phot_g_mean_mag&quot;].</span>
+<span class="sd">            If the columns are not present in the dataframe, a KeyError</span>
+<span class="sd">            is raised.</span>
+<span class="sd">        plotcols : List[str], optional</span>
+<span class="sd">            Colnames used for the axis labels in the plot, by default None.</span>
+<span class="sd">        plot_objects : bool, optional</span>
+<span class="sd">            Whether to plot objects found in the data region, by default True.</span>
+<span class="sd">            By default the objects retrieved are of simbad otype &quot;Cl*&quot;, meaning</span>
+<span class="sd">            star clusters. This can be changed executing the function</span>
+<span class="sd">            :func:`~scludam.pipeline.DEP.get_simbad_objects`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Axes</span>
+<span class="sd">            Axis of the plot</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        Exception</span>
+<span class="sd">            If DEP instance is not fitted.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Not fitted, try running fit()&quot;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">scatter2dprobaplot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proba</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="n">plotcols</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">plot_objects</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_plot_objects</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">cols</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ax</span></div>
 
 <div class="viewcode-block" id="DEP.scatterplot"><a class="viewcode-back" href="../../scludam.pipeline.html#scludam.pipeline.DEP.scatterplot">[docs]</a>    <span class="k">def</span> <span class="nf">scatterplot</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">cols</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">],</span>
+        <span class="n">cols</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">],</span>
         <span class="n">plotcols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">plot_objects</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
@@ -551,6 +607,9 @@
         <span class="sd">&quot;&quot;&quot;Scatter plot with results.</span>
 
 <span class="sd">        Plots a 2d scatterplot of the data, labels and probabilities.</span>
+<span class="sd">        kwargs are passed to the :func:`~scludam.plots.scatter2dprobaplot`,</span>
+<span class="sd">        some useful kwargs are &quot;select_labels&quot; for choosing which</span>
+<span class="sd">        clusters to plot and &quot;palette&quot; for choosing the color palette.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>

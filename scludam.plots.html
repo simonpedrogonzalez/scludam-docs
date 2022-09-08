@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.plots module &mdash; scludam 0.3.0 documentation</title>
+  <title>scludam.plots module &mdash; scludam 1.0.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -387,7 +387,7 @@ passed to matplotlib imshow <a class="footnote-reference brackets" href="#id14" 
 
 <dl class="py function">
 <dt class="sig sig-object py" id="scludam.plots.scatter2dprobaplot">
-<span class="sig-prename descclassname"><span class="pre">scludam.plots.</span></span><span class="sig-name descname"><span class="pre">scatter2dprobaplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proba</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Set1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg_kws</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fr_kws</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/plots.html#scatter2dprobaplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.plots.scatter2dprobaplot" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">scludam.plots.</span></span><span class="sig-name descname"><span class="pre">scatter2dprobaplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proba</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Set1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg_kws</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fg_kws</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/plots.html#scatter2dprobaplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.plots.scatter2dprobaplot" title="Permalink to this definition"></a></dt>
 <dd><p>Create a scatter plot with labels and probabilites.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -395,13 +395,15 @@ passed to matplotlib imshow <a class="footnote-reference brackets" href="#id14" 
 <li><p><strong>data</strong> (<em>pd.DataFrame</em>) – dataframe with at least 2 columns.</p></li>
 <li><p><strong>proba</strong> (<em>np.ndarray</em>) – Probability array.</p></li>
 <li><p><strong>labels</strong> (<em>np.ndarray</em>) – Label array.</p></li>
+<li><p><strong>select_labels</strong> (<em>Optional[Union[List[int], int]], optional</em>) – Select labels to plot, by default None. If None, all
+labels are plotted.</p></li>
 <li><p><strong>cols</strong> (<em>Optional[List[str]], optional</em>) – Axes labels to be used, by default None.
 If None, the columns of data are used.</p></li>
 <li><p><strong>palette</strong> (<em>str, optional</em>) – Palette to be used to choolse label colors,
 by default “Set1”</p></li>
 <li><p><strong>bg_kws</strong> (<em>dict, optional</em>) – kwargs to be passed to sns.scatterplot for the
 background (noise label [-1]) scatter plot, by default {}.</p></li>
-<li><p><strong>fr_kws</strong> (<em>dict, optional</em>) – kwargs to be passed to sns.scatterplot for the
+<li><p><strong>fg_kws</strong> (<em>dict, optional</em>) – kwargs to be passed to sns.scatterplot for the
 foreground (labels [0, 1, …]), by default {}.</p></li>
 </ul>
 </dd>
@@ -416,36 +418,6 @@ foreground (labels [0, 1, …]), by default {}.</p></li>
 <li><p><strong>ValueError</strong> – If data has less than 2 columns.</p></li>
 <li><p><strong>ValueError</strong> – If probability and data have different number of rows.</p></li>
 </ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="scludam.plots.cm_diagram">
-<span class="sig-prename descclassname"><span class="pre">scludam.plots.</span></span><span class="sig-name descname"><span class="pre">cm_diagram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proba</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Set1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg_kws</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fr_kws</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/plots.html#cm_diagram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.plots.cm_diagram" title="Permalink to this definition"></a></dt>
-<dd><p>Plot a color magnitude diagram.</p>
-<p>Invert y axis.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>pd.DataFrame</em>) – Dataframe with at least 2 columns.</p></li>
-<li><p><strong>proba</strong> (<em>np.ndarray</em>) – Probability array</p></li>
-<li><p><strong>labels</strong> (<em>np.ndarray</em>) – Label array</p></li>
-<li><p><strong>cols</strong> (<em>Optional[List[str]], optional</em>) – Axis labels, by default None. If None, dataframe
-columns are used.</p></li>
-<li><p><strong>palette</strong> (<em>str, optional</em>) – Palette to be used for selecting label colors,
-by default “Set1”</p></li>
-<li><p><strong>bg_kws</strong> (<em>dict, optional</em>) – kwargs to be passed to sns.scatterplot for the
-background (noise label [-1]), by default {}</p></li>
-<li><p><strong>fr_kws</strong> (<em>dict, optional</em>) – kwargs to be passed to sns.scatterplot for the
-foreground (labels [0, 1, …]), by default {}</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Axes of the plot.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Axes</p>
 </dd>
 </dl>
 </dd></dl>
@@ -475,6 +447,28 @@ x y axes of <code class="docutils literal notranslate"><span class="pre">ax</spa
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><strong>ValueError</strong> – _description_</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scludam.plots.plot_kernels">
+<span class="sig-prename descclassname"><span class="pre">scludam.plots.</span></span><span class="sig-name descname"><span class="pre">plot_kernels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">means</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">covariances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nstd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/plots.html#plot_kernels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.plots.plot_kernels" title="Permalink to this definition"></a></dt>
+<dd><p>Plot a collection of 2D Gaussians as ellipses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax</strong> (<em>Axes</em>) – ax to plot on</p></li>
+<li><p><strong>means</strong> (<em>np.ndarray</em>) – 2d array of kernel means.</p></li>
+<li><p><strong>covariances</strong> (<em>np.ndarray</em>) – 1d array of 2d covariances (3d array)</p></li>
+<li><p><strong>nstd</strong> (<em>int, optional</em>) – number of standard deviations to draw contour, by default 3</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ax with ploted ellipses.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Axes</p>
 </dd>
 </dl>
 </dd></dl>

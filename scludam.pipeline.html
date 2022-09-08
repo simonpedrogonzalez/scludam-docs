@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.pipeline module &mdash; scludam 0.3.0 documentation</title>
+  <title>scludam.pipeline module &mdash; scludam 1.0.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -297,7 +297,45 @@ Default kwargs are “overwrite”=True and
 <span class="sig-name descname"><span class="pre">cm_diagram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['bp_rp',</span> <span class="pre">'phot_g_mean_mag']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotcols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_objects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/pipeline.html#DEP.cm_diagram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.pipeline.DEP.cm_diagram" title="Permalink to this definition"></a></dt>
 <dd><p>Color-magnitude diagram.</p>
 <p>Plots a 2d color magnitude diagram of the
-data, labels and probabilities.</p>
+data, labels and probabilities. kwargs are passed to the
+<a class="reference internal" href="scludam.plots.html#scludam.plots.scatter2dprobaplot" title="scludam.plots.scatter2dprobaplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">scatter2dprobaplot()</span></code></a>,
+some useful kwargs are “select_labels” for choosing which
+clusters to plot and “palette” for choosing the color palette.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cols</strong> (<em>list, optional</em>) – Dataframe columns to be used,
+by default [“bp_rp”, “phot_g_mean_mag”].
+If the columns are not present in the dataframe, a KeyError
+is raised.</p></li>
+<li><p><strong>plotcols</strong> (<em>List[str], optional</em>) – Colnames used for the axis labels in the plot, by default None.</p></li>
+<li><p><strong>plot_objects</strong> (<em>bool, optional</em>) – Whether to plot objects found in the data region, by default True.
+By default the objects retrieved are of simbad otype “Cl*”, meaning
+star clusters. This can be changed executing the function
+<a class="reference internal" href="#scludam.pipeline.DEP.get_simbad_objects" title="scludam.pipeline.DEP.get_simbad_objects"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_simbad_objects()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Axis of the plot</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Axes</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – If DEP instance is not fitted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scludam.pipeline.DEP.radec_plot">
+<span class="sig-name descname"><span class="pre">radec_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['ra',</span> <span class="pre">'dec']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotcols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_objects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/pipeline.html#DEP.radec_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.pipeline.DEP.radec_plot" title="Permalink to this definition"></a></dt>
+<dd><p>Color-magnitude diagram.</p>
+<p>Plots a 2d color magnitude diagram of the
+data, labels and probabilities. kwargs are passed to the
+<a class="reference internal" href="scludam.plots.html#scludam.plots.scatter2dprobaplot" title="scludam.plots.scatter2dprobaplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">scatter2dprobaplot()</span></code></a>,
+some useful kwargs are “select_labels” for choosing which
+clusters to plot and “palette” for choosing the color palette.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -326,9 +364,12 @@ star clusters. This can be changed executing the function
 
 <dl class="py method">
 <dt class="sig sig-object py" id="scludam.pipeline.DEP.scatterplot">
-<span class="sig-name descname"><span class="pre">scatterplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['ra',</span> <span class="pre">'dec']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotcols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_objects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/pipeline.html#DEP.scatterplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.pipeline.DEP.scatterplot" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">scatterplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['pmra',</span> <span class="pre">'pmdec']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotcols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_objects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/pipeline.html#DEP.scatterplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.pipeline.DEP.scatterplot" title="Permalink to this definition"></a></dt>
 <dd><p>Scatter plot with results.</p>
-<p>Plots a 2d scatterplot of the data, labels and probabilities.</p>
+<p>Plots a 2d scatterplot of the data, labels and probabilities.
+kwargs are passed to the <a class="reference internal" href="scludam.plots.html#scludam.plots.scatter2dprobaplot" title="scludam.plots.scatter2dprobaplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">scatter2dprobaplot()</span></code></a>,
+some useful kwargs are “select_labels” for choosing which
+clusters to plot and “palette” for choosing the color palette.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
