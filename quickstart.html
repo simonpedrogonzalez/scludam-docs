@@ -125,34 +125,41 @@
 <span class="linenos">44</span>    <span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
 <span class="linenos">45</span><span class="p">)</span>
 <span class="linenos">46</span>
-<span class="linenos">47</span><span class="c1"># Build Detection-Estimation Pipeline</span>
-<span class="linenos">48</span><span class="n">dep</span> <span class="o">=</span> <span class="n">DEP</span><span class="p">(</span>
-<span class="linenos">49</span>    <span class="c1"># Detector configuration for the detection step</span>
-<span class="linenos">50</span>    <span class="n">detector</span><span class="o">=</span><span class="n">CountPeakDetector</span><span class="p">(</span>
-<span class="linenos">51</span>        <span class="n">bin_shape</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">],</span>
-<span class="linenos">52</span>        <span class="n">min_score</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-<span class="linenos">53</span>    <span class="p">),</span>
-<span class="linenos">54</span>    <span class="n">det_cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;parallax&quot;</span><span class="p">],</span>
-<span class="linenos">55</span>    <span class="n">sample_sigma_factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-<span class="linenos">56</span>    <span class="c1"># Clusterability test configuration</span>
-<span class="linenos">57</span>    <span class="n">tests</span><span class="o">=</span><span class="p">[</span>
-<span class="linenos">58</span>        <span class="n">RipleysKTest</span><span class="p">(</span><span class="n">pvalue_threshold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">max_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span>
-<span class="linenos">59</span>        <span class="n">HopkinsTest</span><span class="p">(),</span>
-<span class="linenos">60</span>    <span class="p">],</span>
-<span class="linenos">61</span>    <span class="n">test_cols</span><span class="o">=</span><span class="p">[[</span><span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
-<span class="linenos">62</span>    <span class="c1"># Membership columns to use</span>
-<span class="linenos">63</span>    <span class="n">mem_cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;parallax&quot;</span><span class="p">,</span> <span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">],</span>
-<span class="linenos">64</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="linenos">65</span>
-<span class="linenos">66</span><span class="c1"># plot the results</span>
-<span class="linenos">67</span><span class="n">dep</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">([</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">])</span>
-<span class="linenos">68</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="linenos">69</span>
-<span class="linenos">70</span><span class="c1"># write results to file</span>
-<span class="linenos">71</span><span class="n">dep</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ngc2168_result.fits&quot;</span><span class="p">)</span>
+<span class="linenos">47</span><span class="c1"># If data already has been downloaded, you can load it from a file:</span>
+<span class="linenos">48</span><span class="c1"># &gt; from astropy.table.table import Table</span>
+<span class="linenos">49</span><span class="c1"># &gt; df = Table.read(&quot;path_to_my_file/ngc2168_data.fits&quot;).to_pandas()</span>
+<span class="linenos">50</span>
+<span class="linenos">51</span>
+<span class="linenos">52</span><span class="c1"># Build Detection-Estimation Pipeline</span>
+<span class="linenos">53</span><span class="n">dep</span> <span class="o">=</span> <span class="n">DEP</span><span class="p">(</span>
+<span class="linenos">54</span>    <span class="c1"># Detector configuration for the detection step</span>
+<span class="linenos">55</span>    <span class="n">detector</span><span class="o">=</span><span class="n">CountPeakDetector</span><span class="p">(</span>
+<span class="linenos">56</span>        <span class="n">bin_shape</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">],</span>
+<span class="linenos">57</span>        <span class="n">min_score</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="linenos">58</span>    <span class="p">),</span>
+<span class="linenos">59</span>    <span class="n">det_cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;parallax&quot;</span><span class="p">],</span>
+<span class="linenos">60</span>    <span class="n">sample_sigma_factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="linenos">61</span>    <span class="c1"># Clusterability test configuration</span>
+<span class="linenos">62</span>    <span class="n">tests</span><span class="o">=</span><span class="p">[</span>
+<span class="linenos">63</span>        <span class="n">RipleysKTest</span><span class="p">(</span><span class="n">pvalue_threshold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">max_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span>
+<span class="linenos">64</span>        <span class="n">HopkinsTest</span><span class="p">(),</span>
+<span class="linenos">65</span>    <span class="p">],</span>
+<span class="linenos">66</span>    <span class="n">test_cols</span><span class="o">=</span><span class="p">[[</span><span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
+<span class="linenos">67</span>    <span class="c1"># Membership columns to use</span>
+<span class="linenos">68</span>    <span class="n">mem_cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;parallax&quot;</span><span class="p">,</span> <span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">],</span>
+<span class="linenos">69</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="linenos">70</span>
+<span class="linenos">71</span><span class="c1"># plot the results</span>
+<span class="linenos">72</span><span class="n">dep</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">([</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">])</span>
+<span class="linenos">73</span><span class="c1"># zoom on interesting area</span>
+<span class="linenos">74</span><span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="linenos">75</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="linenos">76</span>
+<span class="linenos">77</span><span class="c1"># write results to file</span>
+<span class="linenos">78</span><span class="n">dep</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ngc2168_result.fits&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<a class="reference external image-reference" href="../../examples/pipeline/dep.png"><img alt="_images/dep.png" src="_images/dep.png" /></a>
+<img alt="_images/dep_pmra_pmdec.png" src="_images/dep_pmra_pmdec.png" />
 </section>
 <section id="documentation-quick-guide">
 <h2>Documentation quick guide<a class="headerlink" href="#documentation-quick-guide" title="Permalink to this heading"></a></h2>

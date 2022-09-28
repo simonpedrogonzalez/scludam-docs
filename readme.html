@@ -45,8 +45,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#authors">Authors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#features">Features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#user-install-in-a-conda-environment">User install in a Conda environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#user-install-in-a-conda-environment-recommended">User install in a Conda environment (recommended)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#update-scludam-in-a-conda-environment">Update scludam in a Conda environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#user-install">User install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#user-update">User update</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dev-install">Dev install</a></li>
 </ul>
 </li>
@@ -82,7 +84,7 @@
   <section id="scludam-star-cluster-detection-and-membership-estimation">
 <h1>SCLUDAM (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)<a class="headerlink" href="#scludam-star-cluster-detection-and-membership-estimation" title="Permalink to this heading"></a></h1>
 <a class="reference external image-reference" href="https://travis-ci.com/simonpedrogonzalez/scludam"><img alt="Build Status" src="https://travis-ci.com/simonpedrogonzalez/scludam.svg?branch=main" /></a>
-<a class="reference external image-reference" href="https://simonpedrogonzalez.github.io/scludam-docs/index.html"><img alt="Documentation Status" src="https://readthedocs.org/projects/scludam/badge/?version=latest" /></a>
+<a class="reference external image-reference" href="https://simonpedrogonzalez.github.io/scludam-docs/index.html"><img alt="Documentation Status" src="https://img.shields.io/badge/docs-passing-success" /></a>
 <a class="reference external image-reference" href="https://pypi.org/project/scludam/"><img alt="PyPI" src="https://img.shields.io/pypi/v/scludam" /></a>
 <a class="reference external image-reference" href="https://github.com/simonpedrogonzalez/scludam"><img alt="Python 3.7.6+" src="https://img.shields.io/badge/python-3.7.6+-blue.svg" /></a>
 <a class="reference external image-reference" href="https://github.com/simonpedrogonzalez/scludam"><img alt="Python 3.8+" src="https://img.shields.io/badge/python-3.8+-blue.svg" /></a>
@@ -137,8 +139,8 @@ email: <a class="reference external" href="mailto:simon&#46;pedro&#46;g&#37;&#52
 <li><p>typing_extensions&gt;=4.2.0</p></li>
 </ul>
 </section>
-<section id="user-install-in-a-conda-environment">
-<h2>User install in a Conda environment<a class="headerlink" href="#user-install-in-a-conda-environment" title="Permalink to this heading"></a></h2>
+<section id="user-install-in-a-conda-environment-recommended">
+<h2>User install in a Conda environment (recommended)<a class="headerlink" href="#user-install-in-a-conda-environment-recommended" title="Permalink to this heading"></a></h2>
 <p>Create a conda environment named <code class="docutils literal notranslate"><span class="pre">myscludamenv</span></code> with python3.8 and <code class="docutils literal notranslate"><span class="pre">scludam</span></code> installed</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">myscludamenv</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.8</span> <span class="n">pip</span> <span class="o">--</span><span class="n">yes</span>
 <span class="n">conda</span> <span class="n">activate</span> <span class="n">myscludamenv</span>
@@ -146,10 +148,23 @@ email: <a class="reference external" href="mailto:simon&#46;pedro&#46;g&#37;&#52
 </pre></div>
 </div>
 </section>
+<section id="update-scludam-in-a-conda-environment">
+<h2>Update scludam in a Conda environment<a class="headerlink" href="#update-scludam-in-a-conda-environment" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">activate</span> <span class="n">myscludamenv</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">scludam</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">show</span> <span class="n">scludam</span>
+</pre></div>
+</div>
+</section>
 <section id="user-install">
 <h2>User install<a class="headerlink" href="#user-install" title="Permalink to this heading"></a></h2>
 <p>Install from PyPi:
 <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">scludam</span></code></p>
+</section>
+<section id="user-update">
+<h2>User update<a class="headerlink" href="#user-update" title="Permalink to this heading"></a></h2>
+<p>Update from PyPi:
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">scludam</span></code></p>
 </section>
 <section id="dev-install">
 <h2>Dev install<a class="headerlink" href="#dev-install" title="Permalink to this heading"></a></h2>

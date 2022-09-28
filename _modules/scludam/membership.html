@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.membership &mdash; scludam 1.0.0 documentation</title>
+  <title>scludam.membership &mdash; scludam 1.0.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -92,7 +92,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">attrs</span> <span class="kn">import</span> <span class="n">Factory</span><span class="p">,</span> <span class="n">define</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">validators</span>
 
-<span class="kn">from</span> <span class="nn">scludam</span> <span class="kn">import</span> <span class="n">HKDE</span>
+<span class="kn">from</span> <span class="nn">scludam.hkde</span> <span class="kn">import</span> <span class="n">HKDE</span>
 <span class="kn">from</span> <span class="nn">scludam.plots</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">pairprobaplot</span><span class="p">,</span>
     <span class="n">scatter3dprobaplot</span><span class="p">,</span>
@@ -213,7 +213,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">priors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_iter_priors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">priors</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_posteriors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">densities</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_posteriors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">densities</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_posteriors1</span><span class="p">(</span><span class="n">densities</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_posteriors1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">densities</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">):</span>
         <span class="c1"># probability calculation</span>
         <span class="c1"># P(Ci|x) = Di(x) * P(Ci) / sumj(Dj(x) * P(Cj))</span>
         <span class="n">total_density</span> <span class="o">=</span> <span class="p">(</span>
@@ -224,13 +227,22 @@
         <span class="n">posteriors</span> <span class="o">=</span> <span class="n">densities</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span> <span class="o">/</span> <span class="n">total_density</span>
         <span class="k">return</span> <span class="n">posteriors</span>
 
-    <span class="c1"># def get_posteriors2(self, densities):</span>
+    <span class="k">def</span> <span class="nf">_get_posteriors2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">densities</span><span class="p">):</span>
+        <span class="c1"># probability calculation</span>
+        <span class="c1"># P(Ci|x) = Di(x) / sumj(Dj(x))</span>
+        <span class="n">total_density</span> <span class="o">=</span> <span class="n">densities</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">)</span>
+        <span class="n">posteriors</span> <span class="o">=</span> <span class="n">densities</span> <span class="o">/</span> <span class="n">total_density</span>
+        <span class="k">return</span> <span class="n">posteriors</span>
+
+    <span class="c1"># def _get_posteriors3(self, densities):</span>
     <span class="c1">#     # probability calculation</span>
     <span class="c1">#     # P(Ci|x) = Di(x) / sumj(Dj(x))</span>
     <span class="c1">#     total_density = densities.sum(axis=1, keepdims=True).repeat(</span>
     <span class="c1">#         self.n_classes, axis=1</span>
     <span class="c1">#     )</span>
-    <span class="c1">#     posteriors = densities / total_density</span>
+    <span class="c1">#     posteriors = 10**(np.log(densities) - np.log(total_density))</span>
     <span class="c1">#     return posteriors</span>
 
     <span class="c1"># def get_posteriors3(self, densities):</span>
