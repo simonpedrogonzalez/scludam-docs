@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.hkde &mdash; scludam 1.0.0 documentation</title>
+  <title>scludam.hkde &mdash; scludam 1.0.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -15,6 +15,7 @@
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -88,7 +89,8 @@
 
 <span class="sd">The module provides a class for multivariate Kernel Density Estimation with a bandwidth</span>
 <span class="sd">matrix per observation. Such matrices are created from a baseline bandwidth calculated</span>
-<span class="sd">from the Plugin method. Variable errors and covariances can be added to the matrices.</span>
+<span class="sd">from the Plugin or Rule Of Thumb (scott or silverman) methods. Variable errors and</span>
+<span class="sd">covariances can be added to the matrices.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -98,11 +100,11 @@
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">attrs</span> <span class="kn">import</span> <span class="n">define</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">attrs</span> <span class="kn">import</span> <span class="n">define</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">validators</span>
 <span class="kn">from</span> <span class="nn">beartype</span> <span class="kn">import</span> <span class="n">beartype</span>
 <span class="kn">from</span> <span class="nn">rpy2.robjects</span> <span class="kn">import</span> <span class="n">r</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">multivariate_normal</span>
-<span class="kn">from</span> <span class="nn">statsmodels.stats.correlation_tools</span> <span class="kn">import</span> <span class="n">corr_nearest</span>
+<span class="kn">from</span> <span class="nn">statsmodels.stats.correlation_tools</span> <span class="kn">import</span> <span class="n">corr_nearest</span><span class="p">,</span> <span class="n">cov_nearest</span>
 
 <span class="kn">from</span> <span class="nn">scludam.plots</span> <span class="kn">import</span> <span class="n">bivariate_density_plot</span><span class="p">,</span> <span class="n">univariate_density_plot</span>
 <span class="kn">from</span> <span class="nn">scludam.rutils</span> <span class="kn">import</span> <span class="p">(</span>
@@ -156,7 +158,7 @@
 <span class="sd">    parameter values. All attributes are passed</span>
 <span class="sd">    to ``ks::Hpi`` function.</span>
 
-<span class="sd">    Parameters</span>
+<span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    nstage : int, optional</span>
 <span class="sd">        Number of calculation stages, can be</span>
@@ -222,6 +224,70 @@
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div></div>
 
 
+<div class="viewcode-block" id="RuleOfThumbSelector"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.RuleOfThumbSelector">[docs]</a><span class="nd">@define</span>
+<span class="k">class</span> <span class="nc">RuleOfThumbSelector</span><span class="p">(</span><span class="n">BandwidthSelector</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Bandwidth selector based on the Rule of Thumb method.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rule : str, optional</span>
+<span class="sd">        Name of the rule of thumb to use, by default &quot;scott&quot;.</span>
+<span class="sd">        Can be &quot;scott&quot; or &quot;silverman&quot;.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If rule is not &quot;scott&quot; or &quot;silverman&quot;.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">rule</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;scott&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">validators</span><span class="o">.</span><span class="n">in_</span><span class="p">([</span><span class="s2">&quot;scott&quot;</span><span class="p">,</span> <span class="s2">&quot;silverman&quot;</span><span class="p">]))</span>
+
+    <span class="k">def</span> <span class="nf">_scotts_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="mi">4</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_silverman_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">4.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="mi">4</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_get_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rule</span> <span class="o">==</span> <span class="s2">&quot;scott&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scotts_factor</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">rule</span> <span class="o">==</span> <span class="s2">&quot;silverman&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_silverman_factor</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid rule&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_data_covariance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Numeric2DArray</span><span class="p">,</span> <span class="kc">None</span><span class="p">]):</span>
+        <span class="n">kws</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kws</span><span class="p">[</span><span class="s2">&quot;aweights&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weights</span>
+        <span class="n">data_covariance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+        <span class="n">data_covariance</span> <span class="o">=</span> <span class="n">cov_nearest</span><span class="p">(</span><span class="n">data_covariance</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data_covariance</span>
+
+<div class="viewcode-block" id="RuleOfThumbSelector.get_bw"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.RuleOfThumbSelector.get_bw">[docs]</a>    <span class="nd">@beartype</span>
+    <span class="k">def</span> <span class="nf">get_bw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">Numeric1DArray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate bandwith matrix using the rule of thumb.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : Numeric2DArray</span>
+<span class="sd">            Data to be used</span>
+<span class="sd">        weights : Union[None, Numeric1DArray]</span>
+<span class="sd">            Optional weights to be used.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># This function does not consider the case</span>
+        <span class="c1"># of weights being zero, so they should be at least &gt; 1e-08.</span>
+        <span class="n">data_covariance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_covariance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_factor</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data_covariance</span> <span class="o">*</span> <span class="n">factor</span><span class="o">**</span><span class="mi">2</span></div></div>
+
+
 <div class="viewcode-block" id="HKDE"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.HKDE">[docs]</a><span class="nd">@define</span>
 <span class="k">class</span> <span class="nc">HKDE</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Kernel Density Estimation with variable bandwidth matrices (H).</span>
@@ -243,6 +309,8 @@
 <span class="sd">        *  an Array: the base bandwidth is taken as the given</span>
 <span class="sd">           array. The array shape must be (n, d, d) where n is the</span>
 <span class="sd">           number of observations and d is the number of dimensions.</span>
+<span class="sd">        *  a String: the name of the rule of thumb to be used. One of</span>
+<span class="sd">              &quot;scott&quot; or &quot;silverman&quot;.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -254,9 +322,9 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># input attrs</span>
-    <span class="n">bw</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">BandwidthSelector</span><span class="p">,</span> <span class="n">Number</span><span class="p">,</span> <span class="n">NumericArray</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+    <span class="n">bw</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">BandwidthSelector</span><span class="p">,</span> <span class="n">Number</span><span class="p">,</span> <span class="n">NumericArray</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
         <span class="n">default</span><span class="o">=</span><span class="n">PluginSelector</span><span class="p">(),</span>
-        <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="n">Union</span><span class="p">[</span><span class="n">BandwidthSelector</span><span class="p">,</span> <span class="n">Number</span><span class="p">,</span> <span class="n">NumericArray</span><span class="p">]),</span>
+        <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="n">Union</span><span class="p">[</span><span class="n">BandwidthSelector</span><span class="p">,</span> <span class="n">Number</span><span class="p">,</span> <span class="n">NumericArray</span><span class="p">,</span> <span class="nb">str</span><span class="p">]),</span>
     <span class="p">)</span>
 
     <span class="c1"># internal attrs</span>
@@ -379,6 +447,10 @@
     <span class="k">def</span> <span class="nf">_get_bw_matrices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">,</span> <span class="n">BandwidthSelector</span><span class="p">):</span>
             <span class="n">bw_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="o">.</span><span class="n">get_bw</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_eff_mask</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">bw_matrix</span> <span class="o">=</span> <span class="n">RuleOfThumbSelector</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">)</span><span class="o">.</span><span class="n">get_bw</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_eff_mask</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_eff_mask</span><span class="p">]</span>
+            <span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">:</span>
                 <span class="n">bw_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">)</span>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam &mdash; scludam 1.0.1 documentation</title>
+  <title>scludam &mdash; scludam 1.0.2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -79,19 +80,111 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="scludam.html">scludam package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="scludam.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="scludam.detection.html">scludam.detection module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="scludam.fetcher.html">scludam.fetcher module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="scludam.hkde.html">scludam.hkde module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="scludam.masker.html">scludam.masker module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="scludam.membership.html">scludam.membership module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="scludam.pipeline.html">scludam.pipeline module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="scludam.plots.html">scludam.plots module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="scludam.rutils.html">scludam.rutils module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="scludam.shdbscan.html">scludam.shdbscan module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="scludam.stat_tests.html">scludam.stat_tests module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="scludam.synthetic.html">scludam.synthetic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.detection.html">scludam.detection module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html#scludam.detection.default_mask"><code class="docutils literal notranslate"><span class="pre">default_mask()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html#scludam.detection.fast_std_filter"><code class="docutils literal notranslate"><span class="pre">fast_std_filter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html#scludam.detection.get_histogram_bins"><code class="docutils literal notranslate"><span class="pre">get_histogram_bins()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html#scludam.detection.histogram"><code class="docutils literal notranslate"><span class="pre">histogram()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html#scludam.detection.nyquist_offsets"><code class="docutils literal notranslate"><span class="pre">nyquist_offsets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html#scludam.detection.extend_1dmask"><code class="docutils literal notranslate"><span class="pre">extend_1dmask()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html#scludam.detection.DetectionResult"><code class="docutils literal notranslate"><span class="pre">DetectionResult</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html#scludam.detection.CountPeakDetector"><code class="docutils literal notranslate"><span class="pre">CountPeakDetector</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.fetcher.html">scludam.fetcher module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html#scludam.fetcher.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html#scludam.fetcher.SimbadResult"><code class="docutils literal notranslate"><span class="pre">SimbadResult</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html#scludam.fetcher.search_object"><code class="docutils literal notranslate"><span class="pre">search_object()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html#scludam.fetcher.TableInfo"><code class="docutils literal notranslate"><span class="pre">TableInfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html#scludam.fetcher.search_table"><code class="docutils literal notranslate"><span class="pre">search_table()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html#scludam.fetcher.Query"><code class="docutils literal notranslate"><span class="pre">Query</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html#scludam.fetcher.search_objects_near_data"><code class="docutils literal notranslate"><span class="pre">search_objects_near_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html#scludam.fetcher.simbad2gaiacolnames"><code class="docutils literal notranslate"><span class="pre">simbad2gaiacolnames()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.hkde.html">scludam.hkde module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="scludam.hkde.html#scludam.hkde.BandwidthSelector"><code class="docutils literal notranslate"><span class="pre">BandwidthSelector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.hkde.html#scludam.hkde.PluginSelector"><code class="docutils literal notranslate"><span class="pre">PluginSelector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.hkde.html#scludam.hkde.RuleOfThumbSelector"><code class="docutils literal notranslate"><span class="pre">RuleOfThumbSelector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.hkde.html#scludam.hkde.HKDE"><code class="docutils literal notranslate"><span class="pre">HKDE</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.masker.html">scludam.masker module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="scludam.masker.html#scludam.masker.DataMasker"><code class="docutils literal notranslate"><span class="pre">DataMasker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.masker.html#scludam.masker.RangeMasker"><code class="docutils literal notranslate"><span class="pre">RangeMasker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.masker.html#scludam.masker.CenterMasker"><code class="docutils literal notranslate"><span class="pre">CenterMasker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.masker.html#scludam.masker.DistanceMasker"><code class="docutils literal notranslate"><span class="pre">DistanceMasker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.masker.html#scludam.masker.CrustMasker"><code class="docutils literal notranslate"><span class="pre">CrustMasker</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.membership.html">scludam.membership module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="scludam.membership.html#scludam.membership.DBME"><code class="docutils literal notranslate"><span class="pre">DBME</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.pipeline.html">scludam.pipeline module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="scludam.pipeline.html#scludam.pipeline.DEP"><code class="docutils literal notranslate"><span class="pre">DEP</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.plots.html">scludam.plots module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html#scludam.plots.color_from_proba"><code class="docutils literal notranslate"><span class="pre">color_from_proba()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html#scludam.plots.scatter3dprobaplot"><code class="docutils literal notranslate"><span class="pre">scatter3dprobaplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html#scludam.plots.surfprobaplot"><code class="docutils literal notranslate"><span class="pre">surfprobaplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html#scludam.plots.pairprobaplot"><code class="docutils literal notranslate"><span class="pre">pairprobaplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html#scludam.plots.tsneprobaplot"><code class="docutils literal notranslate"><span class="pre">tsneprobaplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html#scludam.plots.heatmap2D"><code class="docutils literal notranslate"><span class="pre">heatmap2D()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html#scludam.plots.univariate_density_plot"><code class="docutils literal notranslate"><span class="pre">univariate_density_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html#scludam.plots.bivariate_density_plot"><code class="docutils literal notranslate"><span class="pre">bivariate_density_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html#scludam.plots.scatter2dprobaplot"><code class="docutils literal notranslate"><span class="pre">scatter2dprobaplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html#scludam.plots.plot_objects"><code class="docutils literal notranslate"><span class="pre">plot_objects()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html#scludam.plots.plot_kernels"><code class="docutils literal notranslate"><span class="pre">plot_kernels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html#scludam.plots.horizontal_lineplots"><code class="docutils literal notranslate"><span class="pre">horizontal_lineplots()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.rutils.html">scludam.rutils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="scludam.rutils.html#scludam.rutils.disable_r_warnings"><code class="docutils literal notranslate"><span class="pre">disable_r_warnings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.rutils.html#scludam.rutils.disable_r_console_output"><code class="docutils literal notranslate"><span class="pre">disable_r_console_output()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.rutils.html#scludam.rutils.clean_r_session"><code class="docutils literal notranslate"><span class="pre">clean_r_session()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.rutils.html#scludam.rutils.load_r_packages"><code class="docutils literal notranslate"><span class="pre">load_r_packages()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.rutils.html#scludam.rutils.assign_r_args"><code class="docutils literal notranslate"><span class="pre">assign_r_args()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.shdbscan.html">scludam.shdbscan module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="scludam.shdbscan.html#scludam.shdbscan.SHDBSCAN"><code class="docutils literal notranslate"><span class="pre">SHDBSCAN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.stat_tests.html">scludam.stat_tests module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html#scludam.stat_tests.TestResult"><code class="docutils literal notranslate"><span class="pre">TestResult</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html#scludam.stat_tests.StatTest"><code class="docutils literal notranslate"><span class="pre">StatTest</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html#scludam.stat_tests.HopkinsTestResult"><code class="docutils literal notranslate"><span class="pre">HopkinsTestResult</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html#scludam.stat_tests.HopkinsTest"><code class="docutils literal notranslate"><span class="pre">HopkinsTest</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html#scludam.stat_tests.DipDistTestResult"><code class="docutils literal notranslate"><span class="pre">DipDistTestResult</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html#scludam.stat_tests.DipDistTest"><code class="docutils literal notranslate"><span class="pre">DipDistTest</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html#scludam.stat_tests.RipleyKTestResult"><code class="docutils literal notranslate"><span class="pre">RipleyKTestResult</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html#scludam.stat_tests.RipleysKTest"><code class="docutils literal notranslate"><span class="pre">RipleysKTest</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.synthetic.html">scludam.synthetic module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html#scludam.synthetic.is_inside_circle"><code class="docutils literal notranslate"><span class="pre">is_inside_circle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html#scludam.synthetic.is_inside_sphere"><code class="docutils literal notranslate"><span class="pre">is_inside_sphere()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html#scludam.synthetic.cartesian_to_polar"><code class="docutils literal notranslate"><span class="pre">cartesian_to_polar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html#scludam.synthetic.polar_to_cartesian"><code class="docutils literal notranslate"><span class="pre">polar_to_cartesian()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html#scludam.synthetic.EDSD"><code class="docutils literal notranslate"><span class="pre">EDSD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html#scludam.synthetic.UniformSphere"><code class="docutils literal notranslate"><span class="pre">UniformSphere</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html#scludam.synthetic.UniformFrustum"><code class="docutils literal notranslate"><span class="pre">UniformFrustum</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html#scludam.synthetic.UniformCircle"><code class="docutils literal notranslate"><span class="pre">UniformCircle</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html#scludam.synthetic.BivariateUniform"><code class="docutils literal notranslate"><span class="pre">BivariateUniform</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html#scludam.synthetic.TrivariateUniform"><code class="docutils literal notranslate"><span class="pre">TrivariateUniform</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html#scludam.synthetic.StarCluster"><code class="docutils literal notranslate"><span class="pre">StarCluster</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html#scludam.synthetic.StarField"><code class="docutils literal notranslate"><span class="pre">StarField</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html#scludam.synthetic.Synthetic"><code class="docutils literal notranslate"><span class="pre">Synthetic</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="scludam.type_utils.html">scludam.type_utils module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="scludam.utils.html">scludam.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scludam.utils.html">scludam.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="scludam.utils.html#scludam.utils.one_hot_encode"><code class="docutils literal notranslate"><span class="pre">one_hot_encode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="scludam.utils.html#scludam.utils.Colnames"><code class="docutils literal notranslate"><span class="pre">Colnames</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="scludam.html#module-scludam">Module contents</a></li>
