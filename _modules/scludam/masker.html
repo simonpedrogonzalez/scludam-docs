@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.masker &mdash; scludam 1.0.0 documentation</title>
+  <title>scludam.masker &mdash; scludam 1.0.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -15,6 +15,7 @@
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -91,10 +92,11 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">attrs</span> <span class="kn">import</span> <span class="n">define</span>
-<span class="kn">from</span> <span class="nn">scipy.spatial</span> <span class="kn">import</span> <span class="n">ConvexHull</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">pairwise_distances</span>
 
-<span class="kn">from</span> <span class="nn">scludam.synthetic</span> <span class="kn">import</span> <span class="n">is_inside_circle</span><span class="p">,</span> <span class="n">is_inside_sphere</span>
+<span class="c1"># from scipy.spatial import ConvexHull</span>
+<span class="c1"># from sklearn.metrics import pairwise_distances</span>
+
+<span class="c1"># from scludam.synthetic import is_inside_circle, is_inside_sphere</span>
 
 
 <div class="viewcode-block" id="DataMasker"><a class="viewcode-back" href="../../scludam.masker.html#scludam.masker.DataMasker">[docs]</a><span class="k">class</span> <span class="nc">DataMasker</span><span class="p">:</span>
@@ -168,180 +170,181 @@
         <span class="k">return</span> <span class="n">mask</span></div></div>
 
 
-<div class="viewcode-block" id="CenterMasker"><a class="viewcode-back" href="../../scludam.masker.html#scludam.masker.CenterMasker">[docs]</a><span class="nd">@define</span>
-<span class="k">class</span> <span class="nc">CenterMasker</span><span class="p">(</span><span class="n">DataMasker</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Mask from data center and radius.</span>
+<span class="c1"># @define</span>
+<span class="c1"># class CenterMasker(DataMasker):</span>
+<span class="c1">#     &quot;&quot;&quot;Mask from data center and radius.</span>
 
-<span class="sd">    Only works for 2d or 3d.</span>
+<span class="c1">#     Only works for 2d or 3d.</span>
 
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    center: Union[np.ndarray, list]</span>
-<span class="sd">        Center of the mask.</span>
-<span class="sd">    radius: float</span>
-<span class="sd">        Radius of the mask.</span>
+<span class="c1">#     Attributes</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     center: Union[np.ndarray, list]</span>
+<span class="c1">#         Center of the mask.</span>
+<span class="c1">#     radius: float</span>
+<span class="c1">#         Radius of the mask.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
 
-    <span class="n">center</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
-    <span class="n">radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+<span class="c1">#     center: Union[list, np.ndarray]</span>
+<span class="c1">#     radius: Union[int, float]</span>
 
-<div class="viewcode-block" id="CenterMasker.mask"><a class="viewcode-back" href="../../scludam.masker.html#scludam.masker.CenterMasker.mask">[docs]</a>    <span class="k">def</span> <span class="nf">mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Mask the data.</span>
+<span class="c1">#     def mask(self, data: np.ndarray):</span>
+<span class="c1">#         &quot;&quot;&quot;Mask the data.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        data : np.ndarray</span>
-<span class="sd">            data to be masked.</span>
+<span class="c1">#         Parameters</span>
+<span class="c1">#         ----------</span>
+<span class="c1">#         data : np.ndarray</span>
+<span class="c1">#             data to be masked.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        np.ndarray</span>
-<span class="sd">            Mask as 1D boolean array</span>
+<span class="c1">#         Returns</span>
+<span class="c1">#         -------</span>
+<span class="c1">#         np.ndarray</span>
+<span class="c1">#             Mask as 1D boolean array</span>
 
-<span class="sd">        Raises</span>
-<span class="sd">        ------</span>
-<span class="sd">        ValueError</span>
-<span class="sd">            If center has incorrect shape.</span>
+<span class="c1">#         Raises</span>
+<span class="c1">#         ------</span>
+<span class="c1">#         ValueError</span>
+<span class="c1">#             If center has incorrect shape.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Crop data in a circle or sphere according to limits</span>
-        <span class="c1"># takes into account first 2 or 3 dims</span>
-        <span class="n">obs</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
-        <span class="n">center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
-        <span class="n">radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span>
-        <span class="n">cdims</span> <span class="o">=</span> <span class="n">center</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">center</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">cdims</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="ow">or</span> <span class="n">cdims</span> <span class="o">&gt;</span> <span class="n">dims</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Center must be shape (2,) or (3,) and &lt;= data dimensions&quot;</span><span class="p">)</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         # Crop data in a circle or sphere according to limits</span>
+<span class="c1">#         # takes into account first 2 or 3 dims</span>
+<span class="c1">#         obs, dims = data.shape</span>
+<span class="c1">#         center = np.array(self.center)</span>
+<span class="c1">#         radius = self.radius</span>
+<span class="c1">#         cdims = center.shape[0]</span>
+<span class="c1">#         if len(center.shape) &gt; 1 or cdims not in [2, 3] or cdims &gt; dims:</span>
+<span class="c1">#             raise ValueError(</span>
+<span class="c1">#               &quot;Center must be shape (2,) or (3,) and &lt;= data dimensions&quot;</span>
+<span class="c1">#             )</span>
 
-        <span class="n">obs</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+<span class="c1">#         obs, dims = data.shape</span>
 
-        <span class="k">if</span> <span class="n">cdims</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">is_inside_circle</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">is_inside_sphere</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span></div></div>
-
-
-<div class="viewcode-block" id="DistanceMasker"><a class="viewcode-back" href="../../scludam.masker.html#scludam.masker.DistanceMasker">[docs]</a><span class="nd">@define</span>
-<span class="k">class</span> <span class="nc">DistanceMasker</span><span class="p">(</span><span class="n">DataMasker</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Mask data according to distance from center.</span>
-
-<span class="sd">    Get a percentage of the observations closest or</span>
-<span class="sd">    furthest from  and to the center.</span>
-
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    center : Union[np.ndarray, list, str]</span>
-<span class="sd">        Center, if str, it must be &quot;geometric&quot;, by default &quot;geometric&quot;.</span>
-<span class="sd">        Geometric center is the center of the data given its ranges.</span>
-<span class="sd">    percentage : float</span>
-<span class="sd">        Percentage of observations to take, by default 10.</span>
-<span class="sd">    metric : str</span>
-<span class="sd">        Metric to use for distance calculation, by default &quot;euclidean&quot;.</span>
-<span class="sd">    mode : str</span>
-<span class="sd">        Mode of the mask, by default &quot;closest&quot;. Can be one of</span>
-<span class="sd">        &quot;closest&quot; or &quot;furthest&quot;.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">center</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;geometric&quot;</span>
-    <span class="n">percentage</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
-    <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span>
-    <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;closest&quot;</span>
-
-<div class="viewcode-block" id="DistanceMasker.mask"><a class="viewcode-back" href="../../scludam.masker.html#scludam.masker.DistanceMasker.mask">[docs]</a>    <span class="k">def</span> <span class="nf">mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Mask the data.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        data : np.ndarray</span>
-<span class="sd">            Data to mask</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        np.ndarray</span>
-<span class="sd">            Mask as 1D boolean array</span>
+<span class="c1">#         if cdims == 2:</span>
+<span class="c1">#             return is_inside_circle(center, radius, data[:, 0:2])</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             return is_inside_sphere(center, radius, data[:, 0:3])</span>
 
 
+<span class="c1"># @define</span>
+<span class="c1"># class DistanceMasker(DataMasker):</span>
+<span class="c1">#     &quot;&quot;&quot;Mask data according to distance from center.</span>
 
-<span class="sd">        Raises</span>
-<span class="sd">        ------</span>
-<span class="sd">        NotImplementedError</span>
-<span class="sd">            center kind not implemented.</span>
-<span class="sd">        ValueError</span>
-<span class="sd">            Mode is invalid</span>
+<span class="c1">#     Get a percentage of the observations closest or</span>
+<span class="c1">#     furthest from  and to the center.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">==</span> <span class="s2">&quot;geometric&quot;</span><span class="p">:</span>
-                <span class="n">center</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
-        <span class="n">distances</span> <span class="o">=</span> <span class="n">pairwise_distances</span><span class="p">(</span>
-            <span class="n">data</span><span class="p">,</span> <span class="n">center</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-        <span class="n">n_obs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">percentage</span> <span class="o">/</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-        <span class="n">idcs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argpartition</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="o">-</span><span class="n">n_obs</span><span class="p">)[</span><span class="o">-</span><span class="n">n_obs</span><span class="p">:]</span>
-        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">)</span>
-        <span class="n">mask</span><span class="p">[</span><span class="n">idcs</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;closest&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="o">~</span><span class="n">mask</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;furthest&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">mask</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid mode&quot;</span><span class="p">)</span></div></div>
+<span class="c1">#     Attributes</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     center : Union[np.ndarray, list, str]</span>
+<span class="c1">#         Center, if str, it must be &quot;geometric&quot;, by default &quot;geometric&quot;.</span>
+<span class="c1">#         Geometric center is the center of the data given its ranges.</span>
+<span class="c1">#     percentage : float</span>
+<span class="c1">#         Percentage of observations to take, by default 10.</span>
+<span class="c1">#     metric : str</span>
+<span class="c1">#         Metric to use for distance calculation, by default &quot;euclidean&quot;.</span>
+<span class="c1">#     mode : str</span>
+<span class="c1">#         Mode of the mask, by default &quot;closest&quot;. Can be one of</span>
+<span class="c1">#         &quot;closest&quot; or &quot;furthest&quot;.</span>
+
+<span class="c1">#     &quot;&quot;&quot;</span>
+
+<span class="c1">#     center: Union[list, np.ndarray, str] = &quot;geometric&quot;</span>
+<span class="c1">#     percentage: Union[int, float] = 10</span>
+<span class="c1">#     metric: str = &quot;euclidean&quot;</span>
+<span class="c1">#     mode: str = &quot;closest&quot;</span>
+
+<span class="c1">#     def mask(self, data: np.ndarray):</span>
+<span class="c1">#         &quot;&quot;&quot;Mask the data.</span>
+
+<span class="c1">#         Parameters</span>
+<span class="c1">#         ----------</span>
+<span class="c1">#         data : np.ndarray</span>
+<span class="c1">#             Data to mask</span>
+
+<span class="c1">#         Returns</span>
+<span class="c1">#         -------</span>
+<span class="c1">#         np.ndarray</span>
+<span class="c1">#             Mask as 1D boolean array</span>
 
 
-<div class="viewcode-block" id="CrustMasker"><a class="viewcode-back" href="../../scludam.masker.html#scludam.masker.CrustMasker">[docs]</a><span class="nd">@define</span>
-<span class="k">class</span> <span class="nc">CrustMasker</span><span class="p">(</span><span class="n">DataMasker</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Mask data according to crust.</span>
+<span class="c1">#         Raises</span>
+<span class="c1">#         ------</span>
+<span class="c1">#         NotImplementedError</span>
+<span class="c1">#             center kind not implemented.</span>
+<span class="c1">#         ValueError</span>
+<span class="c1">#             Mode is invalid</span>
 
-<span class="sd">    The crust is calculated as the convex hull of the data.</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         if isinstance(self.center, str):</span>
+<span class="c1">#             if self.center == &quot;geometric&quot;:</span>
+<span class="c1">#                 center = data.min(axis=0) + (data.max(axis=0) - data.min(axis=0)) / 2</span>
+<span class="c1">#             else:</span>
+<span class="c1">#                 raise NotImplementedError()</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             center = np.array(self.center)</span>
+<span class="c1">#         distances = pairwise_distances(</span>
+<span class="c1">#             data, center.reshape(1, -1), metric=self.metric</span>
+<span class="c1">#         ).ravel()</span>
+<span class="c1">#         n_obs = int(np.round(self.percentage / 100 * data.shape[0]))</span>
+<span class="c1">#         idcs = np.argpartition(distances, -n_obs)[-n_obs:]</span>
+<span class="c1">#         mask = np.zeros_like(distances).astype(&quot;bool&quot;)</span>
+<span class="c1">#         mask[idcs] = True</span>
+<span class="c1">#         if self.mode == &quot;closest&quot;:</span>
+<span class="c1">#             return ~mask</span>
+<span class="c1">#         elif self.mode == &quot;furthest&quot;:</span>
+<span class="c1">#             return mask</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             raise ValueError(&quot;Invalid mode&quot;)</span>
 
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    percentage : float</span>
-<span class="sd">        Percentage of observations to take, by default 10.</span>
-<span class="sd">    mode : str</span>
-<span class="sd">        Mode of the calculation, by default &quot;crust&quot;.</span>
-<span class="sd">        Can only be &quot;crust&quot;.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c1"># @define</span>
+<span class="c1"># class CrustMasker(DataMasker):</span>
+<span class="c1">#     &quot;&quot;&quot;Mask data according to crust.</span>
 
-    <span class="n">percentage</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
-    <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;crust&quot;</span>
+<span class="c1">#     The crust is calculated as the convex hull of the data.</span>
 
-<div class="viewcode-block" id="CrustMasker.mask"><a class="viewcode-back" href="../../scludam.masker.html#scludam.masker.CrustMasker.mask">[docs]</a>    <span class="k">def</span> <span class="nf">mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Mask the data.</span>
+<span class="c1">#     Attributes</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     percentage : float</span>
+<span class="c1">#         Percentage of observations to take, by default 10.</span>
+<span class="c1">#     mode : str</span>
+<span class="c1">#         Mode of the calculation, by default &quot;crust&quot;.</span>
+<span class="c1">#         Can only be &quot;crust&quot;.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        data : np.ndarray</span>
-<span class="sd">            Data to mask</span>
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        np.ndarray</span>
-<span class="sd">            Mask as a 1D boolean array</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">n</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">n_obs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">percentage</span> <span class="o">/</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">n</span><span class="p">))</span>
-        <span class="n">ch</span> <span class="o">=</span> <span class="n">ConvexHull</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
-        <span class="n">mask</span><span class="p">[</span><span class="n">ch</span><span class="o">.</span><span class="n">vertices</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">idcs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1">#     percentage: Union[int, float] = 10</span>
+<span class="c1">#     mode: str = &quot;crust&quot;</span>
 
-        <span class="k">while</span> <span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">n_obs</span><span class="p">:</span>
-            <span class="n">data_iter</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span>
-            <span class="n">ch</span> <span class="o">=</span> <span class="n">ConvexHull</span><span class="p">(</span><span class="n">data_iter</span><span class="p">)</span>
-            <span class="n">submask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data_iter</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
-            <span class="n">submask</span><span class="p">[</span><span class="n">ch</span><span class="o">.</span><span class="n">vertices</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="n">mask</span><span class="p">[</span><span class="n">idcs</span><span class="p">[</span><span class="n">submask</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="n">idcs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1">#     def mask(self, data: np.ndarray):</span>
+<span class="c1">#         &quot;&quot;&quot;Mask the data.</span>
 
-        <span class="k">return</span> <span class="n">mask</span></div></div>
+<span class="c1">#         Parameters</span>
+<span class="c1">#         ----------</span>
+<span class="c1">#         data : np.ndarray</span>
+<span class="c1">#             Data to mask</span>
+<span class="c1">#         Returns</span>
+<span class="c1">#         -------</span>
+<span class="c1">#         np.ndarray</span>
+<span class="c1">#             Mask as a 1D boolean array</span>
+
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         n = data.shape[0]</span>
+<span class="c1">#         n_obs = int(np.round(self.percentage / 100 * n))</span>
+<span class="c1">#         ch = ConvexHull(data)</span>
+<span class="c1">#         mask = np.zeros(n).astype(bool)</span>
+<span class="c1">#         mask[ch.vertices] = True</span>
+<span class="c1">#         idcs = np.where(~mask)[0]</span>
+
+<span class="c1">#         while mask.sum() &lt; n_obs:</span>
+<span class="c1">#             data_iter = data[~mask]</span>
+<span class="c1">#             ch = ConvexHull(data_iter)</span>
+<span class="c1">#             submask = np.zeros(data_iter.shape[0]).astype(bool)</span>
+<span class="c1">#             submask[ch.vertices] = True</span>
+<span class="c1">#             mask[idcs[submask]] = True</span>
+<span class="c1">#             idcs = np.where(~mask)[0]</span>
+
+<span class="c1">#         return mask</span>
 </pre></div>
 
            </div>
