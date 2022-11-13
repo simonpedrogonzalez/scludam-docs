@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Quickstart" href="quickstart.html" />
-    <link rel="prev" title="SCLUDAM (Star CLUster Detection And Membership estimation)" href="index.html" /> 
+    <link rel="prev" title="Welcome to SCLUDAM’s documentation!" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,13 +48,13 @@
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#user-install-in-a-conda-environment-recommended">User install in a Conda environment (recommended)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#update-scludam-in-a-conda-environment">Update scludam in a Conda environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#user-install">User install</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#user-update">User update</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simple-user-install">Simple user install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simple-user-update">Simple user update</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dev-install">Dev install</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">scludam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Scludam Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="diagrams.html">Software diagrams</a></li>
 </ul>
 
@@ -90,7 +90,7 @@
 <a class="reference external image-reference" href="https://github.com/simonpedrogonzalez/scludam"><img alt="Python 3.7.6+" src="https://img.shields.io/badge/python-3.7.6+-blue.svg" /></a>
 <a class="reference external image-reference" href="https://github.com/simonpedrogonzalez/scludam"><img alt="Python 3.8+" src="https://img.shields.io/badge/python-3.8+-blue.svg" /></a>
 <a class="reference external image-reference" href="https://tldrlegal.com/license/gnu-lesser-general-public-license-v3-(lgpl-3)"><img alt="License" src="https://img.shields.io/badge/License-GNU-blue.svg" /></a>
-<p><strong>scludam</strong> (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation) is a Python package for GAIA catalogues <strong>data fetching</strong>, <strong>star cluster detection</strong> and <strong>star cluster membership estimation</strong>.</p>
+<p><strong>SCLUDAM</strong> (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation) is a Python package for GAIA catalogues <strong>data fetching</strong>, <strong>star cluster detection</strong> and <strong>star cluster membership estimation</strong>.</p>
 <section id="repository-and-issues">
 <h2>Repository and issues<a class="headerlink" href="#repository-and-issues" title="Permalink to this heading"></a></h2>
 <p><a class="reference external" href="https://github.com/simonpedrogonzalez/scludam">https://github.com/simonpedrogonzalez/scludam</a></p>
@@ -98,28 +98,29 @@
 <section id="authors">
 <h2>Authors<a class="headerlink" href="#authors" title="Permalink to this heading"></a></h2>
 <ul class="simple">
-<li><p>Simón Pedro González
-email: <a class="reference external" href="mailto:simon&#46;pedro&#46;g&#37;&#52;&#48;gmail&#46;com">simon<span>&#46;</span>pedro<span>&#46;</span>g<span>&#64;</span>gmail<span>&#46;</span>com</a></p></li>
+<li><p>Simón Pedro González.
+Email: <a class="reference external" href="mailto:simon&#46;pedro&#46;g&#37;&#52;&#48;gmail&#46;com">simon<span>&#46;</span>pedro<span>&#46;</span>g<span>&#64;</span>gmail<span>&#46;</span>com</a></p></li>
 </ul>
 </section>
 <section id="features">
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this heading"></a></h2>
-<p>Currently <strong>scludam</strong> is a work in progress. Modules and features already included are:</p>
+<p>Included modules and features are:</p>
 <ul class="simple">
-<li><p><strong>fetcher</strong>: simple query builder to get data from the GAIA catalogue more easily, and some extra useful functions.</p></li>
-<li><p><strong>stat_tests</strong>: set of 3 clusterability tests that can be used to detect the presence of a cluster in a sample.</p></li>
-<li><p><strong>synthetic</strong>: classes that can be used to generate synthetic astrometric samples by specifying the distributions to use and parameter values.</p></li>
-<li><p><strong>detection</strong>: classes that can be used to detect the presence of a cluster in a sample.</p></li>
-<li><p><strong>shdbscan</strong>: soft clustering based on the <strong>HDBSCAN</strong> algorithm.</p></li>
-<li><p><strong>hkde</strong>: kernel density estimation with variable bandwidth.</p></li>
-<li><p><strong>membership</strong>: membership calculation based on <strong>hkde</strong> smoothing.</p></li>
-<li><p><strong>pipeline</strong>: pipeline for the detection and membership estimation, with default values and convenience functions.</p></li>
+<li><p><strong>fetcher</strong>: Query builder for easy access to GAIA catalogues data, functions to get catalogues and SIMBAD objects information.</p></li>
+<li><p><strong>stat_tests</strong>: Set of three clusterability tests that can be used to detect the presence of a cluster in a sample.</p></li>
+<li><p><strong>synthetic</strong>: Classes that can be used to generate synthetic astrometric samples by specifying the distributions and parameter values.</p></li>
+<li><p><strong>detection</strong>: Detection of star clusters in a sample using an improved version of the Star Counts algorithm.</p></li>
+<li><p><strong>shdbscan</strong>: Soft clustering based on the <strong>HDBSCAN</strong> algorithm.</p></li>
+<li><p><strong>hkde</strong>: Kernel density estimation with per-observation or per-dimension variable bandwidth.</p></li>
+<li><p><strong>membership</strong>: Membership probability estimation based on <strong>hkde</strong> smoothing.</p></li>
+<li><p><strong>pipeline</strong>: Pipeline for the detection and membership estimation, with default values and convenience functions.</p></li>
+<li><p><strong>plots</strong>: Plot detection and membership estimation results alongside SIMBAD objects for better result interpretation.</p></li>
 </ul>
 </section>
 <hr class="docutils" />
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
-<p>You need <strong>Python 3.7.6+</strong> and <strong>R 3.6.3+</strong> to run scludam. It is recommended to install scludam in a separate environment created with pyenv or conda, to avoid dependencies issues with other preinstalled packages you may have in the base environment. The following dependencies will be installed with SCLUDAM:</p>
+<p><strong>Python 3.7.6+</strong> and <strong>R 3.6.3+</strong> are needed to run SCLUDAM. It is recommended to install scludam in a separate environment created with pyenv or conda, to avoid dependencies issues with other preinstalled packages in the base environment. The following dependencies will be installed along with SCLUDAM:</p>
 <ul class="simple">
 <li><p>numpy&gt;=1.21.6</p></li>
 <li><p>matplotlib&gt;=3.4.1</p></li>
@@ -157,13 +158,13 @@ email: <a class="reference external" href="mailto:simon&#46;pedro&#46;g&#37;&#52
 </pre></div>
 </div>
 </section>
-<section id="user-install">
-<h2>User install<a class="headerlink" href="#user-install" title="Permalink to this heading"></a></h2>
+<section id="simple-user-install">
+<h2>Simple user install<a class="headerlink" href="#simple-user-install" title="Permalink to this heading"></a></h2>
 <p>Install from PyPi:
 <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">scludam</span></code></p>
 </section>
-<section id="user-update">
-<h2>User update<a class="headerlink" href="#user-update" title="Permalink to this heading"></a></h2>
+<section id="simple-user-update">
+<h2>Simple user update<a class="headerlink" href="#simple-user-update" title="Permalink to this heading"></a></h2>
 <p>Update from PyPi:
 <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">scludam</span></code></p>
 </section>
@@ -178,7 +179,7 @@ email: <a class="reference external" href="mailto:simon&#46;pedro&#46;g&#37;&#52
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="SCLUDAM (Star CLUster Detection And Membership estimation)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to SCLUDAM’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="quickstart.html" class="btn btn-neutral float-right" title="Quickstart" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

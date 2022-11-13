@@ -43,27 +43,43 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="readme.html">SCLUDAM (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">scludam</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="scludam.html">scludam package</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="scludam.html#submodules">Submodules</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html">scludam.detection module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html">scludam.fetcher module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.hkde.html">scludam.hkde module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.masker.html">scludam.masker module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.membership.html">scludam.membership module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.pipeline.html">scludam.pipeline module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html">scludam.plots module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.rutils.html">scludam.rutils module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.shdbscan.html">scludam.shdbscan module</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">scludam.stat_tests module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.synthetic.html">scludam.synthetic module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.type_utils.html">scludam.type_utils module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.utils.html">scludam.utils module</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Scludam Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="scludam.detection.html">scludam.detection module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.fetcher.html">scludam.fetcher module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.hkde.html">scludam.hkde module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.masker.html">scludam.masker module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.membership.html">scludam.membership module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.pipeline.html">scludam.pipeline module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.plots.html">scludam.plots module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.rutils.html">scludam.rutils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.shdbscan.html">scludam.shdbscan module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">scludam.stat_tests module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.stat_tests.TestResult"><code class="docutils literal notranslate"><span class="pre">TestResult</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.stat_tests.StatTest"><code class="docutils literal notranslate"><span class="pre">StatTest</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.stat_tests.StatTest.test"><code class="docutils literal notranslate"><span class="pre">StatTest.test()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="scludam.html#module-scludam">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.stat_tests.HopkinsTestResult"><code class="docutils literal notranslate"><span class="pre">HopkinsTestResult</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.stat_tests.HopkinsTest"><code class="docutils literal notranslate"><span class="pre">HopkinsTest</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.stat_tests.HopkinsTest.test"><code class="docutils literal notranslate"><span class="pre">HopkinsTest.test()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.stat_tests.DipDistTestResult"><code class="docutils literal notranslate"><span class="pre">DipDistTestResult</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.stat_tests.DipDistTest"><code class="docutils literal notranslate"><span class="pre">DipDistTest</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.stat_tests.DipDistTest.test"><code class="docutils literal notranslate"><span class="pre">DipDistTest.test()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.stat_tests.RipleyKTestResult"><code class="docutils literal notranslate"><span class="pre">RipleyKTestResult</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.stat_tests.RipleysKTest"><code class="docutils literal notranslate"><span class="pre">RipleysKTest</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.stat_tests.RipleysKTest.test"><code class="docutils literal notranslate"><span class="pre">RipleysKTest.test()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.synthetic.html">scludam.synthetic module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.type_utils.html">scludam.type_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.utils.html">scludam.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-scludam">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="diagrams.html">Software diagrams</a></li>
@@ -83,8 +99,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="modules.html">scludam</a> &raquo;</li>
-          <li><a href="scludam.html">scludam package</a> &raquo;</li>
+          <li><a href="modules.html">Scludam Modules</a> &raquo;</li>
       <li>scludam.stat_tests module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/scludam.stat_tests.rst.txt" rel="nofollow"> View page source</a>

@@ -43,27 +43,77 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="readme.html">SCLUDAM (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">scludam</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="scludam.html">scludam package</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="scludam.html#submodules">Submodules</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="scludam.detection.html">scludam.detection module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.fetcher.html">scludam.fetcher module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.hkde.html">scludam.hkde module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.masker.html">scludam.masker module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.membership.html">scludam.membership module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.pipeline.html">scludam.pipeline module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.plots.html">scludam.plots module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.rutils.html">scludam.rutils module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.shdbscan.html">scludam.shdbscan module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.stat_tests.html">scludam.stat_tests module</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">scludam.synthetic module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.type_utils.html">scludam.type_utils module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="scludam.utils.html">scludam.utils module</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Scludam Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="scludam.detection.html">scludam.detection module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.fetcher.html">scludam.fetcher module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.hkde.html">scludam.hkde module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.masker.html">scludam.masker module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.membership.html">scludam.membership module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.pipeline.html">scludam.pipeline module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.plots.html">scludam.plots module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.rutils.html">scludam.rutils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.shdbscan.html">scludam.shdbscan module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.stat_tests.html">scludam.stat_tests module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">scludam.synthetic module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.synthetic.is_inside_circle"><code class="docutils literal notranslate"><span class="pre">is_inside_circle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.synthetic.is_inside_sphere"><code class="docutils literal notranslate"><span class="pre">is_inside_sphere()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.synthetic.cartesian_to_polar"><code class="docutils literal notranslate"><span class="pre">cartesian_to_polar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.synthetic.polar_to_cartesian"><code class="docutils literal notranslate"><span class="pre">polar_to_cartesian()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.synthetic.EDSD"><code class="docutils literal notranslate"><span class="pre">EDSD</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.EDSD.pdf"><code class="docutils literal notranslate"><span class="pre">EDSD.pdf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.EDSD.cdf"><code class="docutils literal notranslate"><span class="pre">EDSD.cdf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.EDSD.ppf"><code class="docutils literal notranslate"><span class="pre">EDSD.ppf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.EDSD.rvs"><code class="docutils literal notranslate"><span class="pre">EDSD.rvs()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="scludam.html#module-scludam">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.synthetic.UniformSphere"><code class="docutils literal notranslate"><span class="pre">UniformSphere</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.UniformSphere.rvs"><code class="docutils literal notranslate"><span class="pre">UniformSphere.rvs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.UniformSphere.pdf"><code class="docutils literal notranslate"><span class="pre">UniformSphere.pdf()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.synthetic.UniformFrustum"><code class="docutils literal notranslate"><span class="pre">UniformFrustum</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.UniformFrustum.rvs"><code class="docutils literal notranslate"><span class="pre">UniformFrustum.rvs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.UniformFrustum.pdf"><code class="docutils literal notranslate"><span class="pre">UniformFrustum.pdf()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.synthetic.UniformCircle"><code class="docutils literal notranslate"><span class="pre">UniformCircle</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.UniformCircle.pdf"><code class="docutils literal notranslate"><span class="pre">UniformCircle.pdf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.UniformCircle.rvs"><code class="docutils literal notranslate"><span class="pre">UniformCircle.rvs()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.synthetic.BivariateUniform"><code class="docutils literal notranslate"><span class="pre">BivariateUniform</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.BivariateUniform.rvs"><code class="docutils literal notranslate"><span class="pre">BivariateUniform.rvs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.BivariateUniform.pdf"><code class="docutils literal notranslate"><span class="pre">BivariateUniform.pdf()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.synthetic.TrivariateUniform"><code class="docutils literal notranslate"><span class="pre">TrivariateUniform</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.TrivariateUniform.rvs"><code class="docutils literal notranslate"><span class="pre">TrivariateUniform.rvs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.TrivariateUniform.pdf"><code class="docutils literal notranslate"><span class="pre">TrivariateUniform.pdf()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.synthetic.StarCluster"><code class="docutils literal notranslate"><span class="pre">StarCluster</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.StarCluster.rvs"><code class="docutils literal notranslate"><span class="pre">StarCluster.rvs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.StarCluster.pdf"><code class="docutils literal notranslate"><span class="pre">StarCluster.pdf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.StarCluster.pm_pdf"><code class="docutils literal notranslate"><span class="pre">StarCluster.pm_pdf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.StarCluster.space_pdf"><code class="docutils literal notranslate"><span class="pre">StarCluster.space_pdf()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.synthetic.StarField"><code class="docutils literal notranslate"><span class="pre">StarField</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.StarField.rvs"><code class="docutils literal notranslate"><span class="pre">StarField.rvs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.StarField.pdf"><code class="docutils literal notranslate"><span class="pre">StarField.pdf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.StarField.pm_pdf"><code class="docutils literal notranslate"><span class="pre">StarField.pm_pdf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.StarField.space_pdf"><code class="docutils literal notranslate"><span class="pre">StarField.space_pdf()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#scludam.synthetic.Synthetic"><code class="docutils literal notranslate"><span class="pre">Synthetic</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scludam.synthetic.Synthetic.rvs"><code class="docutils literal notranslate"><span class="pre">Synthetic.rvs()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.type_utils.html">scludam.type_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scludam.utils.html">scludam.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-scludam">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="diagrams.html">Software diagrams</a></li>
@@ -83,8 +133,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="modules.html">scludam</a> &raquo;</li>
-          <li><a href="scludam.html">scludam package</a> &raquo;</li>
+          <li><a href="modules.html">Scludam Modules</a> &raquo;</li>
       <li>scludam.synthetic module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/scludam.synthetic.rst.txt" rel="nofollow"> View page source</a>

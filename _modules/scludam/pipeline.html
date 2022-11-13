@@ -40,7 +40,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../readme.html">SCLUDAM (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">scludam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Scludam Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../diagrams.html">Software diagrams</a></li>
 </ul>
 
@@ -109,6 +109,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">astropy.table.table</span> <span class="kn">import</span> <span class="n">Table</span>
 <span class="kn">from</span> <span class="nn">attrs</span> <span class="kn">import</span> <span class="n">Factory</span><span class="p">,</span> <span class="n">define</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">validators</span>
+<span class="kn">from</span> <span class="nn">beartype</span> <span class="kn">import</span> <span class="n">beartype</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">RobustScaler</span>
 
 <span class="kn">from</span> <span class="nn">scludam.detection</span> <span class="kn">import</span> <span class="n">CountPeakDetector</span><span class="p">,</span> <span class="n">DetectionResult</span>
@@ -354,7 +355,8 @@
 
         <span class="k">return</span> <span class="n">estimator</span><span class="o">.</span><span class="n">posteriors</span>
 
-<div class="viewcode-block" id="DEP.fit"><a class="viewcode-back" href="../../scludam.pipeline.html#scludam.pipeline.DEP.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<div class="viewcode-block" id="DEP.fit"><a class="viewcode-back" href="../../scludam.pipeline.html#scludam.pipeline.DEP.fit">[docs]</a>    <span class="nd">@beartype</span>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Perform the detection and membership estimation.</span>
 
 <span class="sd">        NaNs are dropped from the dataframe copy and are</span>
@@ -450,7 +452,8 @@
     <span class="k">def</span> <span class="nf">_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">proba</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="DEP.proba_df"><a class="viewcode-back" href="../../scludam.pipeline.html#scludam.pipeline.DEP.proba_df">[docs]</a>    <span class="k">def</span> <span class="nf">proba_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DEP.proba_df"><a class="viewcode-back" href="../../scludam.pipeline.html#scludam.pipeline.DEP.proba_df">[docs]</a>    <span class="nd">@beartype</span>
+    <span class="k">def</span> <span class="nf">proba_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return the data frame with the probabilities.</span>
 
 <span class="sd">        Returns the full dataframe used for the process</span>
@@ -479,7 +482,8 @@
             <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="DEP.write"><a class="viewcode-back" href="../../scludam.pipeline.html#scludam.pipeline.DEP.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="DEP.write"><a class="viewcode-back" href="../../scludam.pipeline.html#scludam.pipeline.DEP.write">[docs]</a>    <span class="nd">@beartype</span>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Write the data frame with the probabilities to a file.</span>
 
 <span class="sd">        Writes the data frame used for the process</span>
@@ -510,7 +514,8 @@
         <span class="n">default_kws</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">table</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">default_kws</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DEP.cm_diagram"><a class="viewcode-back" href="../../scludam.pipeline.html#scludam.pipeline.DEP.cm_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">cm_diagram</span><span class="p">(</span>
+<div class="viewcode-block" id="DEP.cm_diagram"><a class="viewcode-back" href="../../scludam.pipeline.html#scludam.pipeline.DEP.cm_diagram">[docs]</a>    <span class="nd">@beartype</span>
+    <span class="k">def</span> <span class="nf">cm_diagram</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">cols</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;bp_rp&quot;</span><span class="p">,</span> <span class="s2">&quot;phot_g_mean_mag&quot;</span><span class="p">],</span>
         <span class="n">plotcols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -560,7 +565,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_plot_objects</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">cols</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ax</span></div>
 
-<div class="viewcode-block" id="DEP.radec_plot"><a class="viewcode-back" href="../../scludam.pipeline.html#scludam.pipeline.DEP.radec_plot">[docs]</a>    <span class="k">def</span> <span class="nf">radec_plot</span><span class="p">(</span>
+<div class="viewcode-block" id="DEP.radec_plot"><a class="viewcode-back" href="../../scludam.pipeline.html#scludam.pipeline.DEP.radec_plot">[docs]</a>    <span class="nd">@beartype</span>
+    <span class="k">def</span> <span class="nf">radec_plot</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">cols</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">],</span>
         <span class="n">plotcols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -611,7 +617,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_plot_objects</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">cols</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ax</span></div>
 
-<div class="viewcode-block" id="DEP.scatterplot"><a class="viewcode-back" href="../../scludam.pipeline.html#scludam.pipeline.DEP.scatterplot">[docs]</a>    <span class="k">def</span> <span class="nf">scatterplot</span><span class="p">(</span>
+<div class="viewcode-block" id="DEP.scatterplot"><a class="viewcode-back" href="../../scludam.pipeline.html#scludam.pipeline.DEP.scatterplot">[docs]</a>    <span class="nd">@beartype</span>
+    <span class="k">def</span> <span class="nf">scatterplot</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">cols</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">],</span>
         <span class="n">plotcols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
