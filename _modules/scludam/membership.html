@@ -3,17 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.membership &mdash; scludam 1.0.2 documentation</title>
+  <title>scludam.membership &mdash; scludam 1.0.3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -26,11 +25,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> scludam
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            scludam
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -57,9 +60,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>scludam.membership</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">scludam.membership</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -89,6 +92,7 @@
 <span class="sd">&quot;&quot;&quot;Module for Density Based Membership Estimation.&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">attrs</span> <span class="kn">import</span> <span class="n">Factory</span><span class="p">,</span> <span class="n">define</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">validators</span>
@@ -111,7 +115,7 @@
 
 <div class="viewcode-block" id="DBME"><a class="viewcode-back" href="../../scludam.membership.html#scludam.membership.DBME">[docs]</a><span class="nd">@define</span>
 <span class="k">class</span> <span class="nc">DBME</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Density Based Membership Estimation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Density Based Membership Estimation.</span>
 
 <span class="sd">    It uses :class:`~scludam.hkde.HKDE` to estimate the density and calculate</span>
 <span class="sd">    smooth membership probabilities for each class, given data and</span>
@@ -140,9 +144,10 @@
 <span class="sd">    kde_leave1out : bool</span>
 <span class="sd">        Whether to use leave-one-out KDE estimation, by default True.</span>
 
-<span class="sd">    pdf_estimator : :class:`~scludam.hkde.HKDE`</span>
+<span class="sd">    pdf_estimator : Union[:class:`~scludam.hkde.HKDE`, List[:class:`~scludam.hkde.HKDE`]]</span>
 <span class="sd">        Estimator used to estimate the density, by default an instance of HKDE with</span>
-<span class="sd">        default parameters.</span>
+<span class="sd">        default parameters. If list is provided, it is asumed either 1 per class or</span>
+<span class="sd">        first for first class and 2nd for the rest.</span>
 
 <span class="sd">    n_classes: int</span>
 <span class="sd">        Number of detected classes. Only available after the</span>
@@ -178,7 +183,9 @@
         <span class="n">validator</span><span class="o">=</span><span class="n">validators</span><span class="o">.</span><span class="n">in_</span><span class="p">([</span><span class="s2">&quot;same&quot;</span><span class="p">,</span> <span class="s2">&quot;per_class&quot;</span><span class="p">,</span> <span class="s2">&quot;per_class_per_iter&quot;</span><span class="p">]),</span>
         <span class="n">default</span><span class="o">=</span><span class="s2">&quot;per_class&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">pdf_estimator</span><span class="p">:</span> <span class="n">HKDE</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">HKDE</span><span class="p">(),</span> <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="n">HKDE</span><span class="p">))</span>
+    <span class="n">pdf_estimator</span><span class="p">:</span> <span class="n">HKDE</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">HKDE</span><span class="p">(),</span> <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="n">Union</span><span class="p">[</span><span class="n">HKDE</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">HKDE</span><span class="p">]])</span>
+    <span class="p">)</span>
 
     <span class="c1"># internal attrs</span>
     <span class="n">_n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
@@ -186,6 +193,7 @@
     <span class="n">_unique_labels</span><span class="p">:</span> <span class="n">Numeric1DArray</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_data</span><span class="p">:</span> <span class="n">Numeric2DArray</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_estimators</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">Factory</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">_n_estimators</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_iter_priors</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">Factory</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
     <span class="n">_iter_counts</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">Factory</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
     <span class="n">_iter_label_diff</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">Factory</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
@@ -262,17 +270,61 @@
 
     <span class="c1">#     return new_posteriors</span>
 
-    <span class="k">def</span> <span class="nf">_get_densities</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">_fit_several_estimators</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span>
         <span class="n">err</span><span class="p">:</span> <span class="n">OptionalNumeric2DArray</span><span class="p">,</span>
         <span class="n">corr</span><span class="p">:</span> <span class="n">OptionalNumericArray</span><span class="p">,</span>
         <span class="n">weights</span><span class="p">:</span> <span class="n">OptionalNumeric2DArray</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="n">densities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span><span class="p">))</span>
-
         <span class="c1"># estimator(s) fitting</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_estimators</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_calculation_mode</span> <span class="o">==</span> <span class="s2">&quot;per_class_per_iter&quot;</span><span class="p">:</span>
+        <span class="n">first_iter</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_estimators</span>
+        <span class="n">each_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_calculation_mode</span> <span class="o">==</span> <span class="s2">&quot;per_class_per_iter&quot;</span>
+        <span class="k">if</span> <span class="n">first_iter</span> <span class="ow">or</span> <span class="n">each_time</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_estimators</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_estimators</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="c1"># one for first class and copy the 2nd for the other classes</span>
+                <span class="c1"># no need to copy the first one</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_estimators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pdf_estimator</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+                        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                        <span class="n">err</span><span class="o">=</span><span class="n">err</span><span class="p">,</span>
+                        <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span>
+                        <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_estimators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pdf_estimator</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+                            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                            <span class="n">err</span><span class="o">=</span><span class="n">err</span><span class="p">,</span>
+                            <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span>
+                            <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># assume n_estimators == n_classes</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_estimators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">pdf_estimator</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+                            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                            <span class="n">err</span><span class="o">=</span><span class="n">err</span><span class="p">,</span>
+                            <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span>
+                            <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_fit_one_estimator</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span>
+        <span class="n">err</span><span class="p">:</span> <span class="n">OptionalNumeric2DArray</span><span class="p">,</span>
+        <span class="n">corr</span><span class="p">:</span> <span class="n">OptionalNumericArray</span><span class="p">,</span>
+        <span class="n">weights</span><span class="p">:</span> <span class="n">OptionalNumeric2DArray</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="c1"># estimator(s) fitting</span>
+        <span class="n">first_iter</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_estimators</span>
+        <span class="n">each_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_calculation_mode</span> <span class="o">==</span> <span class="s2">&quot;per_class_per_iter&quot;</span>
+
+        <span class="k">if</span> <span class="n">first_iter</span> <span class="ow">or</span> <span class="n">each_time</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_calculation_mode</span> <span class="o">==</span> <span class="s2">&quot;same&quot;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_estimators</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pdf_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="n">corr</span><span class="p">)]</span>
             <span class="k">else</span><span class="p">:</span>
@@ -287,6 +339,20 @@
                         <span class="p">),</span>
                     <span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">_get_densities</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span>
+        <span class="n">err</span><span class="p">:</span> <span class="n">OptionalNumeric2DArray</span><span class="p">,</span>
+        <span class="n">corr</span><span class="p">:</span> <span class="n">OptionalNumericArray</span><span class="p">,</span>
+        <span class="n">weights</span><span class="p">:</span> <span class="n">OptionalNumeric2DArray</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">densities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_estimators</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fit_one_estimator</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="n">corr</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fit_several_estimators</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="n">corr</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+
         <span class="c1"># pdf estimation</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_calculation_mode</span> <span class="o">==</span> <span class="s2">&quot;same&quot;</span><span class="p">:</span>
@@ -299,6 +365,34 @@
 
         <span class="k">return</span> <span class="n">densities</span>
 
+    <span class="k">def</span> <span class="nf">_validate_n_estimators</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># if self.pdf_estimator is class HKDE, set _n_estimators to 1</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pdf_estimator</span><span class="p">,</span> <span class="n">HKDE</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_n_estimators</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># is list of hkde</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_n_estimators</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pdf_estimator</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_estimators</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># normal case, return</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pdf_estimator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pdf_estimator</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span>
+        <span class="c1"># if len &gt; 1 then kernel_calculation_mode should be</span>
+        <span class="c1"># either per_class or per_class_per_iter</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_calculation_mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span>
+                <span class="s2">&quot;per_class&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;per_class_per_iter&quot;</span><span class="p">,</span>
+            <span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;kernel_calculation_mode and n_estimators mismatch&quot;</span><span class="p">)</span>
+            <span class="c1"># now check against n_classes, n_estimators can be only</span>
+            <span class="c1"># either == n_classes, or 2 (field, clusters)</span>
+            <span class="c1"># we assume n_classes = 1 is not possible because</span>
+            <span class="c1"># in fit we already returned init_proba in that case</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_estimators</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_estimators</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;n_estimators should be 1, 2 or n_classes&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
 <div class="viewcode-block" id="DBME.fit"><a class="viewcode-back" href="../../scludam.membership.html#scludam.membership.DBME.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span>
@@ -306,7 +400,7 @@
         <span class="n">err</span><span class="p">:</span> <span class="n">OptionalNumeric2DArray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">corr</span><span class="p">:</span> <span class="n">OptionalNumericArray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Fit models and calculate posteriors probabilities.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit models and calculate posteriors probabilities.</span>
 
 <span class="sd">        The method takes data and initial probabilities and</span>
 <span class="sd">        creates density estimators. Prior probabilities are</span>
@@ -355,6 +449,8 @@
             <span class="c1"># there are no populations to fit</span>
             <span class="k">return</span> <span class="bp">self</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_n_estimators</span><span class="p">()</span>
+
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_iters</span><span class="p">):</span>
             <span class="c1"># is copy actually needed?</span>
             <span class="n">previous_posteriors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">posteriors</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -365,7 +461,7 @@
         <span class="k">return</span> <span class="bp">self</span></div>
 
 <div class="viewcode-block" id="DBME.pairplot"><a class="viewcode-back" href="../../scludam.membership.html#scludam.membership.DBME.pairplot">[docs]</a>    <span class="k">def</span> <span class="nf">pairplot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Plot the clustering results in a pairplot.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot the clustering results in a pairplot.</span>
 
 <span class="sd">        It uses the :func:`~scludam.plots.pairprobaplot`. The colors</span>
 <span class="sd">        of the points represent class labels. The sizes</span>
@@ -390,7 +486,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="DBME.tsneplot"><a class="viewcode-back" href="../../scludam.membership.html#scludam.membership.DBME.tsneplot">[docs]</a>    <span class="k">def</span> <span class="nf">tsneplot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Plot the clustering results in a t-SNE plot.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot the clustering results in a t-SNE plot.</span>
 
 <span class="sd">        It uses the :func:`~scludam.plots.tsneprobaplot` function.</span>
 <span class="sd">        It represents the data in a 2 dimensional space using t-SNE.</span>
@@ -424,7 +520,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="DBME.scatter3dplot"><a class="viewcode-back" href="../../scludam.membership.html#scludam.membership.DBME.scatter3dplot">[docs]</a>    <span class="k">def</span> <span class="nf">scatter3dplot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Plot the clustering results in a 3D scatter plot.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot the clustering results in a 3D scatter plot.</span>
 
 <span class="sd">        It uses the :func:`~scludam.plots.scatter3dprobaplot` function.</span>
 <span class="sd">        It represents the data in a 3 dimensional space using the</span>
@@ -448,7 +544,7 @@
         <span class="k">return</span> <span class="n">scatter3dprobaplot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">posteriors</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DBME.surfplot"><a class="viewcode-back" href="../../scludam.membership.html#scludam.membership.DBME.surfplot">[docs]</a>    <span class="k">def</span> <span class="nf">surfplot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Plot the clustering results in a 3D surface plot.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot the clustering results in a 3D surface plot.</span>
 
 <span class="sd">        It uses the :func:`~scludam.plots.surfprobaplot` function.</span>
 <span class="sd">        The heights of the surface and colors of the points represent</span>

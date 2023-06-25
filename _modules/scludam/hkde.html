@@ -3,17 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.hkde &mdash; scludam 1.0.2 documentation</title>
+  <title>scludam.hkde &mdash; scludam 1.0.3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -26,11 +25,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> scludam
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            scludam
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -57,9 +60,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>scludam.hkde</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">scludam.hkde</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -96,7 +99,7 @@
 
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
 <span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -132,11 +135,11 @@
 
 
 <div class="viewcode-block" id="BandwidthSelector"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.BandwidthSelector">[docs]</a><span class="k">class</span> <span class="nc">BandwidthSelector</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Base class for bandwidth selector.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for bandwidth selector.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="BandwidthSelector.get_bw"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.BandwidthSelector.get_bw">[docs]</a>    <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">get_bw</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get the bandwidth for the given data.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the bandwidth for the given data.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -149,7 +152,7 @@
 
 <div class="viewcode-block" id="PluginSelector"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.PluginSelector">[docs]</a><span class="nd">@define</span>
 <span class="k">class</span> <span class="nc">PluginSelector</span><span class="p">(</span><span class="n">BandwidthSelector</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Bandwidth selector based on the Plugin method.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bandwidth selector based on the Plugin method.</span>
 
 <span class="sd">    It uses the Plugin method with unconstraned pilot bandwidth</span>
 <span class="sd">    [1]_ [2]_ implementation in the</span>
@@ -198,11 +201,11 @@
         <span class="c1"># delete all previous session variables</span>
         <span class="n">clean_r_session</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s2">&quot;var&quot;</span><span class="p">)</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">rparams</span> <span class="o">=</span> <span class="n">assign_r_args</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;ks::Hpi</span><span class="si">{</span><span class="s2">&quot;.diag&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">diag</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="si">}</span><span class="s1">(</span><span class="si">{</span><span class="n">rparams</span><span class="si">}</span><span class="s1">)&#39;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;ks::Hpi</span><span class="si">{</span><span class="s2">&quot;.diag&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">diag</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="si">}</span><span class="s1">(</span><span class="si">{</span><span class="n">rparams</span><span class="si">}</span><span class="s1">)&#39;</span>
 
 <div class="viewcode-block" id="PluginSelector.get_bw"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.PluginSelector.get_bw">[docs]</a>    <span class="nd">@beartype</span>
     <span class="k">def</span> <span class="nf">get_bw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get the bandwidth for the given data.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the bandwidth for the given data.</span>
 
 <span class="sd">        Builds R ``ks::Hpi`` command and executes it.</span>
 
@@ -226,13 +229,17 @@
 
 <div class="viewcode-block" id="RuleOfThumbSelector"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.RuleOfThumbSelector">[docs]</a><span class="nd">@define</span>
 <span class="k">class</span> <span class="nc">RuleOfThumbSelector</span><span class="p">(</span><span class="n">BandwidthSelector</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Bandwidth selector based on the Rule of Thumb method.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bandwidth selector based on the Rule of Thumb method.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    rule : str, optional</span>
 <span class="sd">        Name of the rule of thumb to use, by default &quot;scott&quot;.</span>
 <span class="sd">        Can be &quot;scott&quot; or &quot;silverman&quot;.</span>
+
+<span class="sd">    diag : bool, optional</span>
+<span class="sd">        Whether to use the diagonal bandwidth,</span>
+<span class="sd">        by default False.</span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
@@ -242,6 +249,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">rule</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;scott&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">validators</span><span class="o">.</span><span class="n">in_</span><span class="p">([</span><span class="s2">&quot;scott&quot;</span><span class="p">,</span> <span class="s2">&quot;silverman&quot;</span><span class="p">]))</span>
+    <span class="n">diag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_scotts_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="n">n</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -265,13 +273,21 @@
         <span class="n">kws</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">kws</span><span class="p">[</span><span class="s2">&quot;aweights&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weights</span>
-        <span class="n">data_covariance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">diag</span><span class="p">:</span>
+            <span class="n">data_covariance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diagflat</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data_covariance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kws</span><span class="p">)</span>
         <span class="n">data_covariance</span> <span class="o">=</span> <span class="n">cov_nearest</span><span class="p">(</span><span class="n">data_covariance</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data_covariance</span>
 
 <div class="viewcode-block" id="RuleOfThumbSelector.get_bw"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.RuleOfThumbSelector.get_bw">[docs]</a>    <span class="nd">@beartype</span>
     <span class="k">def</span> <span class="nf">get_bw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">Numeric1DArray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Calculate bandwith matrix using the rule of thumb.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate bandwith matrix using the rule of thumb.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -290,7 +306,7 @@
 
 <div class="viewcode-block" id="HKDE"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.HKDE">[docs]</a><span class="nd">@define</span>
 <span class="k">class</span> <span class="nc">HKDE</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Kernel Density Estimation with variable bandwidth matrices (H).</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Kernel Density Estimation with variable bandwidth matrices (H).</span>
 
 <span class="sd">    Only for multivariate data (2d-nd). As it does not uses</span>
 <span class="sd">    KDE by Fast Fourier Transform, it may take some time for</span>
@@ -322,15 +338,18 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># input attrs</span>
-    <span class="n">bw</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">BandwidthSelector</span><span class="p">,</span> <span class="n">Number</span><span class="p">,</span> <span class="n">NumericArray</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+    <span class="n">bw</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">BandwidthSelector</span><span class="p">,</span> <span class="n">Number</span><span class="p">,</span> <span class="n">NumericArray</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Number</span><span class="p">],</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
         <span class="n">default</span><span class="o">=</span><span class="n">PluginSelector</span><span class="p">(),</span>
-        <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="n">Union</span><span class="p">[</span><span class="n">BandwidthSelector</span><span class="p">,</span> <span class="n">Number</span><span class="p">,</span> <span class="n">NumericArray</span><span class="p">,</span> <span class="nb">str</span><span class="p">]),</span>
+        <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span>
+            <span class="n">Union</span><span class="p">[</span><span class="n">BandwidthSelector</span><span class="p">,</span> <span class="n">Number</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Number</span><span class="p">],</span> <span class="n">NumericArray</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+        <span class="p">),</span>
     <span class="p">)</span>
 
     <span class="c1"># internal attrs</span>
     <span class="n">_kernels</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_weights</span><span class="p">:</span> <span class="n">Numeric1DArrayLike</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_covariances</span><span class="p">:</span> <span class="n">NumericArray</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_base_bw</span><span class="p">:</span> <span class="n">NumericArray</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_data</span><span class="p">:</span> <span class="n">Numeric2DArray</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_d</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
@@ -341,7 +360,7 @@
 
 <div class="viewcode-block" id="HKDE.set_weights"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.HKDE.set_weights">[docs]</a>    <span class="nd">@beartype</span>
     <span class="k">def</span> <span class="nf">set_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Set the weights for each data point.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the weights for each data point.</span>
 
 <span class="sd">        Set a weight value for each data point,</span>
 <span class="sd">        between 0 and 1.</span>
@@ -451,13 +470,16 @@
             <span class="n">bw_matrix</span> <span class="o">=</span> <span class="n">RuleOfThumbSelector</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">)</span><span class="o">.</span><span class="n">get_bw</span><span class="p">(</span>
                 <span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_eff_mask</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_eff_mask</span><span class="p">]</span>
             <span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">:</span>
                 <span class="n">bw_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="p">)</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">):</span>
                 <span class="n">bw_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bw</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Incorrect shape of bandwidth array&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_base_bw</span> <span class="o">=</span> <span class="n">bw_matrix</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">bw_matrix</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_cov_matrices</span><span class="p">(</span>
@@ -483,7 +505,7 @@
         <span class="o">*</span><span class="n">args</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Fit a KDE model to the provided data.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit a KDE model to the provided data.</span>
 
 <span class="sd">        Creates covariances matrices and kernel</span>
 <span class="sd">        instances.</span>
@@ -591,7 +613,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="HKDE.pdf"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.HKDE.pdf">[docs]</a>    <span class="k">def</span> <span class="nf">pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eval_points</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="n">leave1out</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Probability density function.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Probability density function.</span>
 
 <span class="sd">        Evaluate the probability density function at the provided</span>
 <span class="sd">        points, using the fitted KDE model.</span>
@@ -661,7 +683,7 @@
         <span class="n">cols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Plot the KDE model applied in a grid.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot the KDE model applied in a grid.</span>
 
 <span class="sd">        Creates a pairplot of the KDE model applied</span>
 <span class="sd">        in a grid that spans between the data max and min</span>

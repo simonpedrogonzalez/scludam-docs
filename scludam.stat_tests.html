@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.stat_tests module &mdash; scludam 1.0.2 documentation</title>
+  <title>scludam.stat_tests module &mdash; scludam 1.0.3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -29,11 +28,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> scludam
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            scludam
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -98,9 +101,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="modules.html">Scludam Modules</a> &raquo;</li>
-      <li>scludam.stat_tests module</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Scludam Modules</a></li>
+      <li class="breadcrumb-item active">scludam.stat_tests module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/scludam.stat_tests.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -121,7 +124,7 @@ data is “clusterable”) in a n dimensional numerical dataset.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Base class to hold the results of a statistical test.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>rejectH0</strong> (<em>bool</em>) – Whether the null hypothesis was rejected.</p>
 </dd>
 </dl>
@@ -137,13 +140,13 @@ data is “clusterable”) in a n dimensional numerical dataset.</p>
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#scludam.stat_tests.TestResult" title="scludam.stat_tests.TestResult"><span class="pre">TestResult</span></a></span></span><a class="reference internal" href="_modules/scludam/stat_tests.html#StatTest.test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.stat_tests.StatTest.test" title="Permalink to this definition"></a></dt>
 <dd><p>Perform the test.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<em>Numeric2DArray</em>) – numpy numeric 2d array with the data to be tested.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Test result. Its fields depend on the specific test.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#scludam.stat_tests.TestResult" title="scludam.stat_tests.TestResult">TestResult</a></p>
 </dd>
 </dl>
@@ -157,7 +160,7 @@ data is “clusterable”) in a n dimensional numerical dataset.</p>
 <dd><p>Bases: <a class="reference internal" href="#scludam.stat_tests.TestResult" title="scludam.stat_tests.TestResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestResult</span></code></a></p>
 <p>Results of a Hopkins test.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>rejectH0</strong> (<em>bool</em>) – True if the null hypothesis is rejected.</p></li>
 <li><p><strong>pvalue</strong> (<em>Number</em>) – The p-value of the test.</p></li>
@@ -169,11 +172,11 @@ data is “clusterable”) in a n dimensional numerical dataset.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="scludam.stat_tests.HopkinsTest">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scludam.stat_tests.</span></span><span class="sig-name descname"><span class="pre">HopkinsTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DistanceMetric</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Number</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pvalue_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/stat_tests.html#HopkinsTest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.stat_tests.HopkinsTest" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scludam.stat_tests.</span></span><span class="sig-name descname"><span class="pre">HopkinsTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DistanceMetric</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Number</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pvalue_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/stat_tests.html#HopkinsTest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.stat_tests.HopkinsTest" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#scludam.stat_tests.StatTest" title="scludam.stat_tests.StatTest"><code class="xref py py-class docutils literal notranslate"><span class="pre">StatTest</span></code></a></p>
 <p>Class to perform a Hopkins spatial randomness test.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_iters</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of iterations to perform the test. Final Hopkins statistic result
 is taken as the median of the results, by default is 100.</p></li>
@@ -202,7 +205,7 @@ The null hypothesis is:</p>
 <ul class="simple">
 <li><p>H0: The dataset X does not present cluster structure.</p></li>
 </ul>
-<p>The formula to calculate the Hopkins statistic <a class="footnote-reference brackets" href="#id2" id="id1">1</a>
+<p>The formula to calculate the Hopkins statistic <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
 is <code class="docutils literal notranslate"><span class="pre">h</span> <span class="pre">=</span> <span class="pre">sum(d1**l)</span> <span class="pre">/</span> <span class="pre">(sum(d1**l)</span> <span class="pre">+</span> <span class="pre">sum(d2**l))</span></code>, where:</p>
 <ul class="simple">
 <li><p>d1: distance_to_nearest_neighbor_in_X</p></li>
@@ -214,13 +217,14 @@ the null hypothesis. A value <code class="docutils literal notranslate"><span cl
 To get the p-value, the statistic is compared to a beta distribution with
 parameters <code class="docutils literal notranslate"><span class="pre">(m,</span> <span class="pre">m)</span></code>.</p>
 <p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>Hopkins, B. and Skellam, J.G. (1954). A new method of determining the type of
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Hopkins, B. and Skellam, J.G. (1954). A new method of determining the type of
 distribution of plant individuals”. Annals of Botany, 1954, 18(2),
 pp.213-227. <a class="reference external" href="https://doi.org/10.1093/oxfordjournals.aob.a083391">https://doi.org/10.1093/oxfordjournals.aob.a083391</a></p>
-</dd>
-</dl>
+</aside>
+</aside>
 <p class="rubric">Examples</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
 <span class="linenos">2</span>
@@ -238,13 +242,13 @@ pp.213-227. <a class="reference external" href="https://doi.org/10.1093/oxfordjo
 <span class="sig-name descname"><span class="pre">test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/stat_tests.html#HopkinsTest.test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.stat_tests.HopkinsTest.test" title="Permalink to this definition"></a></dt>
 <dd><p>Perform the Hopkins test.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<em>Numeric2DArray</em>) – Array containing the data.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Test results.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#scludam.stat_tests.HopkinsTestResult" title="scludam.stat_tests.HopkinsTestResult">HopkinsTestResult</a></p>
 </dd>
 </dl>
@@ -258,7 +262,7 @@ pp.213-227. <a class="reference external" href="https://doi.org/10.1093/oxfordjo
 <dd><p>Bases: <a class="reference internal" href="#scludam.stat_tests.TestResult" title="scludam.stat_tests.TestResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestResult</span></code></a></p>
 <p>Results of a dip dist test.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>value</strong> (<em>Number</em>) – The value of the dip statistic.</p></li>
 <li><p><strong>pvalue</strong> (<em>Number</em>) – The pvalue of the test.</p></li>
@@ -274,9 +278,9 @@ pp.213-227. <a class="reference external" href="https://doi.org/10.1093/oxfordjo
 <dd><p>Bases: <a class="reference internal" href="#scludam.stat_tests.StatTest" title="scludam.stat_tests.StatTest"><code class="xref py py-class docutils literal notranslate"><span class="pre">StatTest</span></code></a></p>
 <p>Class to perform a Dip-Dist test of multimodality over pairwise distances.</p>
 <p>The Dip-Dist implementation is based on the Python Dip test wrapper built by
-Ralph Ulrus, <a class="footnote-reference brackets" href="#id7" id="id3">2</a>.</p>
+Ralph Ulrus, <a class="footnote-reference brackets" href="#id7" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>max_samples</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of samples to use, by default is <code class="docutils literal notranslate"><span class="pre">1000</span></code>. If there are more
 data points than <code class="docutils literal notranslate"><span class="pre">max_samples</span></code>, then the data is sampled.</p></li>
@@ -288,7 +292,7 @@ is <code class="docutils literal notranslate"><span class="pre">0.05</span></cod
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>The test analyzes the pairwise distance distribution <a class="footnote-reference brackets" href="#id6" id="id4">3</a> between points
+<p>The test analyzes the pairwise distance distribution <a class="footnote-reference brackets" href="#id6" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> between points
 in a data set to determine if said distribution is multimodal.
 The null hypothesis is:</p>
 <ul class="simple">
@@ -302,28 +306,31 @@ The null hypothesis is:</p>
 for uniform data distributions or single cluster distributions.
 It will be multimodal when there are several clusters or when
 there is an aggregate of a uniform distribution and a cluster.
-The Hartigan’s Dip statistic <a class="footnote-reference brackets" href="#id8" id="id5">4</a> can be defined as the maximum
+The Hartigan’s Dip statistic <a class="footnote-reference brackets" href="#id8" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> can be defined as the maximum
 difference between an empirical distribution and its closest
 unimodal distribution calculated using the greatest convex minorant
 and the least concave majorant of the bounded distribution function.</p>
 <p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id4">3</a></span></dt>
-<dd><p>R. Urlus (2022). A Python/C(++) implementation
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id6" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
+<p>R. Urlus (2022). A Python/C(++) implementation
 of Hartigan &amp; Hartigan’s dip test for unimodality.
 <a class="reference external" href="https://pypi.org/project/diptest/">https://pypi.org/project/diptest/</a></p>
-</dd>
-<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
-<dd><p>A. Adolfsson, M. Ackerman, N. C. Brownstein (2018). To Cluster,
+</aside>
+<aside class="footnote brackets" id="id7" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<p>A. Adolfsson, M. Ackerman, N. C. Brownstein (2018). To Cluster,
 or Not to Cluster: An Analysis of Clusterability Methods
 . <a class="reference external" href="https://doi.org/10.48550/arXiv.1808.08317">https://doi.org/10.48550/arXiv.1808.08317</a></p>
-</dd>
-<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id5">4</a></span></dt>
-<dd><p>J. A. Hartigan and P. M. Hartigan (1985). The Dip Test of Unimodality.
+</aside>
+<aside class="footnote brackets" id="id8" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">4</a><span class="fn-bracket">]</span></span>
+<p>J. A. Hartigan and P. M. Hartigan (1985). The Dip Test of Unimodality.
 Annals of Statistics 13, 70–84. D
 OI: 10.1214/aos/1176346577</p>
-</dd>
-</dl>
+</aside>
+</aside>
 <p class="rubric">Examples</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
@@ -346,13 +353,13 @@ OI: 10.1214/aos/1176346577</p>
 <span class="sig-name descname"><span class="pre">test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/stat_tests.html#DipDistTest.test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.stat_tests.DipDistTest.test" title="Permalink to this definition"></a></dt>
 <dd><p>Perform the Dip-Dist test.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<em>Numeric2DArray</em>) – numpy 2d numeric array containing the data.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The test results.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#scludam.stat_tests.DipDistTestResult" title="scludam.stat_tests.DipDistTestResult">DipDistTestResult</a></p>
 </dd>
 </dl>
@@ -366,7 +373,7 @@ OI: 10.1214/aos/1176346577</p>
 <dd><p>Bases: <a class="reference internal" href="#scludam.stat_tests.TestResult" title="scludam.stat_tests.TestResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestResult</span></code></a></p>
 <p>Results of a Ripley’s K test.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>rejectH0</strong> (<em>bool</em>) – True if the null hypothesis is rejected.</p></li>
 <li><p><strong>value</strong> (<em>Number</em>) – The value calculated to determine if H0 is rejected. If
@@ -382,13 +389,13 @@ the value is the pvalue of the Kolmogorov-Smirnov test.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="scludam.stat_tests.RipleysKTest">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scludam.stat_tests.</span></span><span class="sig-name descname"><span class="pre">RipleysKTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rk_estimator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">RipleysKEstimator</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">used_fitted_rk_estimator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">RipleysKEstimator</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TransformerMixin</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">MinMaxScaler()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ripley'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radii</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pvalue_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/stat_tests.html#RipleysKTest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.stat_tests.RipleysKTest" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scludam.stat_tests.</span></span><span class="sig-name descname"><span class="pre">RipleysKTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rk_estimator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RipleysKEstimator</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">used_fitted_rk_estimator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RipleysKEstimator</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TransformerMixin</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">MinMaxScaler()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ripley'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radii</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pvalue_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/stat_tests.html#RipleysKTest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.stat_tests.RipleysKTest" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#scludam.stat_tests.StatTest" title="scludam.stat_tests.StatTest"><code class="xref py py-class docutils literal notranslate"><span class="pre">StatTest</span></code></a></p>
 <p>Class to perform the Ripleys K test of 2D spatial randomness.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>rk_estimator</strong> (<em>astropy.stats.RipleysKEstimator</em><em>, </em><em>optional</em>) – Estimator to use for the Ripleys K function <a class="footnote-reference brackets" href="#id14" id="id9">5</a>, by default
+<li><p><strong>rk_estimator</strong> (<em>astropy.stats.RipleysKEstimator</em><em>, </em><em>optional</em>) – Estimator to use for the Ripleys K function <a class="footnote-reference brackets" href="#id14" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>, by default
 is None. Only used if
 a custom RipleysKEstimator configuration is needed.</p></li>
 <li><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The comparison method to use to determine the rejection of H0, by default is
@@ -399,7 +406,7 @@ a custom RipleysKEstimator configuration is needed.</p></li>
 <div><ul>
 <li><p>area: is the area of the 2D data set taken as a square window.</p></li>
 <li><p>n: is the number of points in the data set.</p></li>
-<li><p>ripley_factor: are the tabulated values calculated by Ripleys <a class="footnote-reference brackets" href="#id14" id="id10">5</a>
+<li><p>ripley_factor: are the tabulated values calculated by Ripleys <a class="footnote-reference brackets" href="#id14" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>
 to determine p-value significance. Available Ripleys factors
 are <code class="docutils literal notranslate"><span class="pre">p-value</span> <span class="pre">=</span> <span class="pre">0.05</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">factor</span> <span class="pre">=</span> <span class="pre">1.42</span></code> and
 <code class="docutils literal notranslate"><span class="pre">p-value</span> <span class="pre">=</span> <span class="pre">0.01</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">factor</span> <span class="pre">=</span> <span class="pre">1.68</span></code>.</p></li>
@@ -409,7 +416,7 @@ are <code class="docutils literal notranslate"><span class="pre">p-value</span> 
 <li><p>”chiu”: H0 rejected if <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">&gt;</span> <span class="pre">chiu_factor</span> <span class="pre">*</span> <span class="pre">sqrt(area)</span> <span class="pre">/</span> <span class="pre">n</span></code> where:</p>
 <blockquote>
 <div><ul>
-<li><p>chiu_factor: are the tabulated values suggested by Chiu <a class="footnote-reference brackets" href="#id15" id="id11">6</a> to
+<li><p>chiu_factor: are the tabulated values suggested by Chiu <a class="footnote-reference brackets" href="#id15" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a> to
 determine p-value significance. Available Chiu factors are
 <code class="docutils literal notranslate"><span class="pre">p-value</span> <span class="pre">=</span> <span class="pre">0.1</span> <span class="pre">-&gt;</span> <span class="pre">factor</span> <span class="pre">=</span> <span class="pre">1.31</span></code>,
 <code class="docutils literal notranslate"><span class="pre">p-value</span> <span class="pre">=</span> <span class="pre">0.05</span> <span class="pre">-&gt;</span> <span class="pre">factor</span> <span class="pre">=</span> <span class="pre">1.45</span></code> and
@@ -437,7 +444,7 @@ where max_radius is calculated as:</p>
 </div></blockquote>
 <p>The steps between the radii values are calculated as
 <code class="docutils literal notranslate"><span class="pre">step</span> <span class="pre">=</span> <span class="pre">max_radius</span> <span class="pre">/</span> <span class="pre">128</span> <span class="pre">/</span> <span class="pre">4</span></code>.
-This procedure is the recommended one in R spatstat package <a class="footnote-reference brackets" href="#id16" id="id12">7</a>.</p>
+This procedure is the recommended one in R spatstat package <a class="footnote-reference brackets" href="#id16" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>.</p>
 </p></li>
 <li><p><strong>max_samples</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximum number of samples to use for the test, by default is 5000. If the
 dataset has more than <code class="docutils literal notranslate"><span class="pre">max_samples</span></code>, then the test is performed on a random sample
@@ -446,13 +453,13 @@ of <code class="docutils literal notranslate"><span class="pre">max_samples</spa
 provided, then pvalue_threshold is ignored.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Raises</dt>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ValueError</strong> – If tabulated factor for the chosen p-value threshold is not available, or if the
     chosen p-value threshold is invalid.</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>The test calculates the value of an estimate for the L function <a class="footnote-reference brackets" href="#id17" id="id13">8</a> (a
+<p>The test calculates the value of an estimate for the L function <a class="footnote-reference brackets" href="#id17" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a> (a
 form of Ripleys K function) for a set of radii taken from the
 center of the data set, and compares it to the theoretical L
 function of a uniform distribution. The null hypothesis is:</p>
@@ -471,27 +478,32 @@ For a completely random point process (Poisson Point Process),
 The statistic to define if H0 is rejected based on the L function is the
 <code class="docutils literal notranslate"><span class="pre">supremum</span></code> of the difference <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">=</span> <span class="pre">max(L(r)</span> <span class="pre">-</span> <span class="pre">r)</span></code>.</p>
 <p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id14"><span class="brackets">5</span><span class="fn-backref">(<a href="#id9">1</a>,<a href="#id10">2</a>)</span></dt>
-<dd><p>B. D. Ripley (1979). Tests of Randomness for Spatial Point Patterns.
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id14" role="note">
+<span class="label"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id9">1</a>,<a role="doc-backlink" href="#id10">2</a>)</span>
+<p>B. D. Ripley (1979). Tests of Randomness for Spatial Point Patterns.
 J. R. Statist. Soc. B (1979), 41, No.3, pp. 368-374.
 <a class="reference external" href="https://doi.org/10.1111/j.2517-6161.1979.tb01091.x">https://doi.org/10.1111/j.2517-6161.1979.tb01091.x</a></p>
-</dd>
-<dt class="label" id="id15"><span class="brackets"><a class="fn-backref" href="#id11">6</a></span></dt>
-<dd><p>S. N. Chiu (2007). Correction to Koen’s critical values in testing
+</aside>
+<aside class="footnote brackets" id="id15" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">6</a><span class="fn-bracket">]</span></span>
+<p>S. N. Chiu (2007). Correction to Koen’s critical values in testing
 spatial randomness. Journal of Statistical Computation and Simulation
 2007 77(11-12):1001-1004. DOI: 10.1080/10629360600989147</p>
-</dd>
-<dt class="label" id="id16"><span class="brackets"><a class="fn-backref" href="#id12">7</a></span></dt>
-<dd><p>A. Baddeley, R. Turner (2005). Spatstat: An R Package for Analyzing
+</aside>
+<aside class="footnote brackets" id="id16" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id12">7</a><span class="fn-bracket">]</span></span>
+<p>A. Baddeley, R. Turner (2005). Spatstat: An R Package for Analyzing
 Spatial Point Patterns. Journal of Statistical Software, 12(6), 1–42.
 DOI: 10.18637/jss.v012.i06.</p>
-</dd>
-<dt class="label" id="id17"><span class="brackets"><a class="fn-backref" href="#id13">8</a></span></dt>
-<dd><p>J. Besag (1977). Contribution to the Discussion on Dr. Ripley’s
+</aside>
+<aside class="footnote brackets" id="id17" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">8</a><span class="fn-bracket">]</span></span>
+<p>J. Besag (1977). Contribution to the Discussion on Dr. Ripley’s
 Paper. Journals of the Royal Statistical Society, B39, 193-195.</p>
-</dd>
-</dl>
+</aside>
+</aside>
 <p class="rubric">Examples</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
@@ -526,16 +538,16 @@ Paper. Journals of the Royal Statistical Society, B39, 193-195.</p>
 <span class="sig-name descname"><span class="pre">test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">number</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scludam/stat_tests.html#RipleysKTest.test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scludam.stat_tests.RipleysKTest.test" title="Permalink to this definition"></a></dt>
 <dd><p>Perform the Ripleys K test of 2D spatial randomness.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<em>Numeric2DArray</em>) – numpy 2d numeric array containing the data set to test.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Result of the Ripleys K test.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>RipleysKTestResult</p>
 </dd>
-<dt class="field-even">Warns</dt>
+<dt class="field-even">Warns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>UserWarning</strong> – Warns if some dataset points are repeated (exactly equal). In that case,
 the RipleysKEstimator will not be able to calculate the L function,
 so repeated points will will be eliminated before the test. Bound to

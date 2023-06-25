@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quickstart &mdash; scludam 1.0.2 documentation</title>
+  <title>Quickstart &mdash; scludam 1.0.3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -29,11 +28,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> scludam
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            scludam
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -65,8 +68,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Quickstart</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quickstart</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -137,27 +140,28 @@
 <span class="linenos">55</span>    <span class="n">detector</span><span class="o">=</span><span class="n">CountPeakDetector</span><span class="p">(</span>
 <span class="linenos">56</span>        <span class="n">bin_shape</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">],</span>
 <span class="linenos">57</span>        <span class="n">min_score</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-<span class="linenos">58</span>    <span class="p">),</span>
-<span class="linenos">59</span>    <span class="n">det_cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;parallax&quot;</span><span class="p">],</span>
-<span class="linenos">60</span>    <span class="n">sample_sigma_factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-<span class="linenos">61</span>    <span class="c1"># Clusterability test configuration</span>
-<span class="linenos">62</span>    <span class="n">tests</span><span class="o">=</span><span class="p">[</span>
-<span class="linenos">63</span>        <span class="n">RipleysKTest</span><span class="p">(</span><span class="n">pvalue_threshold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">max_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span>
-<span class="linenos">64</span>        <span class="n">HopkinsTest</span><span class="p">(),</span>
-<span class="linenos">65</span>    <span class="p">],</span>
-<span class="linenos">66</span>    <span class="n">test_cols</span><span class="o">=</span><span class="p">[[</span><span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
-<span class="linenos">67</span>    <span class="c1"># Membership columns to use</span>
-<span class="linenos">68</span>    <span class="n">mem_cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;parallax&quot;</span><span class="p">,</span> <span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">],</span>
-<span class="linenos">69</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="linenos">70</span>
-<span class="linenos">71</span><span class="c1"># plot the results</span>
-<span class="linenos">72</span><span class="n">dep</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">([</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">])</span>
-<span class="linenos">73</span><span class="c1"># zoom on interesting area</span>
-<span class="linenos">74</span><span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="linenos">75</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="linenos">76</span>
-<span class="linenos">77</span><span class="c1"># write results to file</span>
-<span class="linenos">78</span><span class="n">dep</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ngc2168_result.fits&quot;</span><span class="p">)</span>
+<span class="linenos">58</span>        <span class="n">min_count</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+<span class="linenos">59</span>    <span class="p">),</span>
+<span class="linenos">60</span>    <span class="n">det_cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;parallax&quot;</span><span class="p">],</span>
+<span class="linenos">61</span>    <span class="n">sample_sigma_factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="linenos">62</span>    <span class="c1"># Clusterability test configuration</span>
+<span class="linenos">63</span>    <span class="n">tests</span><span class="o">=</span><span class="p">[</span>
+<span class="linenos">64</span>        <span class="n">RipleysKTest</span><span class="p">(</span><span class="n">pvalue_threshold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">max_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span>
+<span class="linenos">65</span>        <span class="n">HopkinsTest</span><span class="p">(),</span>
+<span class="linenos">66</span>    <span class="p">],</span>
+<span class="linenos">67</span>    <span class="n">test_cols</span><span class="o">=</span><span class="p">[[</span><span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
+<span class="linenos">68</span>    <span class="c1"># Membership columns to use</span>
+<span class="linenos">69</span>    <span class="n">mem_cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">,</span> <span class="s2">&quot;parallax&quot;</span><span class="p">,</span> <span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">],</span>
+<span class="linenos">70</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="linenos">71</span>
+<span class="linenos">72</span><span class="c1"># plot the results</span>
+<span class="linenos">73</span><span class="n">dep</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">([</span><span class="s2">&quot;pmra&quot;</span><span class="p">,</span> <span class="s2">&quot;pmdec&quot;</span><span class="p">])</span>
+<span class="linenos">74</span><span class="c1"># zoom on interesting area</span>
+<span class="linenos">75</span><span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="linenos">76</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="linenos">77</span>
+<span class="linenos">78</span><span class="c1"># write results to file</span>
+<span class="linenos">79</span><span class="n">dep</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ngc2168_result.fits&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="_images/dep_pmra_pmdec.png" src="_images/dep_pmra_pmdec.png" />

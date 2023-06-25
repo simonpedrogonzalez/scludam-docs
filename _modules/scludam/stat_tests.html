@@ -3,17 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.stat_tests &mdash; scludam 1.0.2 documentation</title>
+  <title>scludam.stat_tests &mdash; scludam 1.0.3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -26,11 +25,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> scludam
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            scludam
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -57,9 +60,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>scludam.stat_tests</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">scludam.stat_tests</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -115,7 +118,7 @@
 
 <div class="viewcode-block" id="TestResult"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.TestResult">[docs]</a><span class="nd">@define</span>
 <span class="k">class</span> <span class="nc">TestResult</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Base class to hold the results of a statistical test.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class to hold the results of a statistical test.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -128,11 +131,11 @@
 
 
 <div class="viewcode-block" id="StatTest"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.StatTest">[docs]</a><span class="k">class</span> <span class="nc">StatTest</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Base class for statistical tests.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for statistical tests.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="StatTest.test"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.StatTest.test">[docs]</a>    <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TestResult</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Perform the test.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform the test.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -150,7 +153,7 @@
 
 <div class="viewcode-block" id="HopkinsTestResult"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.HopkinsTestResult">[docs]</a><span class="nd">@define</span>
 <span class="k">class</span> <span class="nc">HopkinsTestResult</span><span class="p">(</span><span class="n">TestResult</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Results of a Hopkins test.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Results of a Hopkins test.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -169,7 +172,7 @@
 
 <div class="viewcode-block" id="HopkinsTest"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.HopkinsTest">[docs]</a><span class="nd">@define</span><span class="p">()</span>
 <span class="k">class</span> <span class="nc">HopkinsTest</span><span class="p">(</span><span class="n">StatTest</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Class to perform a Hopkins spatial randomness test.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to perform a Hopkins spatial randomness test.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -267,7 +270,7 @@
 
 <div class="viewcode-block" id="HopkinsTest.test"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.HopkinsTest.test">[docs]</a>    <span class="nd">@beartype</span>
     <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Perform the Hopkins test.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform the Hopkins test.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -319,7 +322,7 @@
 
 <div class="viewcode-block" id="DipDistTestResult"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.DipDistTestResult">[docs]</a><span class="nd">@define</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">DipDistTestResult</span><span class="p">(</span><span class="n">TestResult</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Results of a dip dist test.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Results of a dip dist test.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -339,7 +342,7 @@
 
 <div class="viewcode-block" id="DipDistTest"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.DipDistTest">[docs]</a><span class="nd">@define</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">DipDistTest</span><span class="p">(</span><span class="n">StatTest</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Class to perform a Dip-Dist test of multimodality over pairwise distances.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to perform a Dip-Dist test of multimodality over pairwise distances.</span>
 
 <span class="sd">    The Dip-Dist implementation is based on the Python Dip test wrapper built by</span>
 <span class="sd">    Ralph Ulrus, [2]_.</span>
@@ -404,7 +407,7 @@
 
 <div class="viewcode-block" id="DipDistTest.test"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.DipDistTest.test">[docs]</a>    <span class="nd">@beartype</span>
     <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Perform the Dip-Dist test.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform the Dip-Dist test.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -430,7 +433,7 @@
 
 <div class="viewcode-block" id="RipleyKTestResult"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.RipleyKTestResult">[docs]</a><span class="nd">@define</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">RipleyKTestResult</span><span class="p">(</span><span class="n">TestResult</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Results of a Ripley&#39;s K test.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Results of a Ripley&#39;s K test.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -455,7 +458,7 @@
 
 <div class="viewcode-block" id="RipleysKTest"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.RipleysKTest">[docs]</a><span class="nd">@define</span>
 <span class="k">class</span> <span class="nc">RipleysKTest</span><span class="p">(</span><span class="n">StatTest</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Class to perform the Ripleys K test of 2D spatial randomness.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to perform the Ripleys K test of 2D spatial randomness.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -629,7 +632,7 @@
 
 <div class="viewcode-block" id="RipleysKTest.test"><a class="viewcode-back" href="../../scludam.stat_tests.html#scludam.stat_tests.RipleysKTest.test">[docs]</a>    <span class="nd">@beartype</span>
     <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Perform the Ripleys K test of 2D spatial randomness.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform the Ripleys K test of 2D spatial randomness.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
