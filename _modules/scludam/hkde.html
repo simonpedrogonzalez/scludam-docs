@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.hkde &mdash; scludam 1.0.3 documentation</title>
+  <title>scludam.hkde &mdash; scludam 1.0.4 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -105,6 +105,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">attrs</span> <span class="kn">import</span> <span class="n">define</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">validators</span>
 <span class="kn">from</span> <span class="nn">beartype</span> <span class="kn">import</span> <span class="n">beartype</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
 <span class="kn">from</span> <span class="nn">rpy2.robjects</span> <span class="kn">import</span> <span class="n">r</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">multivariate_normal</span>
 <span class="kn">from</span> <span class="nn">statsmodels.stats.correlation_tools</span> <span class="kn">import</span> <span class="n">corr_nearest</span><span class="p">,</span> <span class="n">cov_nearest</span>
@@ -327,7 +328,23 @@
 <span class="sd">           number of observations and d is the number of dimensions.</span>
 <span class="sd">        *  a String: the name of the rule of thumb to be used. One of</span>
 <span class="sd">              &quot;scott&quot; or &quot;silverman&quot;.</span>
-
+<span class="sd">    error_convolution: bool, optional</span>
+<span class="sd">        When true:</span>
+<span class="sd">        *  It can only estimate density for the same points as the data.</span>
+<span class="sd">        That is, eval points are equal to data points.</span>
+<span class="sd">        *  It always is a leave-one-out estimation.</span>
+<span class="sd">        *  To calculate the contribution of point A to the density</span>
+<span class="sd">        evaluated at point B, both the bandwidth matrix of point A and</span>
+<span class="sd">        the bandwidth matrix of point B are convolved.</span>
+<span class="sd">        *  This option should be used to get an accurate measure of the</span>
+<span class="sd">        density at the data points considering the uncertainty of all</span>
+<span class="sd">        points, themselves included.</span>
+<span class="sd">        *  As a new matrix is calculated for each combination of points,</span>
+<span class="sd">        is the slowest option. Although it has been optimized with ball</span>
+<span class="sd">        tree to reduce the number of matrices used, it could be</span>
+<span class="sd">        problematic for big concentrated datasets.</span>
+<span class="sd">        *  Default is False.</span>
+<span class="sd">    </span>
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    .. literalinclude:: ../../examples/hkde/hkde.py</span>
@@ -344,6 +361,7 @@
             <span class="n">Union</span><span class="p">[</span><span class="n">BandwidthSelector</span><span class="p">,</span> <span class="n">Number</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Number</span><span class="p">],</span> <span class="n">NumericArray</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
         <span class="p">),</span>
     <span class="p">)</span>
+    <span class="n">error_convolution</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># internal attrs</span>
     <span class="n">_kernels</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">=</span> <span class="kc">None</span>
@@ -612,6 +630,93 @@
             <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_covariances</span> <span class="ow">is</span> <span class="kc">None</span>
         <span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">_calculate_biggest_hypersphere</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># If sum of diagonal is bigger when correlations are small, then matrix is bigger</span>
+        <span class="c1"># get the self._covariances matrix which diagonal sums the biggest</span>
+        <span class="n">sums</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_covariances</span><span class="p">])</span>
+        <span class="c1"># get the 99 percentile of the sums</span>
+        <span class="n">biggest_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">sums</span><span class="p">,</span> <span class="mi">99</span><span class="p">)</span>
+        <span class="n">closest_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sums</span> <span class="o">-</span> <span class="n">biggest_cov</span><span class="p">))</span>
+        <span class="c1"># get the index of the biggest matrix</span>
+        <span class="n">biggest_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_covariances</span><span class="p">[</span><span class="n">closest_cov</span><span class="p">]</span>
+        <span class="c1"># get the biggest matrix</span>
+        <span class="c1"># create a multivariate normal around 0 with the biggest matrix, accounting for dims</span>
+        <span class="n">biggest_kde</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">),</span>
+            <span class="n">biggest_matrix</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># determine where the pdf is &lt;= 1e-08 in all dimensions</span>
+        <span class="c1"># and take the distance between 0 and that point</span>
+        <span class="c1"># as the radius of the biggest sphere</span>
+        <span class="n">grid_range</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">resolution</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="n">threshold</span> <span class="o">=</span> <span class="mf">1e-08</span>
+        <span class="n">grid_linspace</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">grid_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">grid_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">resolution</span><span class="p">)</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="n">grid_linspace</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="n">dim</span><span class="p">)))</span>
+        <span class="n">pdf_values</span> <span class="o">=</span> <span class="n">biggest_kde</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+        <span class="n">points_above_threshold</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="n">pdf_values</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">]</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">points_above_threshold</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">max_distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">max_distance</span>
+
+    <span class="k">def</span> <span class="nf">_build_tree_ball</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">neighbours</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="n">eval_points</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">BallTree</span>
+        <span class="c1"># build a ball tree with the data</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">BallTree</span><span class="p">(</span><span class="n">neighbours</span><span class="p">)</span>
+        <span class="c1"># get the indexes of the points that are inside the ball</span>
+        <span class="k">return</span> <span class="n">tree</span><span class="o">.</span><span class="n">query_radius</span><span class="p">(</span><span class="n">eval_points</span><span class="p">,</span> <span class="n">radius</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_pdf_with_error_convolution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Model not fitted. Try excecuting fit function first.&quot;</span><span class="p">)</span>
+        <span class="n">eval_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+        <span class="n">obs</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">eval_points</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">if</span> <span class="n">dims</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Eval points must have same dims as data.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">obs</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Eval points cannot be empty&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_eff</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+
+        <span class="n">pdf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+        <span class="n">all_covariances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_covariances</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_eff_mask</span><span class="p">]</span>
+        <span class="n">covariances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_covariances</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_eff_mask</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_eff_mask</span><span class="p">]</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_eff</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_tree_ball</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_calculate_biggest_hypersphere</span><span class="p">(),</span> <span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+
+        <span class="c1"># put weights and normalization toghether in each step</span>
+        <span class="c1"># pdf(point) = sum(ki(point)*wi/(sum(w)-wi))</span>
+        <span class="n">norm_weigths</span> <span class="o">=</span> <span class="n">weights</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">weights</span><span class="p">)</span>
+        <span class="n">pdf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">eval_points</span><span class="p">):</span>
+            <span class="c1"># print(f&#39;hkde progress: {round(j/self._n * 100, 2)}&#39;)</span>
+            <span class="c1"># get the indexes of the points that are inside the ball</span>
+            <span class="n">indexes</span> <span class="o">=</span> <span class="n">tree</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="c1"># get the covariances of the points that are inside the ball</span>
+            <span class="n">point_cov</span> <span class="o">=</span> <span class="n">all_covariances</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">applied_ks</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">indexes</span><span class="p">:</span>
+                <span class="n">mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+                    <span class="n">cov</span> <span class="o">=</span> <span class="n">covariances</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+</span> <span class="n">point_cov</span>
+                    <span class="n">k</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="p">(</span>
+                        <span class="n">mean</span><span class="p">,</span>
+                        <span class="n">cov</span>
+                    <span class="p">)</span>
+                    <span class="n">tosum</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="n">norm_weigths</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+                    <span class="n">applied_ks</span> <span class="o">+=</span> <span class="n">tosum</span>
+            <span class="n">pdf</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">applied_ks</span>
+
+        <span class="k">if</span> <span class="n">obs</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># return as float value</span>
+            <span class="k">return</span> <span class="n">pdf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">pdf</span>
+
 <div class="viewcode-block" id="HKDE.pdf"><a class="viewcode-back" href="../../scludam.hkde.html#scludam.hkde.HKDE.pdf">[docs]</a>    <span class="k">def</span> <span class="nf">pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eval_points</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="n">leave1out</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Probability density function.</span>
 
@@ -640,6 +745,11 @@
 <span class="sd">            the fitted KDE model.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_convolution</span><span class="p">:</span>
+            <span class="c1"># ignores the rest of parameters as it only</span>
+            <span class="c1"># works with the data and its alwas leave1out</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pdf_with_error_convolution</span><span class="p">()</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">():</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Model not fitted. Try excecuting fit function first.&quot;</span><span class="p">)</span>
         <span class="n">eval_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">eval_points</span><span class="p">)</span>

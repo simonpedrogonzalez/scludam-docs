@@ -3,17 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.rutils &mdash; scludam 1.0.2 documentation</title>
+  <title>scludam.rutils &mdash; scludam 1.0.4 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -26,11 +25,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> scludam
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            scludam
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -57,9 +60,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>scludam.rutils</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">scludam.rutils</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -102,13 +105,13 @@
 
 
 <div class="viewcode-block" id="disable_r_warnings"><a class="viewcode-back" href="../../scludam.rutils.html#scludam.rutils.disable_r_warnings">[docs]</a><span class="k">def</span> <span class="nf">disable_r_warnings</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Disable R runtime warnings.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Disable R runtime warnings.&quot;&quot;&quot;</span>
     <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">RRuntimeWarning</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="disable_r_console_output"><a class="viewcode-back" href="../../scludam.rutils.html#scludam.rutils.disable_r_console_output">[docs]</a><span class="k">def</span> <span class="nf">disable_r_console_output</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Disable R console output in python.&quot;&quot;&quot;</span>
-    <span class="c1"># flush any R console output</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Disable R console output in python.&quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">add_to_stdout</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
         <span class="k">pass</span>
 
@@ -120,7 +123,7 @@
 
 
 <div class="viewcode-block" id="clean_r_session"><a class="viewcode-back" href="../../scludam.rutils.html#scludam.rutils.clean_r_session">[docs]</a><span class="k">def</span> <span class="nf">clean_r_session</span><span class="p">(</span><span class="n">rsession</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Remove saved elements from R session.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove saved elements from R session.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -148,7 +151,7 @@
 
 
 <div class="viewcode-block" id="load_r_packages"><a class="viewcode-back" href="../../scludam.rutils.html#scludam.rutils.load_r_packages">[docs]</a><span class="k">def</span> <span class="nf">load_r_packages</span><span class="p">(</span><span class="n">rsession</span><span class="p">,</span> <span class="n">packages</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">str</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;Load R packages into R session.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load R packages into R session.</span>
 
 <span class="sd">    If the package is not installed, it will try to install</span>
 <span class="sd">    it from the first CRAN mirror.</span>
@@ -183,7 +186,7 @@
 
 
 <div class="viewcode-block" id="assign_r_args"><a class="viewcode-back" href="../../scludam.rutils.html#scludam.rutils.assign_r_args">[docs]</a><span class="k">def</span> <span class="nf">assign_r_args</span><span class="p">(</span><span class="n">rsession</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Assign R arguments to R session.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Assign R arguments to R session.</span>
 
 <span class="sd">    Loads function kwargs as R variables</span>
 <span class="sd">    into the provided R session. The kwargs</span>

@@ -3,17 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.plots &mdash; scludam 1.0.2 documentation</title>
+  <title>scludam.plots &mdash; scludam 1.0.4 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -26,11 +25,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> scludam
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            scludam
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -57,9 +60,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>scludam.plots</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">scludam.plots</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -122,7 +125,7 @@
 
 
 <div class="viewcode-block" id="color_from_proba"><a class="viewcode-back" href="../../scludam.plots.html#scludam.plots.color_from_proba">[docs]</a><span class="k">def</span> <span class="nf">color_from_proba</span><span class="p">(</span><span class="n">proba</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span> <span class="n">palette</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create color list from palette and probabilities.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create color list from palette and probabilities.</span>
 
 <span class="sd">    It desaturates the colors given the probabilities</span>
 
@@ -188,7 +191,7 @@
     <span class="n">desaturate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create a 3D probability plot.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a 3D probability plot.</span>
 
 <span class="sd">    It represents the provided data in x,</span>
 <span class="sd">    y and z. It passes kwargs to matplotlib scatter3D [1]_</span>
@@ -265,7 +268,7 @@
     <span class="n">cols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create surface 3D probability plot.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create surface 3D probability plot.</span>
 
 <span class="sd">    It represents the provided data in x</span>
 <span class="sd">    y. It passes kwargs to matplotlib plot_trisurf [2]_.</span>
@@ -342,7 +345,7 @@
     <span class="n">plot_kws</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Pairplot of the data and the membership probabilities.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pairplot of the data and the membership probabilities.</span>
 
 <span class="sd">    It passes kwargs, diag_kws and plot_kws to seaborn pairplot [3]_</span>
 <span class="sd">    function.</span>
@@ -435,7 +438,7 @@
     <span class="n">proba</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot of data and membership probabilities using t-SNE projection.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot of data and membership probabilities using t-SNE projection.</span>
 
 <span class="sd">    It pases kwargs to seaborn scatterplot [4]_ function.</span>
 
@@ -493,7 +496,7 @@
     <span class="n">tick_prec</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create a heatmap from a 2D histogram.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a heatmap from a 2D histogram.</span>
 
 <span class="sd">    Also marks index if provided. Create</span>
 <span class="sd">    ticklabels from bin centers and not from</span>
@@ -590,7 +593,7 @@
     <span class="n">grid</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot univariate density plot.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot univariate density plot.</span>
 
 <span class="sd">    Create a filled lineplot given the</span>
 <span class="sd">    densities for x. kwargs are passed</span>
@@ -664,7 +667,7 @@
     <span class="n">grid</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create a bivariate density plot.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a bivariate density plot.</span>
 
 <span class="sd">    Create a heatmap like density plot</span>
 <span class="sd">    given densities in x and y. kwargs are</span>
@@ -759,7 +762,7 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">select_labels</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">labels</span><span class="p">,</span> <span class="n">proba</span>
     <span class="n">new_proba</span> <span class="o">=</span> <span class="n">proba</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">new_labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">new_labels</span> <span class="o">=</span> <span class="n">proba</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">new_labels</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">select_labels</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="n">selected_cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">select_labels</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">summarize_cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">proba</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">selected_cols</span><span class="p">)))</span>
@@ -767,6 +770,16 @@
     <span class="n">new_proba</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">non_selected_sum</span>
     <span class="n">new_proba</span> <span class="o">=</span> <span class="n">new_proba</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">selected_cols</span><span class="p">))]</span>
     <span class="k">return</span> <span class="n">new_labels</span><span class="p">,</span> <span class="n">new_proba</span>
+
+<span class="k">def</span> <span class="nf">_select_1</span><span class="p">(</span><span class="n">proba</span><span class="p">,</span> <span class="n">select_1</span><span class="p">):</span>
+    <span class="c1"># 0 if proba [select_1] &gt; 0, -1 otherwise</span>
+    <span class="n">new_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">proba</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span><span class="o">*-</span><span class="mi">1</span>
+    <span class="n">new_labels</span><span class="p">[</span><span class="n">proba</span><span class="p">[:,</span> <span class="n">select_1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">new_proba</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">proba</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">new_proba</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">proba</span><span class="p">[:,</span> <span class="n">select_1</span><span class="p">]</span>
+    <span class="n">new_proba</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">proba</span><span class="p">[:,</span> <span class="n">select_1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">new_labels</span><span class="p">,</span> <span class="n">new_proba</span>
+
 
 
 <div class="viewcode-block" id="scatter2dprobaplot"><a class="viewcode-back" href="../../scludam.plots.html#scludam.plots.scatter2dprobaplot">[docs]</a><span class="k">def</span> <span class="nf">scatter2dprobaplot</span><span class="p">(</span>
@@ -776,10 +789,11 @@
     <span class="n">cols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">palette</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Set1&quot;</span><span class="p">,</span>
     <span class="n">select_labels</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">select_1</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">bg_kws</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span>
     <span class="n">fg_kws</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create a scatter plot with labels and probabilites.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a scatter plot with labels and probabilites.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -792,6 +806,10 @@
 <span class="sd">    select_labels : Optional[Union[List[int], int]], optional</span>
 <span class="sd">        Select labels to plot, by default None. If None, all</span>
 <span class="sd">        labels are plotted.</span>
+<span class="sd">    select_1: Optional[int], optional</span>
+<span class="sd">        Used to select only one of the labels. Only plots</span>
+<span class="sd">        that population and the background (noise lable -1),</span>
+<span class="sd">        by default None.</span>
 <span class="sd">    cols : Optional[List[str]], optional</span>
 <span class="sd">        Axes labels to be used, by default None.</span>
 <span class="sd">        If None, the columns of data are used.</span>
@@ -821,6 +839,8 @@
     <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">select_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">labels</span><span class="p">,</span> <span class="n">proba</span> <span class="o">=</span> <span class="n">_select_labels</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">proba</span><span class="p">,</span> <span class="n">select_labels</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">select_1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">labels</span><span class="p">,</span> <span class="n">proba</span> <span class="o">=</span> <span class="n">_select_1</span><span class="p">(</span><span class="n">proba</span><span class="p">,</span> <span class="n">select_1</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data must have 2 columns&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
@@ -842,7 +862,9 @@
         <span class="p">[</span>
             <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
             <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">proba</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">labels</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">proba</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">select_1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">proba</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">proba</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">labels</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span>
+                    <span class="n">labels</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
                 <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Probability&quot;</span><span class="p">,</span> <span class="s2">&quot;Label&quot;</span><span class="p">],</span>
             <span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
         <span class="p">],</span>
@@ -882,7 +904,7 @@
 
 
 <div class="viewcode-block" id="plot_objects"><a class="viewcode-back" href="../../scludam.plots.html#scludam.plots.plot_objects">[docs]</a><span class="k">def</span> <span class="nf">plot_objects</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span> <span class="n">Axes</span><span class="p">,</span> <span class="n">cols</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;Plot object dataframe in an axis.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot object dataframe in an axis.</span>
 
 <span class="sd">    Object dataframe refers to a pandas dataframe</span>
 <span class="sd">    created from simbad Table result, translated with</span>
@@ -932,7 +954,7 @@
 
 
 <span class="k">def</span> <span class="nf">_plot_cov_ellipse</span><span class="p">(</span><span class="n">cov</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">nstd</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot ellipse based on the specified covariance.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot ellipse based on the specified covariance.</span>
 
 <span class="sd">    Plots an `nstd` sigma error ellipse based on the specified covariance</span>
 <span class="sd">    matrix (`cov`). Additional keyword arguments are passed on to the</span>
@@ -982,7 +1004,7 @@
 
 
 <div class="viewcode-block" id="plot_kernels"><a class="viewcode-back" href="../../scludam.plots.html#scludam.plots.plot_kernels">[docs]</a><span class="k">def</span> <span class="nf">plot_kernels</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">means</span><span class="p">,</span> <span class="n">covariances</span><span class="p">,</span> <span class="n">nstd</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot a collection of 2D Gaussians as ellipses.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot a collection of 2D Gaussians as ellipses.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -1007,7 +1029,7 @@
 
 
 <div class="viewcode-block" id="horizontal_lineplots"><a class="viewcode-back" href="../../scludam.plots.html#scludam.plots.horizontal_lineplots">[docs]</a><span class="k">def</span> <span class="nf">horizontal_lineplots</span><span class="p">(</span><span class="n">ys</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">cols</span><span class="o">=</span><span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot a list of 1d arrays as horizontal lineplots.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot a list of 1d arrays as horizontal lineplots.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>

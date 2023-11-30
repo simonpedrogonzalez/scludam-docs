@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.detection &mdash; scludam 1.0.3 documentation</title>
+  <title>scludam.detection &mdash; scludam 1.0.4 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -545,6 +545,9 @@
 <span class="sd">                ``std(s) = sqrt(var(h) + var(b) - 2*cov(h,b))``.</span>
 <span class="sd">            *   Considering ``2*cov(h,b)~0``, the approximation is:</span>
 <span class="sd">                ``std(s) = sqrt(h + b)``.</span>
+<span class="sd">    select_index: int, optional</span>
+<span class="sd">        Detection process only returns the peak with the index provided,</span>
+<span class="sd">        by default None.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -621,6 +624,7 @@
     <span class="n">min_sigma_dif</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">min_score</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">max_n_peaks</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">select_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">min_interpeak_dist</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
     <span class="n">remove_low_density_regions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">_type</span><span class="p">(</span><span class="nb">bool</span><span class="p">))</span>
     <span class="n">norm_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;std&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">validators</span><span class="o">.</span><span class="n">in_</span><span class="p">([</span><span class="s2">&quot;std&quot;</span><span class="p">,</span> <span class="s2">&quot;approx&quot;</span><span class="p">]))</span>
@@ -802,7 +806,6 @@
 
             <span class="n">_</span><span class="p">,</span> <span class="n">peak_count</span> <span class="o">=</span> <span class="n">clusters_idx</span><span class="o">.</span><span class="n">shape</span>
             <span class="k">if</span> <span class="n">peak_count</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-
                 <span class="n">iter_indcs</span> <span class="o">=</span> <span class="n">clusters_idx</span><span class="o">.</span><span class="n">T</span>
                 <span class="n">iter_counts</span> <span class="o">=</span> <span class="n">sharp</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">clusters_idx</span><span class="p">)]</span>
                 <span class="n">iter_scores</span> <span class="o">=</span> <span class="n">normalized</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">clusters_idx</span><span class="p">)]</span>
@@ -870,6 +873,16 @@
         <span class="n">g_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">g_indices</span><span class="p">)[</span><span class="n">g_ind</span><span class="p">]</span>
         <span class="n">g_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">g_counts</span><span class="p">)[</span><span class="n">g_ind</span><span class="p">]</span>
         <span class="n">g_offsets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">g_offsets</span><span class="p">)[</span><span class="n">g_ind</span><span class="p">]</span>
+
+        <span class="c1"># if select_index is set, return only the selected peak</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">g_centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">g_centers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">select_index</span><span class="p">]])</span>
+            <span class="n">g_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">g_scores</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">select_index</span><span class="p">]])</span>
+            <span class="n">g_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">g_edges</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">select_index</span><span class="p">]])</span>
+            <span class="n">g_sigmas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">g_sigmas</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">select_index</span><span class="p">]])</span>
+            <span class="n">g_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">g_indices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">select_index</span><span class="p">]])</span>
+            <span class="n">g_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">g_counts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">select_index</span><span class="p">]])</span>
+            <span class="n">g_offsets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">g_offsets</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">select_index</span><span class="p">]])</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_result</span> <span class="o">=</span> <span class="n">DetectionResult</span><span class="p">(</span>
             <span class="n">centers</span><span class="o">=</span><span class="n">g_centers</span><span class="p">,</span>
