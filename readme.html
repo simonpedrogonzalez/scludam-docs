@@ -1,21 +1,21 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SCLUDAM (Star CLUster Detection And Membership estimation) &mdash; scludam 1.0.4 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>SCLUDAM (Star CLUster Detection And Membership estimation) &mdash; scludam 1.0.8 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=aec50437"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -86,27 +86,35 @@
            <div itemprop="articleBody">
              
   <section id="scludam-star-cluster-detection-and-membership-estimation">
-<h1>SCLUDAM (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)<a class="headerlink" href="#scludam-star-cluster-detection-and-membership-estimation" title="Permalink to this heading"></a></h1>
-<a class="reference external image-reference" href="https://travis-ci.com/simonpedrogonzalez/scludam"><img alt="Build Status" src="https://travis-ci.com/simonpedrogonzalez/scludam.svg?branch=main" /></a>
-<a class="reference external image-reference" href="https://simonpedrogonzalez.github.io/scludam-docs/index.html"><img alt="Documentation Status" src="https://img.shields.io/badge/docs-passing-success" /></a>
-<a class="reference external image-reference" href="https://pypi.org/project/scludam/"><img alt="PyPI" src="https://img.shields.io/pypi/v/scludam" /></a>
-<a class="reference external image-reference" href="https://github.com/simonpedrogonzalez/scludam"><img alt="Python 3.7.6+" src="https://img.shields.io/badge/python-3.7.6+-blue.svg" /></a>
-<a class="reference external image-reference" href="https://github.com/simonpedrogonzalez/scludam"><img alt="Python 3.8+" src="https://img.shields.io/badge/python-3.8+-blue.svg" /></a>
-<a class="reference external image-reference" href="https://tldrlegal.com/license/gnu-lesser-general-public-license-v3-(lgpl-3)"><img alt="License" src="https://img.shields.io/badge/License-GNU-blue.svg" /></a>
+<h1>SCLUDAM (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation)<a class="headerlink" href="#scludam-star-cluster-detection-and-membership-estimation" title="Link to this heading"></a></h1>
+<a class="reference external image-reference" href="https://travis-ci.com/simonpedrogonzalez/scludam"><img alt="Build Status" src="https://travis-ci.com/simonpedrogonzalez/scludam.svg?branch=main" />
+</a>
+<a class="reference external image-reference" href="https://simonpedrogonzalez.github.io/scludam-docs/index.html"><img alt="Documentation Status" src="https://img.shields.io/badge/docs-passing-success" />
+</a>
+<a class="reference external image-reference" href="https://pypi.org/project/scludam/"><img alt="PyPI" src="https://img.shields.io/pypi/v/scludam" />
+</a>
+<a class="reference external image-reference" href="https://github.com/simonpedrogonzalez/scludam"><img alt="Python 3.9.21+" src="https://img.shields.io/badge/python-3.9.21+-blue.svg" />
+</a>
+<a class="reference external image-reference" href="https://github.com/simonpedrogonzalez/scludam"><img alt="Python  3.10.16+" src="https://img.shields.io/badge/python-3.10.16+-blue.svg" />
+</a>
+<a class="reference external image-reference" href="https://github.com/simonpedrogonzalez/scludam"><img alt="Python  3.11.11+" src="https://img.shields.io/badge/python-3.11.11+-blue.svg" />
+</a>
+<a class="reference external image-reference" href="https://tldrlegal.com/license/gnu-lesser-general-public-license-v3-(lgpl-3)"><img alt="License" src="https://img.shields.io/badge/License-GNU-blue.svg" />
+</a>
 <p><strong>SCLUDAM</strong> (<strong>S</strong>tar <strong>CLU</strong>ster <strong>D</strong>etection <strong>A</strong>nd <strong>M</strong>embership estimation) is a Python package for GAIA catalogues <strong>data fetching</strong>, <strong>star cluster detection</strong> and <strong>star cluster membership estimation</strong>.</p>
 <section id="repository-and-issues">
-<h2>Repository and issues<a class="headerlink" href="#repository-and-issues" title="Permalink to this heading"></a></h2>
+<h2>Repository and issues<a class="headerlink" href="#repository-and-issues" title="Link to this heading"></a></h2>
 <p><a class="reference external" href="https://github.com/simonpedrogonzalez/scludam">https://github.com/simonpedrogonzalez/scludam</a></p>
 </section>
 <section id="authors">
-<h2>Authors<a class="headerlink" href="#authors" title="Permalink to this heading"></a></h2>
+<h2>Authors<a class="headerlink" href="#authors" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>Simón Pedro González.
 Email: <a class="reference external" href="mailto:simon&#46;pedro&#46;g&#37;&#52;&#48;gmail&#46;com">simon<span>&#46;</span>pedro<span>&#46;</span>g<span>&#64;</span>gmail<span>&#46;</span>com</a></p></li>
 </ul>
 </section>
 <section id="features">
-<h2>Features<a class="headerlink" href="#features" title="Permalink to this heading"></a></h2>
+<h2>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h2>
 <p>Included modules and features are:</p>
 <ul class="simple">
 <li><p><strong>fetcher</strong>: Query builder for easy access to GAIA catalogues data, functions to get catalogues and SIMBAD objects information.</p></li>
@@ -122,39 +130,35 @@ Email: <a class="reference external" href="mailto:simon&#46;pedro&#46;g&#37;&#52
 </section>
 <hr class="docutils" />
 <section id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
-<p><strong>Python 3.7.6+</strong> and <strong>R 3.6.3+</strong> are needed to run SCLUDAM. It is recommended to install scludam in a separate environment created with pyenv or conda, to avoid dependencies issues with other preinstalled packages in the base environment. The following dependencies will be installed along with SCLUDAM:</p>
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<p><strong>Python 3.9+</strong>  is needed to run SCLUDAM. It is recommended to install scludam in a separate environment created to avoid dependencies issues with other preinstalled packages in the base environment. The following dependencies will be installed along with SCLUDAM:</p>
 <ul class="simple">
-<li><p>numpy&gt;=1.21.6</p></li>
-<li><p>matplotlib&gt;=3.4.1</p></li>
-<li><p>scipy&gt;=1.7.3</p></li>
-<li><p>astropy&gt;=4.3.1</p></li>
-<li><p>astroquery&gt;=0.4.6</p></li>
-<li><p>pandas&gt;=1.3.5</p></li>
-<li><p>hdbscan==0.8.27</p></li>
-<li><p>scikit-learn&gt;=1.0.2</p></li>
-<li><p>scikit-image&gt;=0.18.1</p></li>
-<li><p>rpy2&gt;=3.5.2</p></li>
-<li><p>seaborn&gt;=0.11.0</p></li>
-<li><p>attrs&gt;=21.4.0</p></li>
-<li><p>beartype&gt;=0.10.0</p></li>
-<li><p>ordered_set&gt;=4.0.2</p></li>
+<li><p>numpy&gt;=1.26.4,&lt;2.0</p></li>
+<li><p>matplotlib&gt;=3.9.4,&lt;4.0</p></li>
+<li><p>scipy&gt;=1.13.1,&lt;2.0</p></li>
+<li><p>astropy&gt;=6.0.1,&lt;7.0</p></li>
+<li><p>astroquery==0.4.6</p></li>
+<li><p>pandas&gt;=2.3.1,&lt; 3.0</p></li>
+<li><p>hdbscan&gt;=0.8.40</p></li>
+<li><p>joblib&gt;=1.1.0</p></li>
+<li><p>scikit-learn&gt;=1.1.3</p></li>
+<li><p>scikit-image&gt;=0.24.0</p></li>
+<li><p>seaborn&gt;=0.13.2,&lt;0.14</p></li>
 <li><p>statsmodels&gt;=0.12.2</p></li>
-<li><p>diptest&gt;=0.4.2</p></li>
-<li><p>typing_extensions&gt;=4.2.0</p></li>
+<li><p>diptest&gt;=0.10.0,&lt;0.11.0</p></li>
 </ul>
 </section>
 <section id="user-install-in-a-conda-environment-recommended">
-<h2>User install in a Conda environment (recommended)<a class="headerlink" href="#user-install-in-a-conda-environment-recommended" title="Permalink to this heading"></a></h2>
-<p>Create a conda environment named <code class="docutils literal notranslate"><span class="pre">myscludamenv</span></code> with python3.8 and <code class="docutils literal notranslate"><span class="pre">scludam</span></code> installed</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">myscludamenv</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.8</span> <span class="n">pip</span> <span class="o">--</span><span class="n">yes</span>
+<h2>User install in a Conda environment (recommended)<a class="headerlink" href="#user-install-in-a-conda-environment-recommended" title="Link to this heading"></a></h2>
+<p>Create a conda environment named <code class="docutils literal notranslate"><span class="pre">myscludamenv</span></code> with python3.11 and <code class="docutils literal notranslate"><span class="pre">scludam</span></code> installed</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">myscludamenv</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.11</span> <span class="n">pip</span> <span class="o">--</span><span class="n">yes</span>
 <span class="n">conda</span> <span class="n">activate</span> <span class="n">myscludamenv</span>
 <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">scludam</span>
 </pre></div>
 </div>
 </section>
 <section id="update-scludam-in-a-conda-environment">
-<h2>Update scludam in a Conda environment<a class="headerlink" href="#update-scludam-in-a-conda-environment" title="Permalink to this heading"></a></h2>
+<h2>Update scludam in a Conda environment<a class="headerlink" href="#update-scludam-in-a-conda-environment" title="Link to this heading"></a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">activate</span> <span class="n">myscludamenv</span>
 <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">scludam</span>
 <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">show</span> <span class="n">scludam</span>
@@ -162,17 +166,17 @@ Email: <a class="reference external" href="mailto:simon&#46;pedro&#46;g&#37;&#52
 </div>
 </section>
 <section id="simple-user-install">
-<h2>Simple user install<a class="headerlink" href="#simple-user-install" title="Permalink to this heading"></a></h2>
+<h2>Simple user install<a class="headerlink" href="#simple-user-install" title="Link to this heading"></a></h2>
 <p>Install from PyPi:
 <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">scludam</span></code></p>
 </section>
 <section id="simple-user-update">
-<h2>Simple user update<a class="headerlink" href="#simple-user-update" title="Permalink to this heading"></a></h2>
+<h2>Simple user update<a class="headerlink" href="#simple-user-update" title="Link to this heading"></a></h2>
 <p>Update from PyPi:
 <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">scludam</span></code></p>
 </section>
 <section id="dev-install">
-<h2>Dev install<a class="headerlink" href="#dev-install" title="Permalink to this heading"></a></h2>
+<h2>Dev install<a class="headerlink" href="#dev-install" title="Link to this heading"></a></h2>
 <p>Clone the repo and run the following command in the cloned directory (with your environment activated):
 <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.[dev]</span></code></p>
 </section>

@@ -1,20 +1,20 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.detection &mdash; scludam 1.0.4 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>scludam.detection &mdash; scludam 1.0.8 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=aec50437"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -99,23 +99,23 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
-<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
-<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
-<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">warnings</span><span class="w"> </span><span class="kn">import</span> <span class="n">warn</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">astropy.stats.sigma_clipping</span> <span class="kn">import</span> <span class="n">sigma_clipped_stats</span>
-<span class="kn">from</span> <span class="nn">attrs</span> <span class="kn">import</span> <span class="n">define</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">validators</span>
-<span class="kn">from</span> <span class="nn">beartype</span> <span class="kn">import</span> <span class="n">beartype</span>
-<span class="kn">from</span> <span class="nn">numpy.typing</span> <span class="kn">import</span> <span class="n">NDArray</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">ndimage</span>
-<span class="kn">from</span> <span class="nn">skimage.feature</span> <span class="kn">import</span> <span class="n">peak_local_max</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astropy.stats.sigma_clipping</span><span class="w"> </span><span class="kn">import</span> <span class="n">sigma_clipped_stats</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">attrs</span><span class="w"> </span><span class="kn">import</span> <span class="n">define</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">validators</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">beartype</span><span class="w"> </span><span class="kn">import</span> <span class="n">beartype</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">ndimage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage.feature</span><span class="w"> </span><span class="kn">import</span> <span class="n">peak_local_max</span>
 
-<span class="kn">from</span> <span class="nn">scludam.masker</span> <span class="kn">import</span> <span class="n">RangeMasker</span>
-<span class="kn">from</span> <span class="nn">scludam.plots</span> <span class="kn">import</span> <span class="n">heatmap2D</span><span class="p">,</span> <span class="n">horizontal_lineplots</span>
-<span class="kn">from</span> <span class="nn">scludam.type_utils</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scludam.masker</span><span class="w"> </span><span class="kn">import</span> <span class="n">RangeMasker</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scludam.plots</span><span class="w"> </span><span class="kn">import</span> <span class="n">heatmap2D</span><span class="p">,</span> <span class="n">horizontal_lineplots</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scludam.type_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">ArrayLike</span><span class="p">,</span>
     <span class="n">Numeric1DArrayLike</span><span class="p">,</span>
     <span class="n">Numeric2DArray</span><span class="p">,</span>
@@ -125,8 +125,10 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="default_mask"><a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.default_mask">[docs]</a><span class="nd">@beartype</span>
-<span class="k">def</span> <span class="nf">default_mask</span><span class="p">(</span><span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<div class="viewcode-block" id="default_mask">
+<a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.default_mask">[docs]</a>
+<span class="nd">@beartype</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">default_mask</span><span class="p">(</span><span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a default mean mask for a given dimension.</span>
 
 <span class="sd">    It returns a mean weighted mask with 5 elements per dimension,</span>
@@ -175,7 +177,8 @@
     <span class="k">return</span> <span class="n">mask</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_convolve</span><span class="p">(</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_convolve</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">OptionalArrayLike</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">c_filter</span><span class="p">:</span> <span class="nb">callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">):</span>
     <span class="k">if</span> <span class="n">c_filter</span><span class="p">:</span>
@@ -210,8 +213,10 @@
 <span class="c1">#     )</span>
 
 
-<div class="viewcode-block" id="fast_std_filter"><a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.fast_std_filter">[docs]</a><span class="nd">@beartype</span>
-<span class="k">def</span> <span class="nf">fast_std_filter</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="fast_std_filter">
+<a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.fast_std_filter">[docs]</a>
+<span class="nd">@beartype</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">fast_std_filter</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fast standard deviation filter.</span>
 
 <span class="sd">    To be applied over an image or histogram.</span>
@@ -239,8 +244,11 @@
     <span class="k">return</span> <span class="p">(</span><span class="n">ux_2</span> <span class="o">-</span> <span class="n">u_x2</span> <span class="o">*</span> <span class="n">u_x2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span></div>
 
 
-<div class="viewcode-block" id="get_histogram_bins"><a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.get_histogram_bins">[docs]</a><span class="nd">@beartype</span>
-<span class="k">def</span> <span class="nf">get_histogram_bins</span><span class="p">(</span>
+
+<div class="viewcode-block" id="get_histogram_bins">
+<a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.get_histogram_bins">[docs]</a>
+<span class="nd">@beartype</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_histogram_bins</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span>
     <span class="n">bin_shape</span><span class="p">:</span> <span class="n">Numeric1DArrayLike</span><span class="p">,</span>
     <span class="n">offsets</span><span class="p">:</span> <span class="n">OptionalNumeric1DArrayLike</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -295,8 +303,11 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bins</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ranges</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="histogram"><a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.histogram">[docs]</a><span class="nd">@beartype</span>
-<span class="k">def</span> <span class="nf">histogram</span><span class="p">(</span>
+
+<div class="viewcode-block" id="histogram">
+<a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.histogram">[docs]</a>
+<span class="nd">@beartype</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">histogram</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">,</span>
     <span class="n">bin_shape</span><span class="p">:</span> <span class="n">Numeric1DArrayLike</span><span class="p">,</span>
     <span class="n">offsets</span><span class="p">:</span> <span class="n">OptionalNumeric1DArrayLike</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -327,8 +338,11 @@
     <span class="k">return</span> <span class="n">hist</span><span class="p">,</span> <span class="n">edges</span></div>
 
 
-<div class="viewcode-block" id="nyquist_offsets"><a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.nyquist_offsets">[docs]</a><span class="nd">@beartype</span>
-<span class="k">def</span> <span class="nf">nyquist_offsets</span><span class="p">(</span><span class="n">bin_shape</span><span class="p">:</span> <span class="n">Numeric1DArrayLike</span><span class="p">):</span>
+
+<div class="viewcode-block" id="nyquist_offsets">
+<a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.nyquist_offsets">[docs]</a>
+<span class="nd">@beartype</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">nyquist_offsets</span><span class="p">(</span><span class="n">bin_shape</span><span class="p">:</span> <span class="n">Numeric1DArrayLike</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get offsets for shifting a histogram.</span>
 
 <span class="sd">    Get all possible offsets for a given bin shape, to be used</span>
@@ -356,12 +370,15 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">combinations</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_are_indices_adjacent</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Numeric1DArrayLike</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Numeric1DArrayLike</span><span class="p">):</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_are_indices_adjacent</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Numeric1DArrayLike</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Numeric1DArrayLike</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="extend_1dmask"><a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.extend_1dmask">[docs]</a><span class="nd">@beartype</span>
-<span class="k">def</span> <span class="nf">extend_1dmask</span><span class="p">(</span><span class="n">mask</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<div class="viewcode-block" id="extend_1dmask">
+<a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.extend_1dmask">[docs]</a>
+<span class="nd">@beartype</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">extend_1dmask</span><span class="p">(</span><span class="n">mask</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Extend a 1-dimensional filtering mask to a n-dimensional mask.</span>
 
 <span class="sd">    From a numeric filtering 1D mask, the function uses the</span>
@@ -397,7 +414,8 @@
     <span class="k">return</span> <span class="n">mi</span> <span class="o">/</span> <span class="n">mi</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span></div>
 
 
-<span class="k">def</span> <span class="nf">_get_higher_score_offset_per_peak</span><span class="p">(</span><span class="n">indices</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">scores</span><span class="p">:</span> <span class="n">List</span><span class="p">):</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_higher_score_offset_per_peak</span><span class="p">(</span><span class="n">indices</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">scores</span><span class="p">:</span> <span class="n">List</span><span class="p">):</span>
     <span class="n">indices</span> <span class="o">=</span> <span class="n">indices</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">scores</span> <span class="o">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">scores</span><span class="p">):</span>
@@ -428,8 +446,10 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">best</span><span class="p">])</span>
 
 
-<div class="viewcode-block" id="DetectionResult"><a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.DetectionResult">[docs]</a><span class="nd">@define</span>
-<span class="k">class</span> <span class="nc">DetectionResult</span><span class="p">:</span>
+<div class="viewcode-block" id="DetectionResult">
+<a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.DetectionResult">[docs]</a>
+<span class="nd">@define</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DetectionResult</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Result of a detection run.</span>
 
 <span class="sd">    Attributes</span>
@@ -467,9 +487,12 @@
     <span class="n">indices</span><span class="p">:</span> <span class="n">Numeric2DArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span></div>
 
 
+
 <span class="c1"># TODO: add a plot for the result</span>
-<div class="viewcode-block" id="CountPeakDetector"><a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.CountPeakDetector">[docs]</a><span class="nd">@define</span>
-<span class="k">class</span> <span class="nc">CountPeakDetector</span><span class="p">:</span>
+<div class="viewcode-block" id="CountPeakDetector">
+<a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.CountPeakDetector">[docs]</a>
+<span class="nd">@define</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CountPeakDetector</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Count peak detector class.</span>
 
 <span class="sd">    Uses an n-dimensional histogram (array) to detect density</span>
@@ -632,7 +655,7 @@
     <span class="n">_last_result</span><span class="p">:</span> <span class="n">DetectionResult</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_data</span><span class="p">:</span> <span class="n">Numeric2DArray</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">_remove_low_density_regions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_remove_low_density_regions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">):</span>
         <span class="n">obs</span><span class="p">,</span> <span class="n">dim</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
 
         <span class="c1"># calculate data ranges in each dimension, taking into account</span>
@@ -672,7 +695,7 @@
         <span class="n">trimmed_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">RangeMasker</span><span class="p">(</span><span class="n">limits</span><span class="o">=</span><span class="n">ranges</span><span class="p">)</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="n">data</span><span class="p">)]</span>
         <span class="k">return</span> <span class="n">trimmed_data</span>
 
-    <span class="k">def</span> <span class="nf">_set_nyquist_offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_nyquist_offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bin_shape</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">nyquist_offset</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_offsets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">dim</span><span class="p">))</span>
@@ -681,8 +704,10 @@
             <span class="n">combinations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_offsets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">combinations</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-<div class="viewcode-block" id="CountPeakDetector.detect"><a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.CountPeakDetector.detect">[docs]</a>    <span class="nd">@beartype</span>
-    <span class="k">def</span> <span class="nf">detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">):</span>
+<div class="viewcode-block" id="CountPeakDetector.detect">
+<a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.CountPeakDetector.detect">[docs]</a>
+    <span class="nd">@beartype</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Numeric2DArray</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Detect peaks in the provided data.</span>
 
 <span class="sd">        Uses the configuration provided in the class attributes.</span>
@@ -897,8 +922,11 @@
         <span class="c1"># to avoid any kind of array change issue</span>
         <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_result</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CountPeakDetector.plot"><a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.CountPeakDetector.plot">[docs]</a>    <span class="nd">@beartype</span>
-    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span>
+
+<div class="viewcode-block" id="CountPeakDetector.plot">
+<a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.CountPeakDetector.plot">[docs]</a>
+    <span class="nd">@beartype</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">peak</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
@@ -1084,7 +1112,10 @@
 
         <span class="k">return</span> <span class="n">hm</span></div>
 
-<div class="viewcode-block" id="CountPeakDetector.lineplot"><a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.CountPeakDetector.lineplot">[docs]</a>    <span class="k">def</span> <span class="nf">lineplot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CountPeakDetector.lineplot">
+<a class="viewcode-back" href="../../scludam.detection.html#scludam.detection.CountPeakDetector.lineplot">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lineplot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot the last result as a line plot.</span>
 
 <span class="sd">        Plots scores and counts for all peaks found.</span>
@@ -1106,7 +1137,9 @@
             <span class="n">ys</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_result</span><span class="o">.</span><span class="n">scores</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_result</span><span class="o">.</span><span class="n">counts</span><span class="p">],</span>
             <span class="n">cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;scores&quot;</span><span class="p">,</span> <span class="s2">&quot;counts&quot;</span><span class="p">],</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+</div>
+
 </pre></div>
 
            </div>

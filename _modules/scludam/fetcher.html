@@ -1,21 +1,20 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scludam.fetcher &mdash; scludam 1.0.2 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>scludam.fetcher &mdash; scludam 1.0.8 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=aec50437"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -26,11 +25,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> scludam
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            scludam
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -57,9 +60,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>scludam.fetcher</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">scludam.fetcher</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -103,27 +106,29 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">import</span> <span class="nn">astropy.units</span> <span class="k">as</span> <span class="nn">u</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">SkyCoord</span>
-<span class="kn">from</span> <span class="nn">astropy.table.table</span> <span class="kn">import</span> <span class="n">Table</span>
-<span class="kn">from</span> <span class="nn">astropy.units.quantity</span> <span class="kn">import</span> <span class="n">Quantity</span>
-<span class="kn">from</span> <span class="nn">astroquery.simbad</span> <span class="kn">import</span> <span class="n">Simbad</span>
-<span class="kn">from</span> <span class="nn">astroquery.utils.commons</span> <span class="kn">import</span> <span class="n">coord_to_radec</span><span class="p">,</span> <span class="n">radius_to_unit</span>
-<span class="kn">from</span> <span class="nn">attrs</span> <span class="kn">import</span> <span class="n">Factory</span><span class="p">,</span> <span class="n">define</span>
-<span class="kn">from</span> <span class="nn">beartype</span> <span class="kn">import</span> <span class="n">beartype</span>
-<span class="kn">from</span> <span class="nn">ordered_set</span> <span class="kn">import</span> <span class="n">OrderedSet</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">astropy.units</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">u</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astropy.coordinates</span><span class="w"> </span><span class="kn">import</span> <span class="n">SkyCoord</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astropy.table.table</span><span class="w"> </span><span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astropy.units.quantity</span><span class="w"> </span><span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astroquery.simbad</span><span class="w"> </span><span class="kn">import</span> <span class="n">Simbad</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astroquery.utils.commons</span><span class="w"> </span><span class="kn">import</span> <span class="n">coord_to_radec</span><span class="p">,</span> <span class="n">radius_to_unit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">attrs</span><span class="w"> </span><span class="kn">import</span> <span class="n">Factory</span><span class="p">,</span> <span class="n">define</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">beartype</span><span class="w"> </span><span class="kn">import</span> <span class="n">beartype</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ordered_set</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderedSet</span>
 
-<span class="kn">from</span> <span class="nn">scludam.type_utils</span> <span class="kn">import</span> <span class="n">Condition</span><span class="p">,</span> <span class="n">Coord</span><span class="p">,</span> <span class="n">LogicalExpression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scludam.type_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Condition</span><span class="p">,</span> <span class="n">Coord</span><span class="p">,</span> <span class="n">LogicalExpression</span>
 
 
-<div class="viewcode-block" id="Config"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Config">[docs]</a><span class="nd">@define</span>
-<span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Class to hold defaults for a query.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Config">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Config">[docs]</a>
+<span class="nd">@define</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Config</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to hold defaults for a query.&quot;&quot;&quot;</span>
 
     <span class="n">MAIN_GAIA_TABLE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;gaiadr3.gaia_source&quot;</span>
     <span class="n">MAIN_GAIA_RA</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ra&quot;</span>
@@ -135,12 +140,15 @@
     <span class="n">MAIN_GAIA_BP_RP_EXCESS_FACTOR</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;phot_bp_rp_excess_factor&quot;</span></div>
 
 
+
 <span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="SimbadResult"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.SimbadResult">[docs]</a><span class="nd">@define</span>
-<span class="k">class</span> <span class="nc">SimbadResult</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Class to hold the result of a search_object query.</span>
+<div class="viewcode-block" id="SimbadResult">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.SimbadResult">[docs]</a>
+<span class="nd">@define</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SimbadResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to hold the result of a search_object query.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -155,8 +163,11 @@
     <span class="n">table</span><span class="p">:</span> <span class="n">Table</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="search_object"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.search_object">[docs]</a><span class="nd">@beartype</span>
-<span class="k">def</span> <span class="nf">search_object</span><span class="p">(</span>
+
+<div class="viewcode-block" id="search_object">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.search_object">[docs]</a>
+<span class="nd">@beartype</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">search_object</span><span class="p">(</span>
     <span class="n">identifier</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">cols</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s2">&quot;coordinates&quot;</span><span class="p">,</span>
@@ -168,7 +179,7 @@
     <span class="p">],</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Search an identifier in Simbad catalogues.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search an identifier in Simbad catalogues.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -200,9 +211,12 @@
     <span class="k">return</span> <span class="n">SimbadResult</span><span class="p">(</span><span class="n">coords</span><span class="o">=</span><span class="n">SkyCoord</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">hourangle</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">deg</span><span class="p">)),</span> <span class="n">table</span><span class="o">=</span><span class="n">table</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="TableInfo"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.TableInfo">[docs]</a><span class="nd">@define</span>
-<span class="k">class</span> <span class="nc">TableInfo</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Class to hold the result of a search_table query.</span>
+
+<div class="viewcode-block" id="TableInfo">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.TableInfo">[docs]</a>
+<span class="nd">@define</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TableInfo</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to hold the result of a search_table query.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -220,9 +234,12 @@
     <span class="n">columns</span><span class="p">:</span> <span class="n">Table</span></div>
 
 
-<div class="viewcode-block" id="search_table"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.search_table">[docs]</a><span class="nd">@beartype</span>
-<span class="k">def</span> <span class="nf">search_table</span><span class="p">(</span><span class="n">search_query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">only_names</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;List available tables in gaia catalogue matching a search query.</span>
+
+<div class="viewcode-block" id="search_table">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.search_table">[docs]</a>
+<span class="nd">@beartype</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">search_table</span><span class="p">(</span><span class="n">search_query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">only_names</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;List available tables in gaia catalogue matching a search query.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -237,7 +254,7 @@
 <span class="sd">        List of tables found.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">astroquery.gaia</span> <span class="kn">import</span> <span class="n">Gaia</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">astroquery.gaia</span><span class="w"> </span><span class="kn">import</span> <span class="n">Gaia</span>
 
     <span class="n">available_tables</span> <span class="o">=</span> <span class="n">Gaia</span><span class="o">.</span><span class="n">load_tables</span><span class="p">(</span><span class="n">only_names</span><span class="o">=</span><span class="n">only_names</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -284,9 +301,12 @@
     <span class="k">return</span> <span class="n">tables</span></div>
 
 
-<div class="viewcode-block" id="Query"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query">[docs]</a><span class="nd">@define</span>
-<span class="k">class</span> <span class="nc">Query</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Class to hold an ADQL query to be executed.</span>
+
+<div class="viewcode-block" id="Query">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query">[docs]</a>
+<span class="nd">@define</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Query</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to hold an ADQL query to be executed.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -312,7 +332,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">QUERY_TEMPLATE</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="sd">&quot;&quot;&quot;SELECT {row_limit} {columns} \nFROM {table_name} {conditions} {orderby}&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT {row_limit} {columns} \nFROM {table_name} {conditions} {orderby}&quot;&quot;&quot;</span>
     <span class="p">)</span>
     <span class="n">COUNT_QUERY_TEMPLATE</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT COUNT(*) FROM </span><span class="si">{table_name}</span><span class="s2"> </span><span class="si">{conditions}</span><span class="s2">&quot;&quot;&quot;</span>
     <span class="n">table</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">MAIN_GAIA_TABLE</span>
@@ -322,9 +342,11 @@
     <span class="n">conditions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">LogicalExpression</span><span class="p">]</span> <span class="o">=</span> <span class="n">Factory</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
     <span class="n">orderby</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Query.select"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.select">[docs]</a>    <span class="nd">@beartype</span>
-    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Add columns to query.</span>
+<div class="viewcode-block" id="Query.select">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.select">[docs]</a>
+    <span class="nd">@beartype</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add columns to query.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -341,9 +363,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="Query.top"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.top">[docs]</a>    <span class="nd">@beartype</span>
-    <span class="k">def</span> <span class="nf">top</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row_limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Set the number of rows to be returned.</span>
+
+<div class="viewcode-block" id="Query.top">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.top">[docs]</a>
+    <span class="nd">@beartype</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">top</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row_limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the number of rows to be returned.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -359,20 +384,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">row_limit</span> <span class="o">=</span> <span class="n">row_limit</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
+
     <span class="nd">@beartype</span>
-    <span class="k">def</span> <span class="nf">_validate_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">column</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="n">column</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">extra_columns</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid column name: </span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="nd">@beartype</span>
-    <span class="k">def</span> <span class="nf">_validate_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operator</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operator</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">operator</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;&lt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span> <span class="s2">&quot;LIKE&quot;</span><span class="p">,</span> <span class="s2">&quot;like&quot;</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid operator: </span><span class="si">{</span><span class="n">operator</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Query.where"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.where">[docs]</a>    <span class="nd">@beartype</span>
-    <span class="k">def</span> <span class="nf">where</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">condition</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Condition</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Condition</span><span class="p">]]):</span>
-        <span class="sd">&quot;&quot;&quot;Add a condition to the query.</span>
+<div class="viewcode-block" id="Query.where">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.where">[docs]</a>
+    <span class="nd">@beartype</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">where</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">condition</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Condition</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Condition</span><span class="p">]]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a condition to the query.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -400,9 +428,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">conditions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;AND&quot;</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="Query.where_or"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.where_or">[docs]</a>    <span class="nd">@beartype</span>
-    <span class="k">def</span> <span class="nf">where_or</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">condition</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Condition</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Condition</span><span class="p">]]):</span>
-        <span class="sd">&quot;&quot;&quot;Add conditions to the query following in CNF.</span>
+
+<div class="viewcode-block" id="Query.where_or">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.where_or">[docs]</a>
+    <span class="nd">@beartype</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">where_or</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">condition</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Condition</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Condition</span><span class="p">]]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add conditions to the query following in CNF.</span>
 
 <span class="sd">        CNF is conjunctive normal form: AND (c1 OR c2 OR ...).</span>
 
@@ -438,15 +469,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">conditions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_last</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="Query.where_in_circle"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.where_in_circle">[docs]</a>    <span class="nd">@beartype</span>
-    <span class="k">def</span> <span class="nf">where_in_circle</span><span class="p">(</span>
+
+<div class="viewcode-block" id="Query.where_in_circle">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.where_in_circle">[docs]</a>
+    <span class="nd">@beartype</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">where_in_circle</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">coords_or_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Coord</span><span class="p">,</span> <span class="n">SkyCoord</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
         <span class="n">radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Quantity</span><span class="p">],</span>
         <span class="n">ra_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">MAIN_GAIA_RA</span><span class="p">,</span>
         <span class="n">dec_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">MAIN_GAIA_DEC</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Add a condition to the query to select objects within a circle.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a condition to the query to select objects within a circle.</span>
 
 <span class="sd">        The circle is drawn in the spherical coordinates space (ra, dec). It also adds</span>
 <span class="sd">        the dist (distance from the center) column to column list and adds orderby</span>
@@ -505,15 +539,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">orderby</span> <span class="o">=</span> <span class="s2">&quot;dist ASC&quot;</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="Query.where_aen_criterion"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.where_aen_criterion">[docs]</a>    <span class="nd">@beartype</span>
-    <span class="k">def</span> <span class="nf">where_aen_criterion</span><span class="p">(</span>
+
+<div class="viewcode-block" id="Query.where_aen_criterion">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.where_aen_criterion">[docs]</a>
+    <span class="nd">@beartype</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">where_aen_criterion</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">aen_value</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
         <span class="n">aen_sig_value</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
         <span class="n">aen_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">MAIN_GAIA_ASTROMETRIC_EXCESS_NOISE</span><span class="p">,</span>
         <span class="n">aen_sig_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">MAIN_GAIA_ASTROMETRIC_EXCESS_NOISE_SIG</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Add astrometric excess noise rejection criterion based on GAIA criteria.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add astrometric excess noise rejection criterion based on GAIA criteria.</span>
 
 <span class="sd">        It also adds the aen and aen_sig columns to column list.</span>
 
@@ -557,13 +594,16 @@
             <span class="p">]</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Query.where_arenou_criterion"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.where_arenou_criterion">[docs]</a>    <span class="nd">@beartype</span>
-    <span class="k">def</span> <span class="nf">where_arenou_criterion</span><span class="p">(</span>
+
+<div class="viewcode-block" id="Query.where_arenou_criterion">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.where_arenou_criterion">[docs]</a>
+    <span class="nd">@beartype</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">where_arenou_criterion</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">bp_rp_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">MAIN_GAIA_BP_RP</span><span class="p">,</span>
         <span class="n">bp_rp_ef_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">MAIN_GAIA_BP_RP_EXCESS_FACTOR</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Add rejection criterion based on Arenou et al. (2018).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add rejection criterion based on Arenou et al. (2018).</span>
 
 <span class="sd">        It also adds the bp_rp and bp_rp_ef columns to column list.</span>
 
@@ -601,7 +641,8 @@
             <span class="p">]</span>
         <span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_build_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
             <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -611,8 +652,10 @@
         <span class="n">columns</span> <span class="o">=</span> <span class="s2">&quot;, </span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">columns</span>
 
-<div class="viewcode-block" id="Query.build_count"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.build_count">[docs]</a>    <span class="k">def</span> <span class="nf">build_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Build the count query.</span>
+<div class="viewcode-block" id="Query.build_count">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.build_count">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build the count query.</span>
 
 <span class="sd">        It allows to preview a query without executing it.</span>
 
@@ -627,21 +670,24 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">query</span></div>
 
-    <span class="k">def</span> <span class="nf">_build_conditions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_conditions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">conditions</span><span class="p">:</span>
             <span class="n">conditions</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
                 <span class="p">[</span>
-                    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">lop</span><span class="si">}{</span><span class="n">expr1</span> <span class="k">if</span> <span class="s1">&#39;(&#39;</span> <span class="ow">in</span> <span class="n">lop</span> <span class="k">else</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">expr1</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">cop</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">expr2</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">lop</span><span class="si">}{</span><span class="n">expr1</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="s1">&#39;(&#39;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">lop</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">expr1</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">cop</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">expr2</span><span class="si">}</span><span class="s2">&quot;</span>
                     <span class="k">for</span> <span class="n">lop</span><span class="p">,</span> <span class="n">expr1</span><span class="p">,</span> <span class="n">cop</span><span class="p">,</span> <span class="n">expr2</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">conditions</span>
                 <span class="p">]</span>
             <span class="p">)</span>
-            <span class="n">conditions</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">WHERE </span><span class="si">{</span><span class="n">conditions</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;AND &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">conditions</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">WHERE </span><span class="si">{</span><span class="n">conditions</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;AND &#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">conditions</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="k">return</span> <span class="n">conditions</span>
 
-<div class="viewcode-block" id="Query.build"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Build the query.</span>
+<div class="viewcode-block" id="Query.build">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.build">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build the query.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -658,8 +704,11 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">query</span></div>
 
-<div class="viewcode-block" id="Query.get"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Execute the query.</span>
+
+<div class="viewcode-block" id="Query.get">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute the query.</span>
 
 <span class="sd">        It launches an asynchronous gaia job. It takes some time to execute the</span>
 <span class="sd">        query and parse the results. Parameters are passed through kwargs to</span>
@@ -680,7 +729,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
 
-        <span class="kn">from</span> <span class="nn">astroquery.gaia</span> <span class="kn">import</span> <span class="n">Gaia</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">astroquery.gaia</span><span class="w"> </span><span class="kn">import</span> <span class="n">Gaia</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Launching query&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
@@ -691,8 +740,11 @@
             <span class="n">table</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_results</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">table</span></div>
 
-<div class="viewcode-block" id="Query.count"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Execute the count query.</span>
+
+<div class="viewcode-block" id="Query.count">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.Query.count">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute the count query.</span>
 
 <span class="sd">        It launches an asynchronous gaia job. It takes some time</span>
 <span class="sd">        to execute the query and parse the results. It only returns</span>
@@ -713,7 +765,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_count</span><span class="p">()</span>
-        <span class="kn">from</span> <span class="nn">astroquery.gaia</span> <span class="kn">import</span> <span class="n">Gaia</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">astroquery.gaia</span><span class="w"> </span><span class="kn">import</span> <span class="n">Gaia</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Launching query&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
@@ -722,7 +774,9 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dump_to_file&quot;</span><span class="p">):</span>
             <span class="n">table</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_results</span><span class="p">()</span>
-            <span class="k">return</span> <span class="n">table</span></div></div>
+            <span class="k">return</span> <span class="n">table</span></div>
+</div>
+
 
 
 <span class="n">_gaia2criteria</span> <span class="o">=</span> <span class="p">{</span>
@@ -753,7 +807,7 @@
 <span class="n">_supported_simbad_cols</span> <span class="o">=</span> <span class="n">_gaia2simbad</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
 
 
-<span class="k">def</span> <span class="nf">_coords_to_radec</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_coords_to_radec</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
     <span class="k">if</span> <span class="s2">&quot;RA&quot;</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">colnames</span> <span class="ow">and</span> <span class="s2">&quot;DEC&quot;</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">colnames</span><span class="p">:</span>
         <span class="n">coords</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span>
             <span class="n">table</span><span class="p">[[</span><span class="s2">&quot;RA&quot;</span><span class="p">,</span> <span class="s2">&quot;DEC&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">hourangle</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">deg</span><span class="p">)</span>
@@ -763,14 +817,16 @@
     <span class="k">return</span> <span class="n">table</span>
 
 
-<div class="viewcode-block" id="search_objects_near_data"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.search_objects_near_data">[docs]</a><span class="nd">@beartype</span>
-<span class="k">def</span> <span class="nf">search_objects_near_data</span><span class="p">(</span>
+<div class="viewcode-block" id="search_objects_near_data">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.search_objects_near_data">[docs]</a>
+<span class="nd">@beartype</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">search_objects_near_data</span><span class="p">(</span>
     <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
     <span class="n">allow_missing_values</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">fields</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Search for objects in an area defined by dataframe.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for objects in an area defined by dataframe.</span>
 
 <span class="sd">    search all simbad objects in an area</span>
 <span class="sd">    defined by a dataframe by the maxs and mins</span>
@@ -862,8 +918,11 @@
     <span class="k">return</span> <span class="n">table</span></div>
 
 
-<div class="viewcode-block" id="simbad2gaiacolnames"><a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.simbad2gaiacolnames">[docs]</a><span class="k">def</span> <span class="nf">simbad2gaiacolnames</span><span class="p">(</span><span class="n">table</span><span class="p">:</span> <span class="n">Table</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Convert a simbad table colnames to a gaia table colnames.</span>
+
+<div class="viewcode-block" id="simbad2gaiacolnames">
+<a class="viewcode-back" href="../../scludam.fetcher.html#scludam.fetcher.simbad2gaiacolnames">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">simbad2gaiacolnames</span><span class="p">(</span><span class="n">table</span><span class="p">:</span> <span class="n">Table</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a simbad table colnames to a gaia table colnames.</span>
 
 <span class="sd">    Only supports translation for &#39;RA&#39;, &#39;DEC&#39;, &#39;PMRA&#39;, &#39;PMDEC&#39;,</span>
 <span class="sd">    &#39;PLX_VALUE&#39;, &#39;FLUX_G&#39;, &#39;FLUX_R&#39;, &#39;FLUX_B&#39;. It also adds</span>
@@ -887,6 +946,7 @@
             <span class="n">table</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">_simbad2gaia</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
 
     <span class="k">return</span> <span class="n">table</span></div>
+
 </pre></div>
 
            </div>
